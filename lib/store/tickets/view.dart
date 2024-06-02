@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silah/constants.dart';
 import 'package:silah/store/tickets/cubit/cubit.dart';
 import 'package:silah/store/tickets/cubit/states.dart';
 import 'package:silah/store/tickets/units/tickets_categories_section.dart';
@@ -28,7 +27,6 @@ class TicketsView extends StatelessWidget {
             children: [
               // Divider(thickness: 5, height: 0.5, color: kLightGreyColorB4),
               Builder(builder: (context) {
-                
                 final cubit = TicketsCubit.of(context);
                 return CustomTabview(
                   firstTabTitle: "توثيق",
@@ -39,10 +37,10 @@ class TicketsView extends StatelessWidget {
               BlocBuilder<TicketsCubit, TicketsStates>(
                   builder: (context, state) {
                 final ticketsCubit = TicketsCubit.of(context);
-              //  ticketsCubit
-              //       .getModelIndexOfVerificatio('Commercial Register');
-              //   ticketsCubit
-              //       .isAnyRequestInTypeVerification('Commercial Register');
+                //  ticketsCubit
+                //       .getModelIndexOfVerificatio('Commercial Register');
+                //   ticketsCubit
+                //       .isAnyRequestInTypeVerification('Commercial Register');
                 return ticketsCubit.isFirstSelected
                     ? TicketsVerificationSection()
                     : TicketsCategoriesSection();
