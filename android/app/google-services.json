@@ -1,0 +1,88 @@
+{
+  "project_info": {
+    "project_number": "570870926258",
+    "project_id": "sila-321715",
+    "storage_bucket": "sila-321715.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570870926258:android:ef4d45ebbb408395d2b2ab",
+        "android_client_info": {
+          "package_name": "com.sila2.sila"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570870926258-rtd0icpae0j75blrmdp6hlthg7becri4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5gVfzr2VTkvpfHtHS72GZhg0tfBAMURg"
+        },
+        {
+          "current_key": "AIzaSyAIwqIOmCI0HthEdRNgpI8oKjBrDPzn7TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570870926258-rtd0icpae0j75blrmdp6hlthg7becri4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570870926258-orq669ple0d88d2ae0ob6q44oa4k5bb4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.silah.silah"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570870926258:android:aa62e6948bf6afecd2b2ab",
+        "android_client_info": {
+          "package_name": "com.silah.silah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570870926258-rtd0icpae0j75blrmdp6hlthg7becri4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5gVfzr2VTkvpfHtHS72GZhg0tfBAMURg"
+        },
+        {
+          "current_key": "AIzaSyAIwqIOmCI0HthEdRNgpI8oKjBrDPzn7TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570870926258-rtd0icpae0j75blrmdp6hlthg7becri4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570870926258-orq669ple0d88d2ae0ob6q44oa4k5bb4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.silah.silah"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

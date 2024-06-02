@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">sila</string>
+    <string name="deeplink_test_link">wfn2x.test-app.link</string>
+    <string name="deeplink_alternate_test_link">wfn2x-alternate.test-app.link</string>
+    <string name="branch_io_sdk_test_key">key_test_cugs8NkZ95AUfvYGD6YIDeleqsjMEYN9</string>
+    <string name="branch_io_sdk_live_key">key_live_nreq2Ui834zJoF6Kr1ZKAhpbEvmRx6MI</string>
+</resources>
