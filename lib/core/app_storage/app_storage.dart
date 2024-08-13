@@ -53,6 +53,7 @@ class AppStorage {
       products = [];
     }
     products.add(product);
+    
     await _preferences.setStringList(
         getUserModel()!.customerId.toString(), products);
   }

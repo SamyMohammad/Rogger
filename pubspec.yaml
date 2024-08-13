@@ -70,6 +70,7 @@ dependencies:
   widget_zoom: ^0.0.3
   flutter_debouncer: ^2.0.0
   device_info_plus: ^8.2.2
+  carousel_slider_plus: ^7.0.0
 dependency_overrides:
   photo_manager: ^3.0.0-dev.2
 dev_dependencies:

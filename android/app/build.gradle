@@ -55,6 +55,7 @@ android {
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "google_maps_key", localProperties['MAPS_API_KEY']
     }
 
     signingConfigs {

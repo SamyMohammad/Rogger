@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +41,7 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   int _current = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   bool isLikeVisible = false;
 
   @override
@@ -183,7 +183,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     child: Container(
                       height: 350,
                       child: CarouselSlider(
-                        carouselController: _controller,
+                        controller: _controller,
                         items: imagesList!.map((e) {
                           if (e == 'VIDEO') {
                             return DownloadMediaBuilder(
@@ -1261,7 +1261,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   Column buildRelatedItem(Realted? relatedProduct, ProductsDetailsCubit cubit,
       BuildContext context) {
-    final CarouselController _controllerRelated = CarouselController();
+    final CarouselSliderController _controllerRelated =
+        CarouselSliderController();
     int _currentRelatedRelated = 0;
     bool isLikeVisibleRelated = false;
 
@@ -1375,7 +1376,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         Container(
           height: 350,
           child: CarouselSlider(
-            carouselController: _controllerRelated,
+            controller: _controllerRelated,
             items: relatedProduct.productImages!.map((e) {
               if (e == 'VIDEO') {
                 return DownloadMediaBuilder(

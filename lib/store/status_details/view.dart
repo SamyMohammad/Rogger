@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jiffy/jiffy.dart';
@@ -22,8 +22,7 @@ class StatusDetailsView extends StatefulWidget {
 }
 
 class _StatusDetailsViewState extends State<StatusDetailsView> {
-  final CarouselController _controller = CarouselController();
-
+  final CarouselSliderController _controller = CarouselSliderController();
   double progress = 0;
   int currentIndex = 0;
   Timer? timer;
@@ -96,7 +95,7 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
         body: Stack(
           children: [
             CarouselSlider(
-              carouselController: _controller,
+              controller: _controller,
               items: widget.status.map((e) {
                 if (e.attachmentType == 'video') {
                   return DownloadMediaBuilder(
