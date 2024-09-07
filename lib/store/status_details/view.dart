@@ -100,33 +100,30 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
                 if (e.attachmentType == 'video') {
                   return DownloadMediaBuilder(
                     url: e.attachment!,
-                    builder: (context, snapshot) {
-                      if (snapshot.status == DownloadMediaStatus.loading) {
-                        return CircularProgressIndicator(
-                          value: snapshot.progress,
-                          color: kAccentColor,
-                          valueColor: AlwaysStoppedAnimation(kPrimaryColor),
-                        );
-                      }
-                      if (snapshot.status == DownloadMediaStatus.success) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: topDevicePadding,
-                            bottom: bottomDevicePadding,
-                          ),
-                          // child: VideoBubble(
-                          //   file: snapshot.filePath,
-                          //   aspectRatio: sizeFromWidth(1) /
-                          //       sizeFromHeight(1, removeAppBarSize: false),
-                          //   onVideoFinished: () => restartTimer(currentIndex + 1),
-                          // ),
-                          child: VideoPlayerThumbnail(
-                            url: snapshot.filePath!,
-                            network: false,
-                          ),
-                        );
-                      }
-                      return null;
+                    onLoading: (snapshot) {
+                      return CircularProgressIndicator(
+                        value: snapshot.progress,
+                        color: kAccentColor,
+                        valueColor: AlwaysStoppedAnimation(kPrimaryColor),
+                      );
+                    },
+                    onSuccess: (snapshot) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: topDevicePadding,
+                          bottom: bottomDevicePadding,
+                        ),
+                        // child: VideoBubble(
+                        //   file: snapshot.filePath,
+                        //   aspectRatio: sizeFromWidth(1) /
+                        //       sizeFromHeight(1, removeAppBarSize: false),
+                        //   onVideoFinished: () => restartTimer(currentIndex + 1),
+                        // ),
+                        child: VideoPlayerThumbnail(
+                          url: snapshot.filePath!,
+                          network: false,
+                        ),
+                      );
                     },
                   );
                 }

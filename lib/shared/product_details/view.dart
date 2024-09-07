@@ -188,25 +188,20 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           if (e == 'VIDEO') {
                             return DownloadMediaBuilder(
                               url: productsDetailsModel.video!,
-                              builder: (context, snapshot) {
-                                if (snapshot.status ==
-                                    DownloadMediaStatus.loading) {
-                                  return UnconstrainedBox(
-                                    child: CircularProgressIndicator(
-                                      value: snapshot.progress,
-                                      color: kAccentColor,
-                                      valueColor:
-                                          AlwaysStoppedAnimation(kPrimaryColor),
-                                    ),
-                                  );
-                                }
-                                if (snapshot.status ==
-                                    DownloadMediaStatus.success) {
-                                  return _VideoBubble(
-                                    filePath: snapshot.filePath!,
-                                  );
-                                }
-                                return null;
+                              onLoading: (snapshot) {
+                                return UnconstrainedBox(
+                                  child: CircularProgressIndicator(
+                                    value: snapshot.progress,
+                                    color: kAccentColor,
+                                    valueColor:
+                                        AlwaysStoppedAnimation(kPrimaryColor),
+                                  ),
+                                );
+                              },
+                              onSuccess: (snapshot) {
+                                return _VideoBubble(
+                                  filePath: snapshot.filePath!,
+                                );
                               },
                             );
                           }
@@ -1381,22 +1376,19 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               if (e == 'VIDEO') {
                 return DownloadMediaBuilder(
                   url: relatedProduct.video!,
-                  builder: (context, snapshot) {
-                    if (snapshot.status == DownloadMediaStatus.loading) {
-                      return UnconstrainedBox(
-                        child: CircularProgressIndicator(
-                          value: snapshot.progress,
-                          color: kAccentColor,
-                          valueColor: AlwaysStoppedAnimation(kPrimaryColor),
-                        ),
-                      );
-                    }
-                    if (snapshot.status == DownloadMediaStatus.success) {
-                      return _VideoBubble(
-                        filePath: snapshot.filePath!,
-                      );
-                    }
-                    return null;
+                  onLoading: (snapshot) {
+                    return UnconstrainedBox(
+                      child: CircularProgressIndicator(
+                        value: snapshot.progress,
+                        color: kAccentColor,
+                        valueColor: AlwaysStoppedAnimation(kPrimaryColor),
+                      ),
+                    );
+                  },
+                  onSuccess: (snapshot) {
+                    return _VideoBubble(
+                      filePath: snapshot.filePath!,
+                    );
                   },
                 );
               }

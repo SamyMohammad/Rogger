@@ -24,8 +24,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
-
-  await DownloadCacheManager.setExpireDate(daysToExpire: 3);
+await DownloadCacheManager.instance.init();
+  await DownloadCacheManager.instance.setExpireDate(daysToExpire: 3);
   await AppStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
