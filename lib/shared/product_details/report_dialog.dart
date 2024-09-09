@@ -181,7 +181,7 @@ class _DialogState extends State<_Dialog> {
                 ? LoadingIndicator()
                 : ConfirmButton(
                     title: 'إرسـال',
-                    color: message.isEmpty ? kGreyButtonColorD9 : kPrimaryColor,
+                    color: message.isEmpty ? kGreyButtonColorD9 : activeButtonColor,
                     onPressed: message.isEmpty
                         ? null
                         : widget.chatId != null

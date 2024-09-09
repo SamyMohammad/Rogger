@@ -115,7 +115,7 @@ class LoginView extends StatelessWidget {
                           : ConfirmButton(
                               title: 'تسجيل الدخول',
                               color: cubit.areInputsValid
-                                  ? kPrimary2Color
+                                  ? activeButtonColor
                                   : kLightGreyColor,
                               onPressed:
                                   cubit.areInputsValid ? cubit.login : null,

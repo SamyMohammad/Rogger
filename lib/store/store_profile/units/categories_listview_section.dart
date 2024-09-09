@@ -30,7 +30,7 @@ class CategoriesListviewSection extends StatelessWidget {
               ConfirmButton(
                 verticalMargin: 20,
                 title: 'اضف اعلانك',
-                color: kPrimaryColor,
+                color: activeButtonColor,
                 onPressed: () {
                   RouteManager.navigateTo(SAddProductView());
                 },

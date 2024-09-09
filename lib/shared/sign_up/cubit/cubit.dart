@@ -19,6 +19,17 @@ class SignUpCubit extends Cubit<SignUpStates> {
     formKey.currentState!.save();
     emit(SignUpLoadingState());
     // 1 زبون - 2 معلن
+      Map    params = {
+        "customer_group_id": groupId,
+        "name": name,
+        "email": email ?? "",
+        if (groupId == '2') "nickname": nickname,
+        "telephone": telephone,
+        "password": password,
+        "agree": "1",
+        // "country_id" : countryID,
+      };
+      print('params: $params');
     try {
       final response = await DioHelper.post('customer/account/register', data: {
         "customer_group_id": groupId,
@@ -30,7 +41,10 @@ class SignUpCubit extends Cubit<SignUpStates> {
         "agree": "1",
         // "country_id" : countryID,
       });
+
       final data = response.data;
+      showToast(data['message']);
+
       if (!data.toString().contains('customer_id')) {
         showToast(data['message']);
       } else {
@@ -48,6 +62,8 @@ class SignUpCubit extends Cubit<SignUpStates> {
     } catch (e, s) {
       print(e);
       print(s);
+      showToast(e.toString());
+
       // emit(HomeErrorState(e.toString()));
     }
     emit(SignUpInitState());

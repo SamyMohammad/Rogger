@@ -283,7 +283,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                             onPressed:
                                 cubit.areInputsValid ? cubit.contactUs : null,
                             color: cubit.areInputsValid
-                                ? kPrimary2Color
+                                ? activeButtonColor
                                 : kDarkGreyColor,
                           ),
                   ),

@@ -95,7 +95,7 @@ class _EditProfileView extends StatelessWidget {
                 if (state is EditProfileLoadingState) return LoadingIndicator();
                 return ConfirmButton(
                   title: 'تعديل',
-                  color: cubit.areInputsValid ? kPrimaryColor : kGreyColor,
+                  color: cubit.areInputsValid ? activeButtonColor : kGreyColor,
                   onPressed: cubit.areInputsValid ? cubit.editProfile : null,
                 );
               },

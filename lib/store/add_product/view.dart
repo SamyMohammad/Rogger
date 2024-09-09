@@ -212,7 +212,7 @@ class _SAddProductViewState extends State<SAddProductView> {
                                         addProductCubit.categoryID.value !=
                                             null &&
                                         addProductCubit.images.isNotEmpty
-                                    ? Colors.black
+                                    ? activeButtonColor
                                     : kDarkGreyColor,
                                 verticalMargin: 20,
                                 onPressed: addProductCubit.nameController.value

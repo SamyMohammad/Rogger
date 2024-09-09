@@ -542,7 +542,7 @@ class _TicketsVerificationSectionState
   Color determineButtonColor(TicketsCubit cubit) {
     if (cubit.isAnyRequestExists == false ||
         cubit.request?.sTATUS == 'rejected') {
-      return cubit.isValid ? kPrimary1Color : kDarkGreyColor;
+      return cubit.isValid ? activeButtonColor : kDarkGreyColor;
     }
 
     bool isApprovedOrProcessing = cubit.request?.sTATUS == 'approved' ||
@@ -551,7 +551,7 @@ class _TicketsVerificationSectionState
 
     if (isApprovedOrProcessing) {
       return (isVerificationNotRequired && cubit.isValidGuaranteedStatus)
-          ? kPrimary1Color
+          ? activeButtonColor
           : kDarkGreyColor;
     }
 

@@ -48,3 +48,6 @@ app.*.map.json
 /android/gradle
 /android/.gradle
 /android/java_pid42929.hprof
+
+# FVM Version Cache
+.fvm/

@@ -212,7 +212,7 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                   title: "طلب",
                   color: state is ValidateState
                       ? state.state == true
-                      ? kPrimaryColor
+                      ? activeButtonColor
                       : kDarkGreyColor
                       : kDarkGreyColor,
                   onPressed: () {

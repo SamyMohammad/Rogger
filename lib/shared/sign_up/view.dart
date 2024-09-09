@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,16 +37,23 @@ class SignUpView extends StatelessWidget {
                       child: SvgPicture.asset(getIcon("logo_text"),
                           color: Theme.of(context).primaryColor, height: 50)),
                   SizedBox(height: 30),
-                  DropMenu(
-                    hint: "نوع الحساب",
-                    items: ['زبون', 'معلن'],
-                    isMapDepartment: false,
-                    onChanged: (v) => cubit.changeGroup(v),
-                    value: cubit.groupId == null || cubit.groupId!.isEmpty
-                        ? null
-                        : cubit.groupId == '1'
-                            ? 'زبون'
-                            : 'معلن',
+                  InkWell(
+                    onTap: () {
+                      showCupertinoModalPopup(
+                          context: context, builder: (context) => Container());
+                    },
+                    child: DropMenu(
+                      hint: "نوع الحساب",
+                      
+                      items: ['زبون', 'معلن'],
+                      isMapDepartment: false,
+                      onChanged: (v) => cubit.changeGroup(v),
+                      value: cubit.groupId == null || cubit.groupId!.isEmpty
+                          ? null
+                          : cubit.groupId == '1'
+                              ? 'زبون'
+                              : 'معلن',
+                    ),
                   ),
                   const SizedBox(height: 15),
                   // if (cubit.groupId != null)
@@ -68,8 +76,7 @@ class SignUpView extends StatelessWidget {
                           if (cubit.groupId == "2") {
                             return Column(
                               children: [
-                                                  const SizedBox(height: 15),
-
+                                const SizedBox(height: 15),
                                 InputFormField(
                                   fillColor:
                                       Theme.of(context).scaffoldBackgroundColor,
@@ -77,7 +84,8 @@ class SignUpView extends StatelessWidget {
                                   hint: 'الاسم المستعار',
                                   validator: Validator.username,
                                   onSave: (v) => cubit.nickname = v,
-                                  onChanged: (p0) => cubit.checkInputsValidity(),
+                                  onChanged: (p0) =>
+                                      cubit.checkInputsValidity(),
                                 ),
                               ],
                             );
@@ -126,7 +134,7 @@ class SignUpView extends StatelessWidget {
                                   : ConfirmButton(
                                       title: 'تسجيل',
                                       color: cubit.areInputsValid
-                                          ? kPrimary2Color
+                                          ? activeButtonColor
                                           : kLightGreyColor,
                                       onPressed: cubit.areInputsValid
                                           ? cubit.signUp

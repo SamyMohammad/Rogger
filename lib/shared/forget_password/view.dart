@@ -96,7 +96,7 @@ class ForgetPasswordView extends StatelessWidget {
                                 title: "إرسال",
                                 verticalMargin: 28,
                                 color: cubit.areInputsValid
-                                    ? kPrimary2Color
+                                    ? activeButtonColor
                                     : kGreyColor,
                                 onPressed: cubit.areInputsValid
                                     ? cubit.forgetPass

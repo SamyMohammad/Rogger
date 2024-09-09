@@ -42,7 +42,7 @@ class EditBriefView extends StatelessWidget {
                           title: 'تعديل',
                           verticalMargin: 20,
                           color:
-                              cubit.areInputsValid ? kPrimaryColor : kGreyColor,
+                              cubit.areInputsValid ? activeButtonColor : kGreyColor,
                           onPressed:
                               cubit.areInputsValid ? cubit.editBrief : null,
                         )

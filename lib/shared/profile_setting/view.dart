@@ -94,7 +94,7 @@ class ProfileSettingView extends StatelessWidget {
     return ConfirmButton(
       title: title,
       horizontalMargin: 15,
-      color: kPrimaryColor,
+      color: activeButtonColor,
       fontColor: kPrimaryColor,
       border: true,
       onPressed: () => RouteManager.navigateTo(page),

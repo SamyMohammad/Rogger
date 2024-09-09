@@ -51,7 +51,7 @@ class EditPasswordView extends StatelessWidget {
                       : ConfirmButton(
                           title: 'تعديل',
                           color:
-                              cubit.areInputsValid ? kPrimaryColor : kGreyColor,
+                              cubit.areInputsValid ? activeButtonColor : kGreyColor,
                           onPressed:
                               cubit.areInputsValid ? cubit.editPassword : null,
                         )

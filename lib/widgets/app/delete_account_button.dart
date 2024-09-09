@@ -73,7 +73,7 @@ class _DeleteAccountButtonState extends State<DeleteAccountButton> {
         );
       },
       title: "حذف الحساب",
-      color: kPrimaryColor,
+      color: activeButtonColor,
       border: true,
     );
   }

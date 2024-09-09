@@ -37,7 +37,7 @@ class _EditEmailView extends StatelessWidget {
                 if (state is EditProfileLoadingState) return LoadingIndicator();
                 return ConfirmButton(
                   title: 'تعديل',
-                  color: isValid ? kPrimaryColor : kGreyColor,
+                  color: isValid ? activeButtonColor : kGreyColor,
                   onPressed: isValid ? cubit.editProfile : null,
                 );
               },

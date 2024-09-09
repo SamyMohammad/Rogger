@@ -39,7 +39,7 @@ class ConfirmButton extends StatefulWidget {
       this.title,
       this.verticalMargin = 3,
       this.horizontalMargin = 0,
-      this.color = kPrimary2Color,
+      this.color = activeButtonColor,
       this.border = false,
       this.icon,
       this.fontColor,

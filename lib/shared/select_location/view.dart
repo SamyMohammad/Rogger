@@ -43,7 +43,7 @@ class SelectLocationView extends StatelessWidget {
               RouteManager.navigateTo(SelectLocationFromMapView());
             },
             verticalMargin: 15,
-            color: kPrimaryColor,
+            color: activeButtonColor,
             title: ' حدد موقعك من Google Map',
           ),
           ConfirmButton(
@@ -55,7 +55,7 @@ class SelectLocationView extends StatelessWidget {
                 RouteManager.navigateAndPopAll(NavBarView());
               }
             },
-            color: kAccentColor,
+            color: activeButtonColor,
             title: ' حدد موقعك تلقائي',
           ),
         ],

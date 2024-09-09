@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silah/core/validator/validation.dart';
@@ -51,9 +52,8 @@ class _DropMenuState<T> extends State<DropMenu> {
     //       : widget.value;
     // }
 
-    
     super.initState();
-    value=widget.value;
+    value = widget.value;
   }
 
   @override
@@ -73,6 +73,20 @@ class _DropMenuState<T> extends State<DropMenu> {
           ),
         Container(
           child: DropdownButtonFormField(
+            isExpanded: false,
+            onTap: () => showBottomSheet(
+                context: context,
+                builder: (context) => CupertinoPicker(
+                      itemExtent: 30, // Height of each item in the picker
+                      onSelectedItemChanged: (int index) {
+                        // Callback function when an item is selected
+                        // Use 'index' to determine which item was selected
+                      },
+                      children: [
+                        ...widget.items.map((e) => Text(e.toString())).toList(),
+                        ...widget.items.map((e) => Text(e.toString())).toList(),
+                      ],
+                    )),
             dropdownColor: Theme.of(context).appBarTheme.backgroundColor,
             selectedItemBuilder: widget.isMapDepartment == true
                 ? (context) {
@@ -130,11 +144,12 @@ class _DropMenuState<T> extends State<DropMenu> {
             icon: Icon(FontAwesomeIcons.chevronDown, size: 14),
             hint: Text(
               widget.hint ?? '',
-              style: TextStyle(
-                  color: kDarkGreyColor, fontSize: 14),
+              style: TextStyle(color: kDarkGreyColor, fontSize: 14),
             ),
             // style: TextStyle( color:Colors.black45, fontSize: 14),
-            value: widget.value != null ? widget.value : null, // guard it with null if empty
+            value: widget.value != null
+                ? widget.value
+                : null, // guard it with null if empty
 
             validator: Validator.dropMenu,
             onChanged: widget.items.isNotEmpty
@@ -170,7 +185,6 @@ class _DropMenuState<T> extends State<DropMenu> {
                                 ? (MapCategory? newValue) {
                                     setState(() {
                                       value = newValue;
-                                    
                                     });
                                   }
                                 : null,
@@ -205,6 +219,7 @@ class _DropMenuState<T> extends State<DropMenu> {
                   ),
                 )
                 .toList(),
+                
             decoration: InputDecoration(
               label: widget.label != null
                   ? Text(
@@ -212,6 +227,7 @@ class _DropMenuState<T> extends State<DropMenu> {
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     )
                   : null,
+                
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               enabledBorder:
                   getBorder(Theme.of(context).primaryColor ?? kGreyColor),

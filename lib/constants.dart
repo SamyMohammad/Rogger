@@ -228,6 +228,8 @@ final Color kAccentColor = Color(0xFF000000);
 const Color kGreyText73 = Color(0xff757373);
 const Color activeSwitchColor = Colors.green;
 
+const Color activeButtonColor = Color(0xFF019CF6);
+
 const Color kLightGreyColor = Color(0xFF8E8D8D);
 const Color kLightBlackColor = Color(0XFFE7F0FF);
 const Color kLightGreyColorB4 = Color(0xFFB6B4B4);
