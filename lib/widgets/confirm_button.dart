@@ -67,7 +67,7 @@ class _ConfirmButtonState extends State<ConfirmButton> {
         borderRadius: BorderRadius.circular(widget.radius),
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: widget.horizontalPadding, vertical: 8),
+              horizontal: widget.horizontalPadding, vertical: 12),
           margin: EdgeInsets.symmetric(
               vertical: widget.verticalMargin!,
               horizontal: widget.horizontalMargin!),

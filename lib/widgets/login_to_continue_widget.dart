@@ -33,6 +33,9 @@ class LoginToContinueWidget extends StatelessWidget {
               title: 'تسجيل الدخول',
               onPressed: () => RouteManager.navigateAndPopAll(LoginView()),
             ),
+            // Row(
+            //   children: [],
+            // ),
           ],
         ),
       ),

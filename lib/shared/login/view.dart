@@ -31,6 +31,7 @@ class LoginView extends StatelessWidget {
             return Form(
               key: cubit.formKey,
               child: ListView(
+                padding: largeHorizontalPadding,
                 children: [
                   Center(
                       child: SvgPicture.asset(
@@ -39,80 +40,78 @@ class LoginView extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   )),
                   SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 80),
-                    child: Column(
-                      children: [
-                        InputFormField(
-                          fillColor: Theme.of(context).scaffoldBackgroundColor,
-                          hasBorder: true,
-                          verticalMargin: 18,
-                          horizontalMargin: 5,
-                          hint: 'أدخل رقم الجوال',
-                          // maxLength: 10,
-                          multiLine: false,
-                          validator: Validator.phoneNumber,
-                          onChanged: (v) => cubit.checkInputsValidity(),
-                          onSave: (v) => cubit.telephone = v,
-                          suffixIcon: const SaudiFlagWithNum(),
-                        ),
-                        InputFormField(
-                          fillColor: Theme.of(context).scaffoldBackgroundColor,
-                          horizontalMargin: 5,
-                          hasBorder: true,
-                          hint: 'كلمة المرور',
-                          validator: Validator.password,
-                          secure: true,
-                          onSave: (v) => cubit.password = v,
-                          onChanged: (v) => cubit.checkInputsValidity(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: Checkbox(
-                                  side: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                    // width: 2.0,
-                                  ),
-                                  value: cubit.rememberMe,
-                                  onChanged: (value) {
-                                    cubit.toggleRememberMe();
-                                  },
+                  Column(
+                    children: [
+                      InputFormField(
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
+                        hasBorder: true,
+                        verticalMargin: 18,
+                        // horizontalMargin: 5,
+                        hint: 'أدخل رقم الجوال',
+                        // maxLength: 10,
+                        multiLine: false,
+                        validator: Validator.phoneNumber,
+                        onChanged: (v) => cubit.checkInputsValidity(),
+                        onSave: (v) => cubit.telephone = v,
+                        suffixIcon: const SaudiFlagWithNum(),
+                      ),
+                      InputFormField(
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
+                        // horizontalMargin: 5,
+                        hasBorder: true,
+                        hint: 'كلمة المرور',
+                        validator: Validator.password,
+                        secure: true,
+                        onSave: (v) => cubit.password = v,
+                        onChanged: (v) => cubit.checkInputsValidity(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: Checkbox(
+                                side: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                  // width: 2.0,
                                 ),
+                                value: cubit.rememberMe,
+                                onChanged: (value) {
+                                  cubit.toggleRememberMe();
+                                },
                               ),
-                              Text(
-                                'تذكرني',
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              'تذكرني',
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                          ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.topLeft,
-                        //   child: TextButton(
-                        //     onPressed: () {
-                        //       RouteManager.navigateTo(ForgetPasswordView());
-                        //     },
-                        //     child: Text(
-                        //       'نسيت كلمة المرور',
-                        //       style: TextStyle(
-                        //         color: kDarkGreyColor,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
+                      ),
+                      // Align(
+                      //   alignment: Alignment.topLeft,
+                      //   child: TextButton(
+                      //     onPressed: () {
+                      //       RouteManager.navigateTo(ForgetPasswordView());
+                      //     },
+                      //     child: Text(
+                      //       'نسيت كلمة المرور',
+                      //       style: TextStyle(
+                      //         color: kDarkGreyColor,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
                   ),
                   BlocBuilder<LoginCubit, LoginStates>(
                     builder: (context, state) {
                       return state is LoginLoadingState
                           ? LoadingIndicator()
                           : ConfirmButton(
+                              isExpanded: true,
                               title: 'تسجيل الدخول',
                               color: cubit.areInputsValid
                                   ? activeButtonColor
@@ -125,32 +124,33 @@ class LoginView extends StatelessWidget {
                   const SizedBox(height: 30),
                   SizedBox(
                     height: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () => RouteManager.navigateTo(SignUpView()),
-                            child: Text(
-                              "إنشاء حساب جديد",
-                              style: TextStyle(
-                                  color: Color(0xFF5972EA), fontSize: 16),
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () => RouteManager.navigateTo(SignUpView()),
+                          child: Text(
+                            "إنشاء حساب جديد",
+                            style: TextStyle(
+                                color: Color(0xFF5972EA), fontSize: 16),
                           ),
-                          VerticalDivider(thickness: 1, indent: 2),
-                          InkWell(
-                            onTap: () =>
-                                RouteManager.navigateTo(ForgetPasswordView()),
-                            child: Text(
-                              'نسيت كلمة المرور؟',
-                              style: TextStyle(
-                                  fontSize: 16, color: kLightGreyColorB4),
-                            ),
+                        ),
+                        VerticalDivider(
+                          thickness: 1,
+                          indent: 2,
+                          color: kLightGreyColorB4,
+                        ),
+                        InkWell(
+                          onTap: () =>
+                              RouteManager.navigateTo(ForgetPasswordView()),
+                          child: Text(
+                            'نسيت كلمة المرور؟',
+                            style: TextStyle(
+                                fontSize: 16, color: kLightGreyColorB4),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   // TextButton(

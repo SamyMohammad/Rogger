@@ -295,7 +295,6 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Color(0xFF14141A),
   appBarTheme: AppBarTheme(
     toolbarHeight: 50,
-
     systemOverlayStyle: SystemUiOverlayStyle.light,
     backgroundColor: Color(0xFF1E1E26),
     iconTheme: IconThemeData(color: Colors.white),

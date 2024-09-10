@@ -44,7 +44,6 @@ class SignUpView extends StatelessWidget {
                     },
                     child: DropMenu(
                       hint: "نوع الحساب",
-                      
                       items: ['زبون', 'معلن'],
                       isMapDepartment: false,
                       onChanged: (v) => cubit.changeGroup(v),
@@ -132,6 +131,7 @@ class SignUpView extends StatelessWidget {
                               state is SignUpLoadingState
                                   ? LoadingIndicator()
                                   : ConfirmButton(
+                                      isExpanded: true,
                                       title: 'تسجيل',
                                       color: cubit.areInputsValid
                                           ? activeButtonColor
