@@ -33,6 +33,8 @@ class LoginView extends StatelessWidget {
               child: ListView(
                 padding: largeHorizontalPadding,
                 children: [
+                  SizedBox(height: 10),
+
                   Center(
                       child: SvgPicture.asset(
                     getIcon("roger"),

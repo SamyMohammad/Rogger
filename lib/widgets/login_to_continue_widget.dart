@@ -18,6 +18,7 @@ class LoginToContinueWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 10),
             SvgPicture.asset(
               getIcon("roger"),
               color: Theme.of(context).primaryColor,

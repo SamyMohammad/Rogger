@@ -45,8 +45,9 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
                     : 'نوع الحساب',
                 style: TextStyle(
                   fontSize: 16,
-                  color:
-                      cubit.seletedIndex != null ? Colors.black : Colors.grey,
+                  color: cubit.seletedIndex != null
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
                 ),
               ),
               Icon(
@@ -67,8 +68,13 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
       context: context,
       builder: (context) {
         return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              color: Theme.of(context).appBarTheme.backgroundColor,
+            ),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            height: MediaQuery.sizeOf(context).height * 0.18,
+            height: MediaQuery.sizeOf(context).height * 0.22,
             child: Column(children: [
               Container(
                 width: 40,

@@ -23,7 +23,26 @@ class SignUpView extends StatelessWidget {
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: Scaffold(
-        appBar: appBar(elevation: false),
+        appBar: appBar(
+          elevation: false,
+          // leading: IconButton(
+          //   onPressed: () => RouteManager.pop(),
+          //   // padding: EdgeInsets.all(-20),
+          //   icon: Container(
+          //     height: 50,
+          //     width: 50,
+          //     decoration: BoxDecoration(
+
+          //         // borderRadius: BorderRadius.circular(20),
+          //         shape: BoxShape.circle,
+          //         color: Colors.grey.withOpacity(.15)),
+          //     child: Icon(
+          //       Icons.arrow_back_ios_new_sharp,
+          //       weight: 5,
+          //     ),
+          //   ),
+          // ),
+        ),
         body: BlocBuilder<SignUpCubit, SignUpStates>(
           builder: (context, state) {
             final cubit = SignUpCubit.of(context);
@@ -32,6 +51,8 @@ class SignUpView extends StatelessWidget {
               child: ListView(
                 padding: largeHorizontalPadding,
                 children: [
+                  SizedBox(height: 10),
+
                   Center(
                       child: SvgPicture.asset(
                     getIcon("roger"),
