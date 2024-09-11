@@ -74,9 +74,16 @@ class _DropMenuState<T> extends State<DropMenu> {
         Container(
           child: DropdownButtonFormField(
             isExpanded: false,
-            onTap: () => showBottomSheet(
+            onTap: () => showModalBottomSheet(
                 context: context,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15))),
+                scrollControlDisabledMaxHeightRatio: .2,
                 builder: (context) => CupertinoPicker(
+                      selectionOverlay:
+                          CupertinoPickerDefaultSelectionOverlay(),
                       itemExtent: 30, // Height of each item in the picker
                       onSelectedItemChanged: (int index) {
                         // Callback function when an item is selected
@@ -109,28 +116,6 @@ class _DropMenuState<T> extends State<DropMenu> {
                                         fontWeight: FontWeight.bold,
                                         color: Theme.of(context).primaryColor),
                                   ),
-
-                                // if (value == e &&
-                                //     isExpanded) // Show radio button only for selected item
-                                //
-                                //   Radio<MapCategory>(
-                                //     value: e,
-                                //     groupValue: value,
-                                //     onChanged: (MapCategory? newValue) {
-                                //       setState(() {
-                                //         value = newValue;
-                                //       });
-                                //     },
-                                //   )
-                                // Radio<MapCategory>(
-                                //     value: value,
-                                //     groupValue: e,
-                                //     onChanged: (v) {
-                                //       if (widget.onChanged == null) return;
-                                //       widget.onChanged!(v);
-                                //       closeKeyboard();
-                                //       setState(() => value = v);
-                                //     })
                               ],
                             ),
                             value: e,
@@ -219,7 +204,7 @@ class _DropMenuState<T> extends State<DropMenu> {
                   ),
                 )
                 .toList(),
-                
+
             decoration: InputDecoration(
               label: widget.label != null
                   ? Text(
@@ -227,7 +212,6 @@ class _DropMenuState<T> extends State<DropMenu> {
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     )
                   : null,
-                
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               enabledBorder:
                   getBorder(Theme.of(context).primaryColor ?? kGreyColor),

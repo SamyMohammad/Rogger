@@ -1,13 +1,8 @@
 import 'dart:async';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
-import 'package:silah/core/dynamic_links_constants.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/nav_bar/view.dart';
-import 'package:silah/store/store_profile/view.dart';
 import 'package:silah/widgets/logo.dart';
 
 import '../../core/notifications/firebase.dart';
@@ -54,7 +49,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF009CF6),
+      backgroundColor: Color(0xFF022e47),
       body: Container(
         child: Logo(
           heightFraction: 4,

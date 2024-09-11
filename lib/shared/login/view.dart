@@ -35,9 +35,9 @@ class LoginView extends StatelessWidget {
                 children: [
                   Center(
                       child: SvgPicture.asset(
-                    getIcon("logo_text"),
-                    height: 50,
+                    getIcon("roger"),
                     color: Theme.of(context).primaryColor,
+                    height: 35,
                   )),
                   SizedBox(height: 10),
                   Column(

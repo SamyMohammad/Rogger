@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,8 +7,8 @@ import 'package:silah/shared/login/view.dart';
 import 'package:silah/shared/sign_up/cubit/cubit.dart';
 import 'package:silah/shared/sign_up/cubit/states.dart';
 import 'package:silah/widgets/app_bar.dart';
+import 'package:silah/widgets/bottom_sheet_picker.dart';
 import 'package:silah/widgets/confirm_button.dart';
-import 'package:silah/widgets/drop_menu.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/saudi_flag_with_num.dart';
 import 'package:silah/widgets/text_form_field.dart';
@@ -34,26 +33,33 @@ class SignUpView extends StatelessWidget {
                 padding: largeHorizontalPadding,
                 children: [
                   Center(
-                      child: SvgPicture.asset(getIcon("logo_text"),
-                          color: Theme.of(context).primaryColor, height: 50)),
+                      child: SvgPicture.asset(
+                    getIcon("roger"),
+                    color: Theme.of(context).primaryColor,
+                    height: 35,
+                  )),
                   SizedBox(height: 30),
-                  InkWell(
-                    onTap: () {
-                      showCupertinoModalPopup(
-                          context: context, builder: (context) => Container());
-                    },
-                    child: DropMenu(
-                      hint: "نوع الحساب",
-                      items: ['زبون', 'معلن'],
-                      isMapDepartment: false,
-                      onChanged: (v) => cubit.changeGroup(v),
-                      value: cubit.groupId == null || cubit.groupId!.isEmpty
-                          ? null
-                          : cubit.groupId == '1'
-                              ? 'زبون'
-                              : 'معلن',
-                    ),
+                  BottomSheetPicker(
+                    items: [
+                      'زبون',
+                      'معلن',
+                    ],
                   ),
+
+                  // DropMenu(
+                  //     hint: "نوع الحساب",
+                  //     items: ['زبون', 'معلن'],
+                  //     isMapDepartment: false,
+                  //     onChanged: null,
+                  //     //  (v) => cubit.changeGroup(v),
+
+                  //     value: null
+                  //     // cubit.groupId == null || cubit.groupId!.isEmpty
+                  //     //     ? null
+                  //     //     : cubit.groupId == '1'
+                  //     //         ? 'زبون'
+                  //     //         : 'معلن',
+                  //     ),
                   const SizedBox(height: 15),
                   // if (cubit.groupId != null)
                   Column(

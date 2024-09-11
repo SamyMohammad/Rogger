@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:silah/shared/login/view.dart';
 
 import '../constants.dart';
@@ -17,7 +18,11 @@ class LoginToContinueWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(getAsset('logo')),
+            SvgPicture.asset(
+              getIcon("roger"),
+              color: Theme.of(context).primaryColor,
+              height: 35,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30),
               child: Text(

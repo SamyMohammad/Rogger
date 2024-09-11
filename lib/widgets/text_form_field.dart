@@ -141,7 +141,9 @@ class _InputFormFieldState extends State<InputFormField> {
                   cursorColor: Theme.of(context).primaryColor,
                   validator: widget.validator,
                   minLines: widget.minLines,
-                  maxLines: widget.secure!||widget.maxLines==null ? 1 : widget.maxLines,
+                  maxLines: widget.secure! || widget.maxLines == null
+                      ? 1
+                      : widget.maxLines,
                   enabled: !widget.disabled && widget.onTap == null,
                   buildCounter: (context,
                           {int? currentLength, bool? isFocused, maxLength}) =>
@@ -200,10 +202,9 @@ class _InputFormFieldState extends State<InputFormField> {
                             ? 0
                             : 15),
                     enabledBorder: getBorder(kDarkGreyColor),
-                    
-                    focusedBorder: getBorder(Theme.of(context).primaryColor,width: 2),
+                    focusedBorder: getBorder(activeButtonColor, width: 2),
                     errorBorder: getBorder(Colors.red),
-                    focusedErrorBorder: getBorder(Theme.of(context).primaryColor, width: 2),
+                    focusedErrorBorder: getBorder(Colors.red, width: 2),
                     disabledBorder: getBorder(kGreyColor),
                   ),
                 ),
@@ -221,11 +222,11 @@ class _InputFormFieldState extends State<InputFormField> {
 
   BorderRadius get _borderRadius => BorderRadius.circular(widget.radius ?? 10);
 
-  InputBorder getBorder(Color color,{ double? width}) {
+  InputBorder getBorder(Color color, {double? width}) {
     if (widget.hasBorder) {
       return OutlineInputBorder(
         borderRadius: _borderRadius,
-        borderSide: BorderSide(color: color,width:  width??1),
+        borderSide: BorderSide(color: color, width: width ?? 1),
       );
     } else {
       return UnderlineInputBorder(

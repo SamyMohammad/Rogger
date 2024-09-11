@@ -13,23 +13,24 @@ class SignUpCubit extends Cubit<SignUpStates> {
 
   String? name, email, telephone, password, nickname, groupId;
   final formKey = GlobalKey<FormState>();
+  int? seletedIndex;
 
   Future<void> signUp() async {
     if (!formKey.currentState!.validate()) return;
     formKey.currentState!.save();
     emit(SignUpLoadingState());
     // 1 زبون - 2 معلن
-      Map    params = {
-        "customer_group_id": groupId,
-        "name": name,
-        "email": email ?? "",
-        if (groupId == '2') "nickname": nickname,
-        "telephone": telephone,
-        "password": password,
-        "agree": "1",
-        // "country_id" : countryID,
-      };
-      print('params: $params');
+    Map params = {
+      "customer_group_id": groupId,
+      "name": name,
+      "email": email ?? "",
+      if (groupId == '2') "nickname": nickname,
+      "telephone": telephone,
+      "password": password,
+      "agree": "1",
+      // "country_id" : countryID,
+    };
+    print('params: $params');
     try {
       final response = await DioHelper.post('customer/account/register', data: {
         "customer_group_id": groupId,
@@ -69,8 +70,9 @@ class SignUpCubit extends Cubit<SignUpStates> {
     emit(SignUpInitState());
   }
 
-  void changeGroup(String v) {
+  void changeGroup(String v, int selctedIndex) {
     groupId = v == 'زبون' ? '1' : '2';
+    this.seletedIndex = selctedIndex;
     // countryID = null;
     emit(SignUpChangeGroupState());
   }

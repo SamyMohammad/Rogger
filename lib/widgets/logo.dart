@@ -28,9 +28,12 @@ class Logo extends StatelessWidget {
         child: SizedBox(
           height: sizeFromHeight(heightFraction),
           // child: Image.asset(getAsset('logo'), color: color,)),
-          child: SvgPicture.asset(
-            getIcon('logo'),
-          ),
+          child: Center(
+              child: SvgPicture.asset(
+            getIcon("main_logo_roger"),
+            color: color,
+            height: 90,
+          )),
         ),
       );
 
@@ -40,7 +43,8 @@ class Logo extends StatelessWidget {
           child: CircleAvatar(
               backgroundColor: kBackgroundColor,
               radius: sizeFromHeight(8),
-              child: Image.asset(getAsset('logo'), color: color)),
+              child:
+                  Image.asset(getAsset('logo'), color: color ?? kPrimaryColor)),
           decoration: BoxDecoration(color: kGreyColor, shape: BoxShape.circle),
         ),
       );
