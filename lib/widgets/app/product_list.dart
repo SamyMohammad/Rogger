@@ -43,13 +43,13 @@ class ProductItem extends StatelessWidget {
         ),
       ),
       width: double.infinity,
-      child: Row(
+      child: Column(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
               imageUrl: image,
-              width: 112,
+              width: double.infinity,
               height: 112,
               fit: BoxFit.cover,
               placeholder: (context, url) => Center(
@@ -58,124 +58,155 @@ class ProductItem extends StatelessWidget {
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title.toString(),
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: isRead == true ? Color(0xFFAA3DED) : null),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title.toString(),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: isRead == true ? Color(0xFFAA3DED) : null),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: AbsorbPointer(
+                  absorbing: true,
+                  child: RateWidget(
+                    rate: rate,
+                    itemSize: 15,
+                    hItemPadding: 1,
+                    vItemPadding: 5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network(
+                  customerProfile,
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
+              SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  personName.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                SizedBox(height: 30),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AbsorbPointer(
-                            absorbing: true,
-                            child: RateWidget(
-                              rate: rate,
-                              itemSize: 15,
-                              hItemPadding: 1,
-                              vItemPadding: 5,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          InkWell(
-                            // onTap: () => RouteManager.navigateTo(StoreProfileView(storeId: )),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.network(
-                                    customerProfile,
-                                    width: 24,
-                                    height: 24,
-                                    fit: BoxFit.fill,
-                                    errorBuilder: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Flexible(
-                                  child: Text(
-                                    personName.toString(),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.clock,
-                                size: 12,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              SizedBox(width: 5),
-                              Flexible(
-                                child: Text(
-                                  time.toString(),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 3),
-                                  child: SvgPicture.asset(getIcon("icon3"),
-                                      color: Theme.of(context).primaryColor,
-                                      height: 12)),
-                              SizedBox(width: 2),
-                              Flexible(
-                                child: Text(
-                                  city.toString().replaceAll('\n', ' '),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+              ),
+              Spacer(),
+              Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: SvgPicture.asset(getIcon("icon3"),
+                      color: Theme.of(context).primaryColor, height: 12)),
+              SizedBox(width: 2),
+              Flexible(
+                child: Text(
+                  city.toString().replaceAll('\n', ' '),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ],
-            ),
-          )
+              ),
+              Spacer(),
+              Icon(
+                FontAwesomeIcons.clock,
+                size: 12,
+                color: Theme.of(context).primaryColor,
+              ),
+              SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  time.toString(),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Row(
+          //   children: [
+          //     SizedBox(width: 16),
+          //     Expanded(
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           SizedBox(height: 30),
+          //           Row(
+          //             children: [
+          //               Flexible(
+          //                 child: Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     SizedBox(height: 8),
+          //                     InkWell(
+          //                       // onTap: () => RouteManager.navigateTo(StoreProfileView(storeId: )),
+          //                       child: Row(
+          //                         children: [],
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //               Flexible(
+          //                 child: Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     SizedBox(height: 5),
+          //                     Row(
+          //                       children: [
+          //                         Icon(
+          //                           FontAwesomeIcons.clock,
+          //                           size: 12,
+          //                           color: Theme.of(context).primaryColor,
+          //                         ),
+          //                         SizedBox(width: 5),
+          //                         Flexible(
+          //                           child: Text(
+          //                             time.toString(),
+          //                             style: TextStyle(
+          //                               fontSize: 10,
+          //                               fontWeight: FontWeight.w700,
+          //                             ),
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                     SizedBox(height: 15),
+          //                     Row(
+          //                       crossAxisAlignment: CrossAxisAlignment.start,
+          //                       children: [],
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ],
+          //       ),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );

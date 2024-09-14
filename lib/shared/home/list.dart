@@ -21,11 +21,15 @@ class ListProducts extends StatefulWidget {
 class _ListProductsState extends State<ListProducts> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       // physics: BouncingScrollPhysics(),
       padding: EdgeInsets.only(
         right: 10,
+        left: 10,
       ),
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 10);
+      },
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
