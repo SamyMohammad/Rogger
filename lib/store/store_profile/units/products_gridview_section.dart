@@ -18,22 +18,26 @@ class ProductsGridviewSection extends StatelessWidget {
     return BlocBuilder(
       bloc: cubit,
       builder: (context, state) {
-        if (state is StoreProfileEmptyState) {
-          return SizedBox();
-        }
-        if (state is StoreProfileLoadingState) {
+        // if (state is StoreProfileEmptyState) {
+        //   return SizedBox();
+        // }
+
+        final products = StoreProfileCubit.of(context).productsModel?.products;
+        print(products);
+        if (state is GetRelatedProductsLoadingState || products == null) {
           return SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.9,
             child: Center(
-              child: LoadingIndicator(),
+              child: Column(
+                children: [
+                  SizedBox(height: 100),
+                  LoadingIndicator(),
+                  // SizedBox(height: 60),
+                ],
+              ),
             ),
           );
-        }
-        final products = StoreProfileCubit.of(context).productsModel?.products;
-        print(products);
-        if (products == null || products.isEmpty) {
-          return Text('لا يوجد منتجات في هذا القسم');
-        } else
+        } else if (products.isNotEmpty) {
           return GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -50,6 +54,10 @@ class ProductsGridviewSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ProductGridviewTile(product: products[index]);
               });
+        } else if (products.isEmpty) {
+          return Text('لا يوجد منتجات في هذا القسم');
+        }
+        return SizedBox();
       },
     );
   }

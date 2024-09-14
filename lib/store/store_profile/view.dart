@@ -54,7 +54,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                             storeInfo: storeInfo,
                             storeId: widget.storeId,
                             rate: cubit.getOverAllRating != null
-                                ? double.parse(cubit.getOverAllRating??'0')
+                                ? double.parse(cubit.getOverAllRating ?? '0')
                                 : null)),
                   ]),
                 ),

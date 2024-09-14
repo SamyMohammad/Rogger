@@ -18,6 +18,11 @@ class GetRateErrorState extends StoreProfileStates {
   String? error;
   GetRateErrorState(this.error);
 }
+class GetRelatedProductsLoadingState extends StoreProfileStates {}
+class GetRelatedProductsSuccessState extends StoreProfileStates {}
+class GetRelatedProductsEmptyState extends StoreProfileStates {}
+class GetRelatedProductsErrorState extends StoreProfileStates {}
+
 // class StoreProfileLoadingState extends StoreProfileStates {}
 
 // class StoreProfileEmptyState extends StoreProfileStates {}

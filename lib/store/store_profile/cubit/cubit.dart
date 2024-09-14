@@ -74,7 +74,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
 
   Future<void> getCategoryProducts(String categoryId,
       [bool rebuild = true]) async {
-    if (rebuild) emit(StoreProfileLoadingState());
+    if (rebuild) emit(GetRelatedProductsLoadingState());
     selectedCategory = categoryId;
     try {
       final response =
@@ -87,6 +87,12 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       final data = response.data;
       log(data.toString());
       productsModel = ProductsModel.fromJson(data);
+      // if (productsModel?.products?.isNotEmpty ?? false) {
+      //   emit(GetRelatedProductsSuccessState());
+      // } else {
+      //   emit(GetRelatedProductsEmptyState());
+      // }
+      // throw Exception();
     } catch (e) {
       emit(StoreProfileErrorState(e.toString()));
     }
