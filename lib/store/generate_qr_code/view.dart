@@ -57,7 +57,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
   //To Generate Deep Link For Branch Io
   void _generateDeepLink(BuildContext context) async {
     response =
-    await FlutterBranchSdk.getShortUrl(buo: buo!, linkProperties: lp!);
+        await FlutterBranchSdk.getShortUrl(buo: buo!, linkProperties: lp!);
     if (response?.success ?? false) {
       print('FlutterBranchSdk.getShortUrl${response?.result}');
       setState(() {});
@@ -86,25 +86,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
     }
   }
 
-  // void _generateQrCodeImage(BuildContext context) async {
-  //   responseQrCodeImage = await FlutterBranchSdk.getQRCodeAsImage(
-  //       buo: buo!,
-  //       linkProperties: lp!,
-  //       qrCode: BranchQrCode(
-  //           primaryColor: Colors.black,
-  //           //primaryColor: const Color(0xff443a49), //Hex colors
-  //           // centerLogoUrl: imageURL,
-  //           backgroundColor: Colors.white,
-  //           imageFormat: BranchImageFormat.PNG));
-  //   if (responseQrCodeImage?.success ?? false) {
-  //     print('FlutterBranchSdk.BranchImageFormat${response?.result}');
-  //     setState(() {});
-  //     // print("${response.result}");
-  //   } else {
-  //     print('${responseQrCodeImage?.errorCode} - ${response?.errorMessage}');
-  //   }
-  // }
-
   _saved(Uint8List image) async {
     final result = await ImageGallerySaver.saveImage(image);
     print("File Saved to Gallery");
@@ -114,24 +95,12 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.sizeOf(context).height * 0.95,
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   foregroundColor: Color(0xff0022E47),
-        //   iconTheme: IconThemeData(color: Colors.white),
-        //   elevation: 0,
-        //   backgroundColor: Color(0xff0022E47),
-        //   title: SwipeDetector(
-        //       onSwipeDown: ((offset) {
-        //         RouteManager.pop();
-        //       }),
-        //       child: StarterDivider(height: 5, width: 100)),
-        // ),
+        height: MediaQuery.sizeOf(context).height * 0.65,
         child: Column(
           children: [
             const SizedBox(height: 5),
             StarterDivider(height: 5, width: 60),
-            const SizedBox(height: 80),
+            const SizedBox(height: 50),
             Center(
               child: Screenshot(
                 controller: screenshotController,
@@ -140,109 +109,229 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                     // border: Border.all(color: Colors.white, width: 3),
                     color: Color.fromARGB(255, 67, 154, 205),
 
-                    borderRadius: BorderRadius.circular(27),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   margin: const EdgeInsets.symmetric(horizontal: 60),
                   child: QrImageView(
                     backgroundColor: Colors.transparent,
-
-                    // foregroundColor: Colors.white60,
-                    // eyeStyle: QrEyeStyle(
-                    //   eyeShape: QrEyeShape.square,
-                    //   color: Colors.white,
-                    // ),
-                    // dataModuleStyle: QrDataModuleStyle(
-                    // //   dataModuleShape: QrDataModuleShape.square,
-                    //   dataModuleShape: QrDataModuleShape.square,
-                    //   color: Colors.white,
-                    // ),
-
                     embeddedImageStyle: QrEmbeddedImageStyle(
                       size: Size(25, 25),
 
                       // color: Color(0xff009FFB)
                     ),
-                    // gapless: false,
-                    // embeddedImage: AssetImage(
-                    //   'assets/images/qr_image.png',
-                    // ),
-                    // embeddedImage: AssetImage(
-                    //   getAsset('main_logo'),
-                    // ),
-
-                    size: 170,
+                    size: 200,
                     data: response?.result ?? AppStorage.customerID.toString(),
                   ),
                 ),
               ),
             ),
-            const Spacer(),
+            SizedBox(height: 40),
             Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 5),
-                  Center(child: const StarterDivider(width: 80)),
-                  const SizedBox(height: 20),
-                  Text("لديك رمز QR",
-                      style: TextStyle(fontSize: 16, color: kPrimaryColor)),
-                  const SizedBox(height: 20),
-                  Text("يمكنك مشاركة الرمز الخاص بك مع الأصدقاء",
-                      style: TextStyle(fontSize: 16, color: kDarkGreyColor)),
-                  const SizedBox(height: 20),
-                  _TabWithIcon(
-                    title: "مشاركة رمز صلة",
-                    iconData: Icons.share_outlined,
-                    onTap: () {
-                      copyText(response?.result);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  _TabWithIcon(
-                    title: "الحفظ في ألبوم الكاميرا",
-                    iconData: Icons.save_alt_rounded,
-                    onTap: () async {
-                      final directory =
-                          (await getApplicationDocumentsDirectory())
-                              .path; //from path_provide package
-                      int fileName = DateTime.now().microsecondsSinceEpoch;
-                      String path = '$directory';
-                      screenshotController
-                      //     .captureFromLongWidget(QrImageView(
-                      //   size: 140,
-                      //   data: response?.result ??
-                      //       AppStorage.customerID.toString(),
-                      // ))
-                          .capture(delay: const Duration(milliseconds: 10))
-                          .then((Uint8List? image) async {
-                        if (image != null) {
-                          print('inCapture');
-                          final directory =
-                          await getApplicationDocumentsDirectory();
-                          final imagePath =
-                          await File('${directory.path}/image.png')
-                              .create();
-                          await imagePath.writeAsBytes(image);
-                          _saved(image);
-                        }
-                      });
-                      //     .then((File e) {
-                      //   _saved(e);
-                      // });
-                    },
-                  ),
-                  const SizedBox(height: 40),
-                ],
+              margin: EdgeInsets.symmetric(horizontal: 43),
+              color: Colors.transparent,
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: Color(0xff1B4259),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(15),
+                  onTap: () {
+                    copyText(response?.result);
+                  },
+                  child: Container(
+                      // margin: EdgeInsets.symmetric(horizontal: 43),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 19),
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.copy,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          Spacer(),
+                          Text(
+                            textAlign: TextAlign.center,
+                            "مشاركة رمز روجر",
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          Spacer(),
+                          SizedBox(
+                            width: 30,
+                          )
+                        ],
+                      )
+
+                      // _TabWithIcon(
+                      //   title: "مشاركة رمز روجر",
+                      //   iconData: Icons.copy,
+                      //   onTap: () {
+                      //     copyText(response?.result);
+                      //   },
+                      // ),
+                      ),
+                ),
               ),
-            )
+            ),
+            SizedBox(height: 20),
+
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 43),
+              color: Colors.transparent,
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: Color(0xff1B4259),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(15),
+                  onTap: () async {
+                    final directory = (await getApplicationDocumentsDirectory())
+                        .path; //from path_provide package
+                    int fileName = DateTime.now().microsecondsSinceEpoch;
+                    String path = '$directory';
+                    screenshotController
+                        //     .captureFromLongWidget(QrImageView(
+                        //   size: 140,
+                        //   data: response?.result ??
+                        //       AppStorage.customerID.toString(),
+                        // ))
+                        .capture(delay: const Duration(milliseconds: 10))
+                        .then((Uint8List? image) async {
+                      if (image != null) {
+                        print('inCapture');
+                        final directory =
+                            await getApplicationDocumentsDirectory();
+                        final imagePath =
+                            await File('${directory.path}/image.png').create();
+                        await imagePath.writeAsBytes(image);
+                        _saved(image);
+                      }
+                    });
+                  },
+                  child: Container(
+                      // margin: EdgeInsets.symmetric(horizontal: 43),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 19),
+                      decoration: BoxDecoration(
+                          color:Colors.transparent,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.save_alt,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          Spacer(),
+                          Text(
+                            textAlign: TextAlign.center,
+                            "الحفظ في ألبوم الكاميرا",
+                            style: TextStyle(color: Colors.white, fontSize: 19),
+                          ),
+                          Spacer(),
+                          SizedBox(
+                            width: 30,
+                          )
+                        ],
+                      )),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 30,
+              ), //EdgeInsets.all(20),
+              alignment: Alignment.centerRight,
+              child: Text("لديك رمز QR",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 30,
+              ), //EdgeInsets.all(20),
+              alignment: Alignment.centerRight,
+              child: Text("يمكنك مشاركة الرمز الخاص بك مع الأصدقاء",
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
+            ),
+            const SizedBox(height: 10),
+            // const Spacer(),
+            // Container(
+            //   width: double.infinity,
+            //   padding: EdgeInsets.symmetric(horizontal: 30),
+            //   decoration: const BoxDecoration(
+            //       color: Colors.white,
+            //       borderRadius: BorderRadius.only(
+            //         topLeft: Radius.circular(20),
+            //         topRight: Radius.circular(20),
+            //       )),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const SizedBox(height: 5),
+            //       Center(child: const StarterDivider(width: 80)),
+            //       const SizedBox(height: 20),
+            //       Text("لديك رمز QR",
+            //           style: TextStyle(fontSize: 16, color: kPrimaryColor)),
+            //       const SizedBox(height: 20),
+            //       Text("يمكنك مشاركة الرمز الخاص بك مع الأصدقاء",
+            //           style: TextStyle(fontSize: 16, color: kDarkGreyColor)),
+            //       const SizedBox(height: 20),
+            //       _TabWithIcon(
+            //         title: "مشاركة رمز صلة",
+            //         iconData: Icons.share_outlined,
+            //         onTap: () {
+            //           copyText(response?.result);
+            //         },
+            //       ),
+            //       const SizedBox(height: 10),
+            //       _TabWithIcon(
+            //         title: "الحفظ في ألبوم الكاميرا",
+            //         iconData: Icons.save_alt_rounded,
+            //         onTap: () async {
+            //           final directory =
+            //               (await getApplicationDocumentsDirectory())
+            //                   .path; //from path_provide package
+            //           int fileName = DateTime.now().microsecondsSinceEpoch;
+            //           String path = '$directory';
+            //           screenshotController
+            //               //     .captureFromLongWidget(QrImageView(
+            //               //   size: 140,
+            //               //   data: response?.result ??
+            //               //       AppStorage.customerID.toString(),
+            //               // ))
+            //               .capture(delay: const Duration(milliseconds: 10))
+            //               .then((Uint8List? image) async {
+            //             if (image != null) {
+            //               print('inCapture');
+            //               final directory =
+            //                   await getApplicationDocumentsDirectory();
+            //               final imagePath =
+            //                   await File('${directory.path}/image.png')
+            //                       .create();
+            //               await imagePath.writeAsBytes(image);
+            //               _saved(image);
+            //             }
+            //           });
+            //           //     .then((File e) {
+            //           //   _saved(e);
+            //           // });
+            //         },
+            //       ),
+            //       const SizedBox(height: 40),
+            //     ],
+            //   ),
+            // )
           ],
         ));
   }

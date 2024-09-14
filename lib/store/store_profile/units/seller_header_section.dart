@@ -48,7 +48,7 @@ class SellerHeaderSection extends StatelessWidget {
           child: Container(
             height: 35,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),  
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
