@@ -210,7 +210,9 @@ class _NearestLocationButtonState extends State<_NearestLocationButton> {
       // radius: 22,
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: cubit.nearestAds ? Colors.black : kPrimaryColor.withOpacity(0.5),
+        color: cubit.nearestAds
+            ? Color(0xFF019CF6).withOpacity(.9)
+            : kPrimaryColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(50),
       ),
       child: IconButton(

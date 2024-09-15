@@ -150,11 +150,11 @@ class _NavBarViewState extends State<NavBarView> {
                                           ),
                                           child: Icon(
                                             FontAwesomeIcons.magnifyingGlass,
-                                            color: Colors.white,
+                                            color: Theme.of(context).primaryColor,
                                             size: 16,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: kAccentColor,
+                                            color: Theme.of(context).appBarTheme.backgroundColor,
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),

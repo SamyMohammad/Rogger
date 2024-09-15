@@ -41,7 +41,7 @@ class LoginView extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     height: 35,
                   )),
-                  SizedBox(height: 10),
+                  SizedBox(height: 50),
                   Column(
                     children: [
                       InputFormField(

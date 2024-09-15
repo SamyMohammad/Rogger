@@ -35,18 +35,27 @@ class ProductItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 4, top: 4),
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 0.5,
-            color: Color(0xFFCDD4D9),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 3,
+            offset: Offset(0, 1),
           ),
-        ),
+        ],
+        color: Theme.of(context).appBarTheme.backgroundColor,
+        border: Border(
+            // bottom: BorderSide(
+            //   width: 0.5,
+            //   color: Color(0xFFCDD4D9),
+            // ),
+            ),
       ),
       width: double.infinity,
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5), topRight: Radius.circular(5)),
             child: CachedNetworkImage(
               imageUrl: image,
               width: double.infinity,
@@ -58,18 +67,23 @@ class ProductItem extends StatelessWidget {
               errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 6),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title.toString(),
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: isRead == true ? Color(0xFFAA3DED) : null),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                children: [
+                  SizedBox(width: 12),
+                  Text(
+                    title.toString(),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: isRead == true ? Color(0xFFAA3DED) : null),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -88,6 +102,7 @@ class ProductItem extends StatelessWidget {
           SizedBox(height: 15),
           Row(
             children: [
+              SizedBox(width: 8),
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.network(
@@ -99,15 +114,13 @@ class ProductItem extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 5),
-              Flexible(
-                child: Text(
-                  personName.toString(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+              Text(
+                personName.toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Spacer(),
@@ -115,14 +128,13 @@ class ProductItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 3),
                   child: SvgPicture.asset(getIcon("icon3"),
                       color: Theme.of(context).primaryColor, height: 12)),
-              SizedBox(width: 2),
-              Flexible(
-                child: Text(
-                  city.toString().replaceAll('\n', ' '),
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+              SizedBox(width: 5),
+              Text(
+                city.toString().replaceAll('\n', ' '),
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Spacer(),
@@ -132,15 +144,14 @@ class ProductItem extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               SizedBox(width: 5),
-              Flexible(
-                child: Text(
-                  time.toString(),
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+              Text(
+                time.toString(),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
+              SizedBox(width: 8),
             ],
           ),
           // Row(

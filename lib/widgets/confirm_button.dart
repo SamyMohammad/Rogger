@@ -99,13 +99,14 @@ class _ConfirmButtonState extends State<ConfirmButton> {
                 color: widget.color!,
                 width: 2,
               ),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(.6),
-                    spreadRadius: 1,
-                    blurRadius: 4,
-                    offset: Offset(0, 1))
-              ]),
+              // boxShadow: [
+              //   BoxShadow(
+              //       color: Colors.grey.withOpacity(.6),
+              //       spreadRadius: 1,
+              //       blurRadius: 4,
+              //       offset: Offset(0, 1))
+              // ],
+              ),
         ),
       );
 

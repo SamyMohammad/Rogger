@@ -42,7 +42,7 @@ class SignUpView extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     height: 35,
                   )),
-                  SizedBox(height: 30),
+                  SizedBox(height: 60),
                   BottomSheetPicker(
                     items: [
                       'زبون',

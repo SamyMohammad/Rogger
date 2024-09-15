@@ -69,7 +69,7 @@ class _SettingViewState extends State<SettingView> {
                 color: Theme.of(context).primaryColor,
               ),
               leading: SvgPicture.asset(getIcon("login")),
-              onPressed: () => RouteManager.navigateAndPopAll(LoginView()),
+              onPressed: () => RouteManager.navigateTo(LoginView()),
             ),
             ListTileWidget(
               title: 'انشاء حساب',
@@ -80,7 +80,7 @@ class _SettingViewState extends State<SettingView> {
                 color: Theme.of(context).primaryColor,
               ),
               leading: SvgPicture.asset(getIcon("register")),
-              onPressed: () => RouteManager.navigateAndPopAll(SignUpView()),
+              onPressed: () => RouteManager.navigateTo(SignUpView()),
             ),
           ],
         ),
@@ -135,7 +135,7 @@ class _SettingViewState extends State<SettingView> {
                         context: context,
                         backgroundColor: Color(0xff022E47),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.only(topLeft:Radius.circular(20) ,topRight: Radius.circular(20),),),
                         builder: (context) => GenerateQRCodeView(
                               id: AppStorage.customerID.toString(),
                             ));

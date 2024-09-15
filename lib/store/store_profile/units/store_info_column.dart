@@ -174,7 +174,8 @@ class StoreInfoColumn extends StatelessWidget {
                         context: context,
                         backgroundColor: Color(0xff022E47),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.only(topLeft:Radius.circular(20) ,topRight: Radius.circular(20),)
+                            ),
                         builder: (context) => GenerateQRCodeView(id: storeId ,)),
                     child: Container(
                       padding: const EdgeInsets.only(bottom: 6),

@@ -296,9 +296,51 @@ class HtmlEncodedText extends StatelessWidget {
 
     final decodedText = parse(encodedText).documentElement!.text;
 
-    return Text(
-      decodedText,
-      style: textStyle,
+    return RichText(
+      text: TextSpan(
+        children: _getStyledMessage(decodedText),
+        style: TextStyle(color: Colors.black, fontSize: 16),
+      ),
     );
+
+    // Text(
+    //   decodedText,
+    //   style: textStyle,
+    // );
+  }
+
+  List<TextSpan> _getStyledMessage(String message) {
+    final List<TextSpan> spans = [];
+    // final RegExp regex = RegExp(r'\d+'); // Detect the number
+    // final RegExp phoneRegExp = RegExp(r'(\+?\d{1,3}[-.\s]??\d{1,4}[-.\s]??\d{1,4}[-.\s]??\d{1,9})');
+    final RegExp phoneRegExp = RegExp(
+        r'^(?:\+?(\d{1,3}))?[-.\s]?((\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9}))$');
+    final match =
+        phoneRegExp.firstMatch(message); // Get the first match of number
+
+    if (match != null) {
+      // Add text before the number
+      if (match.start > 0) {
+        spans.add(TextSpan(text: message.substring(0, match.start)));
+      }
+
+      // Add the number with blue color
+      spans.add(
+        TextSpan(
+          text: message.substring(match.start, match.end),
+          style: TextStyle(color: Colors.blue),
+        ),
+      );
+
+      // Add text after the number
+      if (match.end < message.length) {
+        spans.add(TextSpan(text: message.substring(match.end)));
+      }
+    } else {
+      // If no number is found, just return the entire message as regular text
+      spans.add(TextSpan(text: message));
+    }
+
+    return spans;
   }
 }

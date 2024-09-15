@@ -98,8 +98,8 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
         height: MediaQuery.sizeOf(context).height * 0.65,
         child: Column(
           children: [
-            const SizedBox(height: 5),
-            StarterDivider(height: 5, width: 60),
+            const SizedBox(height: 15),
+            StarterDivider(height: 5, width: 50),
             const SizedBox(height: 50),
             Center(
               child: Screenshot(
@@ -107,7 +107,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                 child: Container(
                   decoration: BoxDecoration(
                     // border: Border.all(color: Colors.white, width: 3),
-                    color: Color.fromARGB(255, 67, 154, 205),
+                    color: Color(0xff70F1EB),
 
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -218,7 +218,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 30, vertical: 19),
                       decoration: BoxDecoration(
-                          color:Colors.transparent,
+                          color: Colors.transparent,
                           borderRadius: BorderRadius.circular(15)),
                       child: Row(
                         children: [
@@ -249,7 +249,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                 horizontal: 30,
               ), //EdgeInsets.all(20),
               alignment: Alignment.centerRight,
-              child: Text("لديك رمز QR",
+              child: Text(AppStorage.isStore ? "لديك رمز QR" : "لديه رمز  QR",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -261,7 +261,10 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                 horizontal: 30,
               ), //EdgeInsets.all(20),
               alignment: Alignment.centerRight,
-              child: Text("يمكنك مشاركة الرمز الخاص بك مع الأصدقاء",
+              child: Text(
+                  AppStorage.isStore
+                      ? "يمكنك مشاركة الرمز الخاص بك مع الأصدقاء"
+                      : "يمكنك مشاركة الرمز مع الاصدقاء",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
             ),
             const SizedBox(height: 10),
