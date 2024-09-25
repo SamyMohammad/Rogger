@@ -4,12 +4,8 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-        {
-            "name": "silah-app",
-            "request": "launch",
-            "type": "dart"
-        },
+
+    
         {
             "name": "silah-app (profile mode)",
             "request": "launch",
@@ -21,6 +17,12 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "silah-app (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug"
         }
     ]
 }
