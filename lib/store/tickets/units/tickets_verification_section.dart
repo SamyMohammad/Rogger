@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:silah/constants.dart';
 import 'package:silah/store/tickets/cubit/cubit.dart';
 import 'package:silah/store/tickets/cubit/states.dart';
-import 'package:silah/store/tickets/units/verification_method_widget.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/custom_checkbox.dart';
 import 'package:silah/widgets/image_picker_form.dart';
@@ -168,23 +167,23 @@ class _TicketsVerificationSectionState
                                             children: [
                                               Row(
                                                   children: List.generate(
-                                                      3,
-                                                      (index) =>
-                                                          VerificationMethodWidget(
-                                                              onTap: () {
-                                                                onTabverificationMethodWidget(
-                                                                    cubit,
-                                                                    index,
-                                                                    context);
-                                                              },
-                                                              icon: cubit
-                                                                  .icons[index],
-                                                              isActive: index ==
-                                                                  cubit
-                                                                      .indexOfVerification,
-                                                              name: cubit
-                                                                      .categories[
-                                                                  index]))),
+                                                      3, (index) => Container()
+                                                      // TODO:fix this issue
+                                                      // VerificationMethodWidget(
+                                                      //     onTap: () {
+                                                      //       onTabverificationMethodWidget(
+                                                      //           cubit,
+                                                      //           index,
+                                                      //           context);
+                                                      //     },
+                                                      //     icon:
+                                                      //         cubit.icons[index],
+                                                      //     isActive: index ==
+                                                      //         cubit
+                                                      //             .indexOfVerification,
+                                                      //     name: cubit
+                                                      //         .categories[index]),
+                                                      )),
                                               const SizedBox(height: 20),
                                               Container(
                                                 child: Column(
@@ -470,8 +469,10 @@ class _TicketsVerificationSectionState
             cubit.request?.sTATUS != 'rejected'
         ? true
         : false;
-    if(cubit.request?.sTATUS != 'rejected' && cubit.request?.isExpired == false){
-      commercialRegisterNumberController.text =cubit.request?.verificationTypeNumber ?? '';
+    if (cubit.request?.sTATUS != 'rejected' &&
+        cubit.request?.isExpired == false) {
+      commercialRegisterNumberController.text =
+          cubit.request?.verificationTypeNumber ?? '';
     }
     commercialRegisterNumberController.text =
         cubit.request?.sTATUS != 'rejected' && cubit.request?.isExpired == false

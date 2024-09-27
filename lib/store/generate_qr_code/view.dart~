@@ -102,16 +102,16 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
             StarterDivider(height: 5, width: 50),
             const SizedBox(height: 50),
             Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.white, width: 3),
-                  color: Color(0xff70F1EB),
+              child: Screenshot(
+                controller: screenshotController,
+                child: Container(
+                  decoration: BoxDecoration(
+                    // border: Border.all(color: Colors.white, width: 3),
+                    color: Color(0xff70F1EB),
 
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 60),
-                child: Screenshot(
-                  controller: screenshotController,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 60),
                   child: QrImageView(
                     backgroundColor: Colors.transparent,
                     embeddedImageStyle: QrEmbeddedImageStyle(

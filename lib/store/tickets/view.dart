@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:silah/store/tickets/choose_verification_method_view.dart';
 import 'package:silah/store/tickets/cubit/cubit.dart';
 import 'package:silah/store/tickets/cubit/states.dart';
 import 'package:silah/store/tickets/units/tickets_categories_section.dart';
-import 'package:silah/store/tickets/units/tickets_verification_section.dart';
 import 'package:silah/widgets/custom_tabview.dart';
 
 class TicketsView extends StatelessWidget {
@@ -42,7 +42,7 @@ class TicketsView extends StatelessWidget {
                 //   ticketsCubit
                 //       .isAnyRequestInTypeVerification('Commercial Register');
                 return ticketsCubit.isFirstSelected
-                    ? TicketsVerificationSection()
+                    ? ChooseVerificationMethodSection()
                     : TicketsCategoriesSection();
               }),
             ],

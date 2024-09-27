@@ -15,12 +15,14 @@ class ConfirmButton extends StatefulWidget {
   final double radius;
   final bool isExpanded;
   final double horizontalPadding;
+  final double? verticalPadding;
 
   ConfirmButton({
     this.onPressed,
     this.radius = 10,
     this.child,
     this.title,
+    this.verticalPadding,
     this.verticalMargin = 3,
     this.horizontalMargin = 0,
     this.color = kPrimary2Color,
@@ -37,6 +39,7 @@ class ConfirmButton extends StatefulWidget {
       this.radius = 10,
       this.child,
       this.title,
+      this.verticalPadding,
       this.verticalMargin = 3,
       this.horizontalMargin = 0,
       this.color = activeButtonColor,
@@ -67,7 +70,7 @@ class _ConfirmButtonState extends State<ConfirmButton> {
         borderRadius: BorderRadius.circular(widget.radius),
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: widget.horizontalPadding, vertical: 12),
+              horizontal: widget.horizontalPadding, vertical: widget.verticalPadding ?? 12),
           margin: EdgeInsets.symmetric(
               vertical: widget.verticalMargin!,
               horizontal: widget.horizontalMargin!),

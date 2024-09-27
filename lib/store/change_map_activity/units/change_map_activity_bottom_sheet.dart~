@@ -1,22 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silah/constants.dart';
-import 'package:silah/shared/sign_up/cubit/cubit.dart';
+import 'package:silah/store/change_map_activity/cubit.dart';
 
-class BottomSheetPicker extends StatefulWidget {
+import '../../../user/advertisers_on_map/map_categories_model.dart';
+
+class ChangeMapActivityBottomSheet extends StatefulWidget {
   // int? selectedIndex;
-
-  final List<String> items;
-  BottomSheetPicker({super.key, required this.items});
+  List<MapCategory> categories;
+  ChangeMapActivityBottomSheet({
+    super.key,
+    required this.categories,
+  });
 
   @override
-  State<BottomSheetPicker> createState() => _BottomSheetPickerState();
+  State<ChangeMapActivityBottomSheet> createState() =>
+      _ChangeMapActivityBottomSheetState();
 }
 
-class _BottomSheetPickerState extends State<BottomSheetPicker> {
+class _ChangeMapActivityBottomSheetState
+    extends State<ChangeMapActivityBottomSheet> {
+  // MapCategory? selectedValue;
+
   @override
   Widget build(BuildContext context) {
-    final cubit = SignUpCubit.of(context);
+    final cubit = ChangeMapActivityCubit();
     return Material(
       borderRadius: BorderRadius.circular(10),
       color: Colors.transparent,
@@ -26,7 +34,6 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
           showCustomBottomSheet(
             context,
             cubit: cubit,
-            children: widget.items,
           );
         },
         child: Container(
@@ -41,12 +48,16 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                cubit.seletedIndex != null
-                    ? widget.items[cubit.seletedIndex!]
-                    : 'نوع الحساب',
+                cubit.selectedMapCategory != null
+                    ? widget.categories
+                            .firstWhere((element) =>
+                                element.id == cubit.selectedMapCategory!.id!)
+                            .name ??
+                        ''
+                    : 'الرجاء الاختيار',
                 style: TextStyle(
                   fontSize: 16,
-                  color: cubit.seletedIndex != null
+                  color: cubit.selectedMapCategory != null
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -64,7 +75,7 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
   }
 
   void showCustomBottomSheet(BuildContext context,
-      {required List<String> children, required SignUpCubit cubit}) {
+      {required ChangeMapActivityCubit cubit}) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -87,7 +98,7 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
               ),
               SizedBox(height: 10),
               Text(
-                'نوع الحساب',
+                'أقسام الخريطة',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
@@ -99,9 +110,11 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 5);
                   },
-                  itemCount: children.length,
+                  itemCount: widget.categories.length,
                   itemBuilder: (context, index) {
-                    bool isSelected = cubit.seletedIndex == index;
+                    // bool isSelected = cubit.seletedIndex == index;
+                    bool isSelected = widget.categories.elementAt(index) ==
+                        cubit.selectedMapCategory;
 
                     return Material(
                       borderRadius: BorderRadius.circular(10),
@@ -109,9 +122,18 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(10),
                         onTap: () {
-                          cubit.changeGroup(children[index], index);
-                          Navigator.pop(
-                              context); // Close the bottom sheet after selection
+                          cubit.selectedMapCategory = widget.categories[index];
+                          // cubit.selectedMapCategory = cubit.selectedMapCategory;
+                          print(
+                              "cubit.selectedMapCategory${cubit.selectedMapCategory!.id}");
+                          print(
+                              "cubit.selectedMapCategory${cubit.selectedMapCategory!.name}");
+                          cubit.updateMapCategory(
+                              cubit.selectedMapCategory!.id!);
+                          // cubit.changeGroup(widget.items[index], index);
+                          Navigator.pop(context);
+                          setState(
+                              () {}); // Close the bottom sheet after selection
                         },
                         child: Container(
                           height: 35.0,
@@ -128,7 +150,7 @@ class _BottomSheetPickerState extends State<BottomSheetPicker> {
                             // ),
                           ),
                           child: Text(
-                            children[index],
+                            widget.categories[index].name ?? '',
                             style: TextStyle(
                               fontSize: 16.0,
                               color: isSelected

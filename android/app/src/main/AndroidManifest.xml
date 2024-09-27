@@ -37,8 +37,8 @@
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-<!--       <meta-data android:name="com.google.android.geo.API_KEY"-->
-<!--                  android:value="AIzaSyA5rARsu5IE9C448JTjRXuxMfkCbbXFV4w"/>-->
+       <meta-data android:name="com.google.android.geo.API_KEY"
+                  android:value="AIzaSyA5rARsu5IE9C448JTjRXuxMfkCbbXFV4w"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

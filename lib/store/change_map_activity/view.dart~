@@ -8,7 +8,7 @@ import 'package:silah/core/location/location_manager.dart';
 import 'package:silah/store/change_map_activity/cubit.dart';
 import 'package:silah/store/change_map_activity/states.dart';
 import 'package:silah/store/change_map_activity/units/location_bottom_sheet.dart';
-import 'package:silah/user/advertisers_on_map/map_categories_model.dart';
+import 'package:silah/widgets/drop_menu.dart';
 
 import 'units/change_map_activity_bottom_sheet.dart';
 
@@ -67,23 +67,11 @@ class _SChangeMapActivityViewState extends State<SChangeMapActivityView> {
                                 //  showAdaptiveDialog(context: context, builder: (context) {
                                 //
                                 // });
-                                if (state is ChangeMapActivityInitState) {
-                                  return ChooseBottomSheet<MapCategory>(
-                                      title: 'أقسام الخريطة',
-                                      items: categories, // List of MapCategory
-                                      selectedItem: cubit
-                                          .selectedMapCategory, // Initially selected category
-                                      itemLabelBuilder: (category) =>
-                                          category.name ??
-                                          '', // Customize how the category name is shown
-                                      onItemSelected: (selectedCategory) {
-                                        cubit.selectedMapCategory =
-                                            selectedCategory;
-                                        cubit.updateMapCategory(selectedCategory
-                                            .id!); // Handle selection
-                                        setState(() {}); // Update the UI
-                                      });
-                                } // return DropMenu(
+                                if (state is ChangeMapActivityInitState)
+                                  return ChangeMapActivityBottomSheet(
+                                    categories: categories,
+                                  );
+                                // return DropMenu(
                                 //   isMapDepartment: true,
                                 //   label: "قسم الخريطة",
                                 //   hasBorder: true,

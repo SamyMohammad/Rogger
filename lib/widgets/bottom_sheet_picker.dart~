@@ -7,7 +7,7 @@ class BottomSheetPicker extends StatefulWidget {
   // int? selectedIndex;
 
   final List<String> items;
-  BottomSheetPicker({super.key, required this.items});
+  BottomSheetPicker({super.key, required this.items });
 
   @override
   State<BottomSheetPicker> createState() => _BottomSheetPickerState();

@@ -19,7 +19,9 @@ class TicketsCubit extends Cubit<TicketsStates> {
   bool firstCheckbox = false;
   bool secondCheckbox = false;
   GetStatusVerification? getStatusVerification;
+  
   Request? request;
+  bool? accountIsVerified;
   // File? categoryRecordImage;
   // File? copyOfTransferImage;
   // String? commercialRegisterNumberController;
@@ -198,8 +200,19 @@ class TicketsCubit extends Cubit<TicketsStates> {
       if (response.data.containsKey('success')) {
         print('Success');
         print('getStatusVerification ${response.data}');
-
+        print(
+            'getStatusVerificationPPPP ${response.data["requests"][0].toString()}');
+         accountIsVerified = response.data["requests"].any((request) {
+          print("accountIsVerified___ ${request['STATUS'] == "approved"}");
+          return request['STATUS'] == "approved";
+        });
+        print("accountIsVerified $accountIsVerified");
         getStatusVerification = GetStatusVerification.fromJson(response.data);
+        // getStatusVerification?.requests?.any((request) {
+        //   print("accountIsVerified*** ${request.verificationRequired == 1}");
+        //   return request.verificationRequired == 1 &&
+        //       request.sTATUS == "approved";
+        // });
         print('getStatusVerification $getStatusVerification');
         emit(GetStatusVerificationSuccessState(getStatusVerification));
       } else {
@@ -232,7 +245,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
     String? verificationFee = settings?['data']['verification_fee'];
     if (indexOfVerification == 0) {
       if (firstCheckbox) {
-        totalFee = (double.parse(commercialRegisterFee ?? '0')+
+        totalFee = (double.parse(commercialRegisterFee ?? '0') +
                 double.parse(verificationFee ?? '0'))
             .toString();
       } else {
@@ -354,7 +367,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
   bool isAnyRequestExists = false;
   bool isAnyRequestInTypeVerification(String verificationType) {
     bool isAnyRequest = getStatusVerification?.requests
-        ?.any((request) => request.verificationType == verificationType)??false;
+            ?.any((request) => request.verificationType == verificationType) ??
+        false;
     isAnyRequestExists = isAnyRequest;
 
     print(isAnyRequestExists);
