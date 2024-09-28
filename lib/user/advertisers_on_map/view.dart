@@ -27,39 +27,48 @@ class _UAdvertiserOnMapViewState extends State<UAdvertiserOnMapView> {
     return BlocProvider(
       create: (context) => AdvertisersOnMapCubit()..getAdvertisers(),
       child: Scaffold(
-        body: BlocBuilder<AdvertisersOnMapCubit, AdvertisersOnMapStates>(
+        body: BlocConsumer<AdvertisersOnMapCubit, AdvertisersOnMapStates>(
+          listener: (context, state) {
+            // if (state is AdvertisersOnMapLoadingStates) {
+            //   showDialog(
+            //       context: context, builder: (context) => LoadingIndicator());
+            // }
+            // if (state is AdvertisersOnMapLoadedStates) {
+            //   Navigator.pop(context);
+            // }
+          },
           builder: (context, state) {
             final cubit = AdvertisersOnMapCubit.of(context);
-            if (state is AdvertisersOnMapLoadingStates) {
-              return LoadingIndicator();
-            }
+            // if (state is AdvertisersOnMapLoadingStates) {
+            //   return LoadingIndicator();
+            // }
             final categories = cubit.mapCategoriesModel?.mapCategories ?? [];
             return Stack(
               children: [
                 CustomGoogleMapMarkerBuilder(
                   customMarkers: cubit.advertisersOnMapModel?.advertizers
-                      ?.map((e) {
-                    return MarkerData(
-                      child: AdvertiserOnMap(
-                        e: e,
-                      ),
-                      marker: Marker(
-                        markerId: MarkerId(e.advertizerId!),
-                        position: e.location!,
-                        visible: e.nickname != null,
-                        onTap: () {
-                          AppStorage.cacheAdvertiser(e.advertizerId!);
-                          setState(() {});
-                          RouteManager.navigateTo(
-                              StoreProfileView(storeId: e.advertizerId!));
-                        },
-                        // infoWindow: InfoWindow(
-                        //   title: e.nickname ?? '',
-                        //   onTap: () => RouteManager.navigateTo(StoreProfileView(storeId: e.advertizerId!)),
-                        // ),
-                      ),
-                    );
-                  }).toList() ??
+                          ?.map((e) {
+                        return MarkerData(
+                          child: AdvertiserOnMap(
+                            e: e,
+                          ),
+                          marker: Marker(
+                            markerId: MarkerId(e.advertizerId!),
+                            position: e.location!,
+                            visible: e.nickname != null,
+                            onTap: () {
+                              AppStorage.cacheAdvertiser(e.advertizerId!);
+                              setState(() {});
+                              RouteManager.navigateTo(
+                                  StoreProfileView(storeId: e.advertizerId!));
+                            },
+                            // infoWindow: InfoWindow(
+                            //   title: e.nickname ?? '',
+                            //   onTap: () => RouteManager.navigateTo(StoreProfileView(storeId: e.advertizerId!)),
+                            // ),
+                          ),
+                        );
+                      }).toList() ??
                       [],
                   builder: (context, markers) => GoogleMap(
                     myLocationEnabled: true,
@@ -73,7 +82,7 @@ class _UAdvertiserOnMapViewState extends State<UAdvertiserOnMapView> {
                     ),
                     markers: markers ?? {},
                     onMapCreated: (controller) =>
-                    cubit.googleMapController = controller,
+                        cubit.googleMapController = controller,
                   ),
                 ),
                 Positioned(
@@ -118,6 +127,7 @@ class _UAdvertiserOnMapViewState extends State<UAdvertiserOnMapView> {
                     },
                   ),
                 ),
+                if (state is AdvertisersOnMapLoadingStates) LoadingIndicator(),
               ],
             );
           },

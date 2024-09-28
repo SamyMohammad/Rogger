@@ -32,10 +32,11 @@ class AdvertisersOnMapCubit extends Cubit<AdvertisersOnMapStates> {
       });
       print('map_category_id$response');
       final data = response.data;
-            print('AdvertisersOnMapLoadingStates$data');
+      print('AdvertisersOnMapLoadingStates$data');
 
       advertisersOnMapModel = AdvertisersOnMapModel.fromJson(data);
-      print('AdvertisersOnMapLoadingStatesName${advertisersOnMapModel?.advertizers?.first.nickname}');
+      print(
+          'AdvertisersOnMapLoadingStatesName${advertisersOnMapModel?.advertizers?.first.nickname}');
       // final markerIcon = await getMapIcon('enabled-marker');
       // advertisersOnMapModel?.advertizers?.forEach((element) {
       //   final marker = Marker(
@@ -49,12 +50,12 @@ class AdvertisersOnMapCubit extends Cubit<AdvertisersOnMapStates> {
       //   );
       //   mapMarkers.add(marker);
       // });
-      emit(AdvertisersOnMapInitStates());
+      emit(AdvertisersOnMapLoadedStates());
     } catch (e) {
       emit(AdvertisersOnMapErrorStates(e.toString()));
     }
-    await Future.delayed(Duration(milliseconds: 500));
-    emit(AdvertisersOnMapInitStates());
+    // await Future.delayed(Duration(milliseconds: 500));
+    // emit(AdvertisersOnMapInitStates());
   }
 
   Future<void> getMapCategories() async {
