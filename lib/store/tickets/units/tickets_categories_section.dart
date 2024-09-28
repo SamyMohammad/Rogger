@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silah/constants.dart';
 import 'package:silah/shared_cubit/category_cubit/cubit.dart';
 import 'package:silah/shared_cubit/category_cubit/states.dart';
+import 'package:silah/shared_models/categories_model.dart';
+import 'package:silah/shared_models/sub_categories_model.dart';
+import 'package:silah/store/change_map_activity/units/choose_bottom_sheet.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/drop_menu.dart';
 import 'package:silah/widgets/image_picker_form.dart';
@@ -133,23 +136,51 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                       final categories = CategoryCubit.of(context)
                           .paidCategoriesModel
                           ?.categories;
-                      return DropMenu(
-                        isMapDepartment: false,
-                        hint: 'اختيار القسم',
-                        items: categories ?? [],
-                        isItemsModel: true,
-                        onChanged: (v) {
-                          print(v.name);
-                          print(v.id);
-                          CategoryCubit.of(context).getSubCategories(v.id);
-                          CategoryCubit.of(context).selectedCategory = v;
-                          CategoryCubit.of(context).checkInputsValidity();
-                          // print(CategoryCubit.of(context)
-                          //     .getSubCategory
-                          //     ?.categories?[0]
-                          //     .name);
-                        },
-                      );
+
+                      return ChooseBottomSheet<Category>(
+                          title: 'اختيار القسم',
+                          items: categories ?? [], // List of MapCategory
+                          selectedItem: CategoryCubit.of(context)
+                              .selectedCategory, // Initially selected category
+                          itemLabelBuilder: (category) =>
+                              category.name ??
+                              '', // Customize how the category name is shown
+                          onItemSelected: (selectedCategory) {
+                            print(selectedCategory.name);
+                            print(selectedCategory.id);
+                            CategoryCubit.of(context).selectedSubCategory = null;
+                            CategoryCubit.of(context)
+                                .getSubCategories(selectedCategory.id);
+                            CategoryCubit.of(context).selectedCategory =
+                                selectedCategory;
+                            CategoryCubit.of(context).checkInputsValidity();
+                            // print(CategoryCubit.of(context)
+                            //     .getSubCategory
+                            //     ?.categories?[0]
+                            //     .name);
+                            // cubit.selectedMapCategory =
+                            //     selectedCategory;
+                            // cubit.updateMapCategory(selectedCategory
+                            //     .id!); // Handle selection
+                            // setState(() {}); // Update the UI
+                          });
+                      // return DropMenu(
+                      //   isMapDepartment: false,
+                      //   hint: 'اختيار القسم',
+                      //   items: categories ?? [],
+                      //   isItemsModel: true,
+                      //   onChanged: (v) {
+                      //     print(v.name);
+                      //     print(v.id);
+                      //     CategoryCubit.of(context).getSubCategories(v.id);
+                      //     CategoryCubit.of(context).selectedCategory = v;
+                      //     CategoryCubit.of(context).checkInputsValidity();
+                      //     // print(CategoryCubit.of(context)
+                      //     //     .getSubCategory
+                      //     //     ?.categories?[0]
+                      //     //     .name);
+                      //   },
+                      // );
                     },
                   ),
                   const SizedBox(height: 20),
@@ -162,6 +193,38 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                       //     ?.where((country) => seen.add(country))
                       //     .toList();
                       if (CategoryCubit.of(context).isSubCategoryShow) {
+                        return ChooseBottomSheet<Categories>(
+                          title: 'اختيار نوع القسم',
+                          items: subCategories, // List of MapCategory
+                          selectedItem: CategoryCubit.of(context)
+                              .selectedSubCategory, // Initially selected category
+                          itemLabelBuilder: (category) =>
+                              category.name ??
+                              '', // Customize how the category name is shown
+                          onItemSelected: (v) {
+                            CategoryCubit.of(context).selectedSubCategory = v;
+                            CategoryCubit.of(context).checkInputsValidity();
+                          },
+
+                          //  (selectedCategory) {
+                          //   print(selectedCategory.name);
+                          //   print(selectedCategory.id);
+                          //   CategoryCubit.of(context)
+                          //       .getSubCategories(selectedCategory.id);
+                          //   CategoryCubit.of(context).selectedCategory =
+                          //       selectedCategory;
+                          //   CategoryCubit.of(context).checkInputsValidity();
+                          //   // print(CategoryCubit.of(context)
+                          //   //     .getSubCategory
+                          //   //     ?.categories?[0]
+                          //   //     .name);
+                          //   // cubit.selectedMapCategory =
+                          //   //     selectedCategory;
+                          //   // cubit.updateMapCategory(selectedCategory
+                          //   //     .id!); // Handle selection
+                          //   // setState(() {}); // Update the UI
+                          // }
+                        );
                         return DropMenu(
                           hint: 'اختيار نوع القسم',
                           items: subCategories,
@@ -169,11 +232,11 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                           onChanged: subCategories.length == 0
                               ? null
                               : (v) {
-                            CategoryCubit.of(context)
-                                .selectedSubCategory = v;
-                            CategoryCubit.of(context)
-                                .checkInputsValidity();
-                          },
+                                  CategoryCubit.of(context)
+                                      .selectedSubCategory = v;
+                                  CategoryCubit.of(context)
+                                      .checkInputsValidity();
+                                },
                         );
                       }
                       return SizedBox();
@@ -212,8 +275,8 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                   title: "طلب",
                   color: state is ValidateState
                       ? state.state == true
-                      ? activeButtonColor
-                      : kDarkGreyColor
+                          ? activeButtonColor
+                          : kDarkGreyColor
                       : kDarkGreyColor,
                   onPressed: () {
                     CategoryCubit.of(context).requestVerificationCategory();

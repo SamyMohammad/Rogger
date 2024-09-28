@@ -57,7 +57,7 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
               Text(
                 selectedValue != null
                     ? widget.itemLabelBuilder(selectedValue!)
-                    : 'الرجاء الاختيار',
+                    : widget.title,
                 style: TextStyle(
                   fontSize: 16,
                   color: selectedValue != null

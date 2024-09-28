@@ -10,7 +10,7 @@ import 'package:silah/store/change_map_activity/states.dart';
 import 'package:silah/store/change_map_activity/units/location_bottom_sheet.dart';
 import 'package:silah/user/advertisers_on_map/map_categories_model.dart';
 
-import 'units/change_map_activity_bottom_sheet.dart';
+import 'units/choose_bottom_sheet.dart';
 
 class SChangeMapActivityView extends StatefulWidget {
   const SChangeMapActivityView({Key? key}) : super(key: key);
