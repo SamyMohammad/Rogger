@@ -64,7 +64,6 @@ class FollowersView extends StatelessWidget {
                             return Material(
                               color: Colors
                                   .transparent, // Make Material transparent
-
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
@@ -88,9 +87,10 @@ class FollowersView extends StatelessWidget {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
-                                      color: !isFollowing
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: isFollowing
+                                          ? Theme.of(context)
+                                              .scaffoldBackgroundColor
+                                          : Theme.of(context).primaryColor,
                                     ),
                                   ),
                                   decoration: BoxDecoration(

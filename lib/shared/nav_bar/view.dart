@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
-import 'package:silah/core/dynamic_links_constants.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/nav_bar/cubit/cubit.dart';
 import 'package:silah/shared/nav_bar/cubit/states.dart';
@@ -16,7 +11,6 @@ import 'package:silah/shared/notifications/view.dart';
 import 'package:silah/shared/search/view.dart';
 import 'package:silah/shared/stores/view.dart';
 import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
-import 'package:silah/store/store_profile/view.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 
 import '../../constants.dart';
@@ -32,32 +26,11 @@ class NavBarView extends StatefulWidget {
 }
 
 class _NavBarViewState extends State<NavBarView> {
-   StreamSubscription<Map>? streamSubscriptionDeepLink;
-
-  void listenDeepLinkData(BuildContext context) async {
-    streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
-      debugPrint('data: $data');
-      if (data.containsKey(AppConstants.clickedBranchLink) &&
-          data[AppConstants.clickedBranchLink] == true) {
-        // Navigate to relative screen
-        RouteManager.navigateTo(StoreProfileView(
-          storeId: data[AppConstants.deepLinkTitle],
-        ));
-      }
-    }, onError: (error) {
-      PlatformException platformException = error as PlatformException;
-      debugPrint('exception: $platformException');
-    });
-  }
-  @override
-  void initState() {
-    super.initState();
-    listenDeepLinkData(context);
-  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NavBarCubit(currentIndex: widget.initialIndex)..init(),
+      create: (context) =>
+          NavBarCubit(currentIndex: widget.initialIndex)..init(),
       child: BlocBuilder<NavBarCubit, NavBarStates>(
         builder: (context, state) {
           final cubit = NavBarCubit.get(context);
@@ -150,11 +123,14 @@ class _NavBarViewState extends State<NavBarView> {
                                           ),
                                           child: Icon(
                                             FontAwesomeIcons.magnifyingGlass,
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             size: 16,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: Theme.of(context).appBarTheme.backgroundColor,
+                                            color: Theme.of(context)
+                                                .appBarTheme
+                                                .backgroundColor,
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),
@@ -243,7 +219,9 @@ class _NavBarViewState extends State<NavBarView> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color:ThemeCubit.of(context).isDark?kPrimary1Color: kGreyColor,
+                                  color: ThemeCubit.of(context).isDark
+                                      ? kPrimary1Color
+                                      : kGreyColor,
                                   blurRadius: 1.5,
                                   spreadRadius: 0.5,
                                 )
@@ -266,11 +244,10 @@ class _NavBarViewState extends State<NavBarView> {
                   });
                 },
               ),
-              preferredSize: Size.fromHeight(cubit.currentIndex == 0? 40 : 50),
+              preferredSize: Size.fromHeight(cubit.currentIndex == 0 ? 40 : 50),
             ),
             bottomNavigationBar: BottomNavBar(
               onTap: cubit.toggleTab,
-            
               index: cubit.currentIndex,
             ),
             body: state is NavBarLoadingState

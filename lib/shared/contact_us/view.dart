@@ -121,7 +121,8 @@ class _ContactUsViewState extends State<ContactUsView> {
                               child: Center(
                                   child: Text(
                                 "الاقتراحات",
-                                style: TextStyle(fontWeight: FontWeight.bold,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     color: cubit.subject == 'suggestion'
                                         ? Colors.white
                                         : kDarkGreyColor),
@@ -151,7 +152,8 @@ class _ContactUsViewState extends State<ContactUsView> {
                               child: Center(
                                   child: Text(
                                 "البلاغات",
-                                style: TextStyle(fontWeight: FontWeight.bold,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     color: cubit.subject == 'issue'
                                         ? Colors.white
                                         : kDarkGreyColor),
@@ -282,9 +284,14 @@ class _ContactUsViewState extends State<ContactUsView> {
                             horizontalPadding: 30,
                             onPressed:
                                 cubit.areInputsValid ? cubit.contactUs : null,
+                            fontColor: cubit.areInputsValid
+                                ? Colors.white
+                                : Color(0xFFA1A1A1),
                             color: cubit.areInputsValid
                                 ? activeButtonColor
-                                : kDarkGreyColor,
+                                : ThemeCubit.of(context).isDark
+                                    ? Color(0xFF1E1E26)
+                                    : Color(0xffFAFAFF),
                           ),
                   ),
                 ],

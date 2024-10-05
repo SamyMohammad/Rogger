@@ -22,18 +22,19 @@ import '../black_list/cubit/states.dart';
 import '../messages/cubit.dart';
 
 class ChatView extends StatelessWidget {
-  const ChatView(
-      {Key? key,
-      required this.chatID,
-      required this.username,
-      required this.productID,
-      this.productImage,
-      required this.userID,
-      required this.messagesCubit,
-      required this.profileImage})
-      : super(key: key);
-
+  const ChatView({
+    Key? key,
+    required this.chatID,
+    required this.username,
+    required this.productID,
+    this.productImage,
+    this.productTitle,
+    required this.userID,
+    required this.messagesCubit,
+    required this.profileImage,
+  }) : super(key: key);
   final String profileImage;
+  final String? productTitle;
   final String? productImage;
   final String chatID;
   final String? productID;
@@ -210,7 +211,11 @@ class ChatView extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.only(
                                     top: 6, left: 16, right: 25, bottom: 6),
-                                color:ThemeCubit.of(context).isDark? Theme.of(context).appBarTheme.backgroundColor:kGreyColor,
+                                color: ThemeCubit.of(context).isDark
+                                    ? Theme.of(context)
+                                        .appBarTheme
+                                        .backgroundColor
+                                    : kGreyColor,
                                 child: cubit.isBlocked ?? false
                                     ? buildBlockBanner(blackListCubit, cubit)
                                     : Column(
@@ -224,14 +229,33 @@ class ChatView extends StatelessWidget {
                                               builder: (context, setState) {
                                             return Column(
                                               children: [
-                                                Visibility(
-                                                  visible: isVisible,
-                                                  child: Image.network(
-                                                    productImage ?? '',
-                                                    fit: BoxFit.fill,
-                                                    width: 80,
-                                                    height: 80,
-                                                  ),
+                                                Row(
+                                                  children: [
+                                                    Visibility(
+                                                      visible: isVisible,
+                                                      child: Image.network(
+                                                        productImage ?? '',
+                                                        fit: BoxFit.fill,
+                                                        width: 80,
+                                                        height: 80,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      productTitle ?? '',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.black),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 6,
+                                                ),
+                                                Text(
+                                                  productTitle ?? '',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline6,
                                                 ),
                                                 SizedBox(
                                                   height: 6,
@@ -270,8 +294,7 @@ class ChatView extends StatelessWidget {
                                                                     SvgPicture
                                                                         .asset(
                                                                   getIcon(
-                                                                      "large_back_arrow")
-                                                                      ,
+                                                                      "large_back_arrow"),
                                                                   height: 18,
                                                                 ),
                                                               ),
@@ -340,7 +363,9 @@ class ChatView extends StatelessWidget {
                                                       },
                                                       child: SvgPicture.asset(
                                                           getIcon("image"),
-                                                          color: Theme.of(context).primaryColor,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
                                                           height: 26),
                                                     )
                                                   ],

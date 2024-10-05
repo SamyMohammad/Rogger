@@ -19,7 +19,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
   bool firstCheckbox = false;
   bool secondCheckbox = false;
   GetStatusVerification? getStatusVerification;
-  
+
   Request? request;
   bool? accountIsVerified;
   // File? categoryRecordImage;
@@ -33,6 +33,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
   final verifiedNotifier = ValueNotifier<bool?>(false);
   final guaranteedNotifier = ValueNotifier<bool?>(false);
 
+  int? veirificationMethodSelectedIndex;
   // File? categoryRecordImage;
   // File? copyOfTransferImage;
   // String? commercialRegisterNumberController;
@@ -41,7 +42,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
   bool get isValid =>
       categoryRecordImageNotifier.value != null &&
       copyOfTransferImageNotifier.value != null &&
-      registerNumberControllerNotifier.value != "" &&
+      (registerNumberControllerNotifier.value != "" &&
+          registerNumberControllerNotifier.value != null) &&
       verifiedNotifier.value == true;
   bool validateVerificationRequest() {
     if (categoryRecordImageNotifier.value == null) {
@@ -202,7 +204,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
         print('getStatusVerification ${response.data}');
         print(
             'getStatusVerificationPPPP ${response.data["requests"][0].toString()}');
-         accountIsVerified = response.data["requests"].any((request) {
+        accountIsVerified = response.data["requests"].any((request) {
           print("accountIsVerified___ ${request['STATUS'] == "approved"}");
           return request['STATUS'] == "approved";
         });
@@ -296,6 +298,20 @@ class TicketsCubit extends Cubit<TicketsStates> {
     // emit(TicketsInitState());
   }
 
+  bool isNavigateToContinueVerifyMethodForm = false;
+  bool isNavigateToContinueGuaranteeForm = false;
+
+  navigateToVerifyMethodForm() {
+    isNavigateToContinueVerifyMethodForm =
+        !isNavigateToContinueVerifyMethodForm;
+    emit(NavigateToVerifyMethodFormState());
+  }
+
+  navigateToGuaranteeForm() {
+    isNavigateToContinueGuaranteeForm = true;
+    emit(NavigateToVerifyMethodFormState());
+  }
+
   String handleCategory(int index) {
     List<String> verificationTypesList = [
       "Commercial Register",
@@ -318,11 +334,13 @@ class TicketsCubit extends Cubit<TicketsStates> {
   }
 
   List<String> categories = [
+    "حساب مضمون",
     "السجل التجاري",
     "وثيقة معروف",
     "وثيقة العمل الحر"
   ];
   List<String> icons = [
+    "verified",
     "ministry",
     "wasika",
     "freelancing",
@@ -334,6 +352,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
 
   toggleIsFirstSelected(bool isFirstSelected) {
     this.isFirstSelected = isFirstSelected;
+    isNavigateToContinueVerifyMethodForm = false;
+    isNavigateToContinueGuaranteeForm = false;
     emit(TicketsInitState());
   }
 
@@ -381,7 +401,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
   bool buttonStatus = false;
   getFormStatus() {
     if ((isAnyRequestExists == true && request?.sTATUS == 'rejected') ||
-        request?.isExpired == true) {
+        request?.isExpired == true ||
+        true) {
       categoryRecordImageNotifier.value = null;
       copyOfTransferImageNotifier.value = null;
       registerNumberControllerNotifier.value = null;

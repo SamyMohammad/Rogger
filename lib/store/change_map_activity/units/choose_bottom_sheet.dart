@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silah/constants.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/widgets/confirm_button.dart';
 
 class ChooseBottomSheet<T> extends StatefulWidget {
@@ -129,9 +130,15 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
                                     context); // Close the bottom sheet
                               },
                         title: "تعديل",
+                        fontColor: tempSelectedValue == null ||
+                                tempSelectedValue == selectedValue
+                            ? Color(0xffA1A1A1)
+                            : Colors.white,
                         color: tempSelectedValue == null ||
                                 tempSelectedValue == selectedValue
-                            ? Colors.grey
+                            ? ThemeCubit.of(context).isDark
+                                ? Color(0xFF34343B)
+                                : Color(0xFFFAFAFA)
                             : activeButtonColor,
                       ),
                       Spacer(

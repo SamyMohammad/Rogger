@@ -37,8 +37,8 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
     await getRate();
     await getOverAllRate();
     await getStatusVerified();
-    await getCategoryProducts(
-        categories?.categories?.first.categoryId ?? '', false);
+    // await getCategoryProducts(
+    //   categories?.categories?.isNotEmpty == true?  categories?.categories?.first.categoryId ?? '0':'0', false);
     if (categories != null && categories!.categories!.isNotEmpty) {
       await getCategoryProducts(
           categories!.categories!.first.categoryId!, false);
@@ -60,6 +60,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
     storeInfoModel = StoreInfoModel.fromJson(data);
   }
 
+  bool? isStoreVerified;
   Future<void> getStatusVerified() async {
     final response = await DioHelper.post(
       'customer/account/get_customer_verfication',
@@ -68,7 +69,9 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       },
     );
     final data = response.data;
-    print('getStatusVerified $data');
+
+    // isStoreVerified = data['is_verified'] ?? false;
+    print('getStatusVerifiedss $data');
     // storeInfoModel = StoreInfoModel.fromJson(data);
   }
 

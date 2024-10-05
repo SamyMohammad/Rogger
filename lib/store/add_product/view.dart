@@ -4,17 +4,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:silah/constants.dart';
 import 'package:silah/core/validator/validation.dart';
 import 'package:silah/shared/product_details/model.dart';
+import 'package:silah/store/add_product/categories_in_add_product.dart';
 import 'package:silah/store/add_product/cubit/cubit.dart';
 import 'package:silah/store/add_product/cubit/states.dart';
 import 'package:silah/store/add_product/widgets/image_widget.dart';
 import 'package:silah/store/add_product/widgets/silah_agreement_dialog.dart';
 import 'package:silah/widgets/confirm_button.dart';
-import 'package:silah/widgets/drop_menu.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/text_form_field.dart';
 import 'package:silah/widgets/video_bubble.dart';
 
-import 'categories_in_add_product.dart';
+import '../../shared_cubit/theme_cubit/cubit.dart';
+import '../change_map_activity/units/choose_bottom_sheet.dart';
 
 class SAddProductView extends StatefulWidget {
   const SAddProductView({Key? key, this.productsDetailsModel})
@@ -132,24 +133,40 @@ class _SAddProductViewState extends State<SAddProductView> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 12),
                         BlocBuilder<AddProductCubit, AddProductStates>(
                           builder: (context, state) {
                             final categories = AddProductCubit.of(context)
                                 .categoriesInAddProduct
                                 ?.data;
-                            return DropMenu(
-                                upperText: 'القسم*',
-                                hint: 'اختر القسم',
-                                value: addProductCubit.categoryInAddProduct,
-                                items: categories ?? [],
-                                isItemsModel: true,
-                                onChanged: (v) {
-                                  addProductCubit.categoryInAddProduct =
-                                      (v as CategoryInAddProduct);
-                                  addProductCubit.categoryID.value =
-                                      addProductCubit.categoryInAddProduct?.id;
-                                  addProductCubit.checkInputsValidity();
-                                });
+                            return ChooseBottomSheet<CategoryInAddProduct>(
+                              items: categories ?? [],
+                              title: 'القسم',
+                              itemLabelBuilder: (category) =>
+                                  category.name ?? '',
+                              selectedItem:
+                                  addProductCubit.categoryInAddProduct,
+                              onItemSelected: (selectedItem) {
+                                addProductCubit.categoryInAddProduct =
+                                    selectedItem;
+                                addProductCubit.categoryID.value =
+                                    addProductCubit.categoryInAddProduct?.id;
+                                addProductCubit.checkInputsValidity();
+                              },
+                            );
+                            // DropMenu(
+                            //     upperText: 'القسم*',
+                            //     hint: 'اختر القسم',
+                            //     value: addProductCubit.categoryInAddProduct,
+                            //     items: categories ?? [],
+                            //     isItemsModel: true,
+                            //     onChanged: (v) {
+                            //       addProductCubit.categoryInAddProduct =
+                            //           (v as CategoryInAddProduct);
+                            //       addProductCubit.categoryID.value =
+                            //           addProductCubit.categoryInAddProduct?.id;
+                            //       addProductCubit.checkInputsValidity();
+                            //     });
                           },
                         ),
                         SizedBox(
@@ -207,13 +224,29 @@ class _SAddProductViewState extends State<SAddProductView> {
                                 title: widget.productsDetailsModel != null
                                     ? 'تعديل'
                                     : 'إضافة',
+                                fontColor: addProductCubit.nameController.value
+                                            .text.isNotEmpty &&
+                                        addProductCubit.categoryID.value !=
+                                            null &&
+                                        addProductCubit.images.isNotEmpty
+                                    ? Colors.white
+                                    : Color(0xFFA1A1A1),
                                 color: addProductCubit.nameController.value.text
                                             .isNotEmpty &&
                                         addProductCubit.categoryID.value !=
                                             null &&
                                         addProductCubit.images.isNotEmpty
                                     ? activeButtonColor
-                                    : kDarkGreyColor,
+                                    : ThemeCubit.of(context).isDark
+                                        ? Color(0xFF1E1E26)
+                                        : Color(0xffFAFAFF),
+                                // color: addProductCubit.nameController.value.text
+                                //             .isNotEmpty &&
+                                //         addProductCubit.categoryID.value !=
+                                //             null &&
+                                //         addProductCubit.images.isNotEmpty
+                                //     ? activeButtonColor
+                                //     : kDarkGreyColor,
                                 verticalMargin: 20,
                                 onPressed: addProductCubit.nameController.value
                                             .text.isNotEmpty &&

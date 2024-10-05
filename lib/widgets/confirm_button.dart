@@ -29,7 +29,7 @@ class ConfirmButton extends StatefulWidget {
     this.border = false,
     this.icon,
     this.fontColor,
-    this.isExpanded = false,
+    this.isExpanded = true,
     this.horizontalPadding = 14,
   });
 
@@ -70,7 +70,8 @@ class _ConfirmButtonState extends State<ConfirmButton> {
         borderRadius: BorderRadius.circular(widget.radius),
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: widget.horizontalPadding, vertical: widget.verticalPadding ?? 12),
+              horizontal: widget.horizontalPadding,
+              vertical: widget.verticalPadding ?? 12),
           margin: EdgeInsets.symmetric(
               vertical: widget.verticalMargin!,
               horizontal: widget.horizontalMargin!),
@@ -94,22 +95,22 @@ class _ConfirmButtonState extends State<ConfirmButton> {
                       ],
                     )),
           decoration: BoxDecoration(
-              color: widget.border == true
-                  ? Theme.of(context).scaffoldBackgroundColor
-                  : widget.color ?? Color(0xFF5972EA),
-              borderRadius: BorderRadius.circular(widget.radius),
-              border: Border.all(
-                color: widget.color!,
-                width: 2,
-              ),
-              // boxShadow: [
-              //   BoxShadow(
-              //       color: Colors.grey.withOpacity(.6),
-              //       spreadRadius: 1,
-              //       blurRadius: 4,
-              //       offset: Offset(0, 1))
-              // ],
-              ),
+            color: widget.border == true
+                ? Theme.of(context).scaffoldBackgroundColor
+                : widget.color ?? Color(0xFF5972EA),
+            borderRadius: BorderRadius.circular(widget.radius),
+            border: Border.all(
+              color: widget.color!,
+              width: 2,
+            ),
+            // boxShadow: [
+            //   BoxShadow(
+            //       color: Colors.grey.withOpacity(.6),
+            //       spreadRadius: 1,
+            //       blurRadius: 4,
+            //       offset: Offset(0, 1))
+            // ],
+          ),
         ),
       );
 
@@ -118,7 +119,6 @@ class _ConfirmButtonState extends State<ConfirmButton> {
         style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color:
-                widget.border! ? Theme.of(context).primaryColor : Colors.white),
+            color: widget.fontColor ?? Theme.of(context).primaryColor),
       );
 }

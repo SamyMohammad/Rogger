@@ -768,22 +768,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
-  image_gallery_saver:
-    dependency: "direct overridden"
-    description:
-      name: image_gallery_saver
-      sha256: "0aba74216a4d9b0561510cb968015d56b701ba1bd94aace26aacdd8ae5761816"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
-      sha256: "021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a"
+      sha256: "1f498d086203360cca099d20ffea2963f48c39ce91bdd8a3b6d4a045786b02c8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2"
+    version: "1.0.8"
   image_picker_android:
     dependency: transitive
     description:
@@ -843,10 +835,11 @@ packages:
   images_picker:
     dependency: "direct main"
     description:
-      name: images_picker
-      sha256: cc99347a6fa93228bf92f15ce36e4474256e4af0e6c0e1f0e7e9f047adbccd5b
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: b4306638efb18435626a650494e8d7dd74346d22
+      url: "https://github.com/SamyMohammad/images_picker.git"
+    source: git
     version: "1.2.11"
   infinite_scroll_pagination:
     dependency: "direct overridden"
@@ -1128,6 +1121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  photo_view:
+    dependency: "direct overridden"
+    description:
+      name: photo_view
+      sha256: "1fc3d970a91295fbd1364296575f854c9863f225505c28c46e0a03e48960c75e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.0"
   pin_code_fields:
     dependency: "direct main"
     description:
@@ -1660,6 +1661,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  zoom_pinch_overlay:
+    dependency: "direct main"
+    description:
+      name: zoom_pinch_overlay
+      sha256: "8f34f508c81441b0f51f0ea56827ccbfd32fd3c1c63c0c4d677b55fd849d9ef4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.3"
   zxing2:
     dependency: "direct main"
     description:

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silah/core/validator/validation.dart';
 import 'package:silah/shared/edit_password/cubit.dart';
-import 'package:silah/widgets/app_bar.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 
 import '../../constants.dart';
@@ -50,8 +50,14 @@ class EditPasswordView extends StatelessWidget {
                       ? LoadingIndicator()
                       : ConfirmButton(
                           title: 'تعديل',
-                          color:
-                              cubit.areInputsValid ? activeButtonColor : kGreyColor,
+                          fontColor: cubit.areInputsValid
+                              ? Colors.white
+                              : Color(0xFFA1A1A1),
+                          color: cubit.areInputsValid
+                              ? activeButtonColor
+                              : ThemeCubit.of(context).isDark
+                                  ? Color(0xFF1E1E26)
+                                  : Color(0xffFAFAFF),
                           onPressed:
                               cubit.areInputsValid ? cubit.editPassword : null,
                         )

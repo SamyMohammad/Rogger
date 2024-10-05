@@ -410,6 +410,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                         messagesCubit: null,
                                         productImage: productsDetailsModel
                                             .productImages![0],
+                                        productTitle:
+                                            productsDetailsModel.productName,
                                       ),
                                     );
                                   },
@@ -1571,6 +1573,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           ChatView(
                             profileImage: relatedProduct.advertizerProfile!,
                             chatID: chatID,
+                            productTitle:
+                                cubit.productsDetailsModel?.productName,
                             username: relatedProduct.advertizerName!,
                             productID: relatedProduct.productId.toString(),
                             productImage: relatedProduct.productImages![0],

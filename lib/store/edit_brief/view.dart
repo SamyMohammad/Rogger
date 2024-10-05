@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silah/core/validator/validation.dart';
 import 'package:silah/store/edit_brief/cubit.dart';
-import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
 import '../../constants.dart';
+import '../../shared_cubit/theme_cubit/cubit.dart';
 
 class EditBriefView extends StatelessWidget {
   const EditBriefView({Key? key}) : super(key: key);
@@ -41,8 +41,16 @@ class EditBriefView extends StatelessWidget {
                       : ConfirmButton(
                           title: 'تعديل',
                           verticalMargin: 20,
-                          color:
-                              cubit.areInputsValid ? activeButtonColor : kGreyColor,
+                          fontColor: cubit.areInputsValid
+                              ? Colors.white
+                              : Color(0xFFA1A1A1),
+                          color: cubit.areInputsValid
+                              ? activeButtonColor
+                              : ThemeCubit.of(context).isDark
+                                  ? Color(0xFF1E1E26)
+                                  : Color(0xffFAFAFF),
+                          // color:
+                          //     cubit.areInputsValid ? activeButtonColor : kGreyColor,
                           onPressed:
                               cubit.areInputsValid ? cubit.editBrief : null,
                         )

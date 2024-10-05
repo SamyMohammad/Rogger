@@ -24,7 +24,9 @@ class ProductsGridviewSection extends StatelessWidget {
 
         final products = StoreProfileCubit.of(context).productsModel?.products;
         print(products);
-        if (state is GetRelatedProductsLoadingState || products == null) {
+        if (state is GetRelatedProductsLoadingState ||
+            state is StoreProfileLoadingState ||
+            products == null) {
           return SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.9,
             child: Center(
@@ -37,7 +39,7 @@ class ProductsGridviewSection extends StatelessWidget {
               ),
             ),
           );
-        } else if (products.isNotEmpty) {
+        } else if (products != null && products.isNotEmpty) {
           return GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -54,8 +56,8 @@ class ProductsGridviewSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ProductGridviewTile(product: products[index]);
               });
-        } else if (products.isEmpty) {
-          return Text('لا يوجد منتجات في هذا القسم');
+        } else if (products.isEmpty == true) {
+          return Center(child: Text('لا يوجد منتجات في هذا القسم'));
         }
         return SizedBox();
       },

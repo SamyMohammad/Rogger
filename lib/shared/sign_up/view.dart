@@ -14,6 +14,7 @@ import 'package:silah/widgets/saudi_flag_with_num.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
 import '../../constants.dart';
+import '../../shared_cubit/theme_cubit/cubit.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -143,9 +144,17 @@ class SignUpView extends StatelessWidget {
                                   : ConfirmButton(
                                       isExpanded: true,
                                       title: 'تسجيل',
+                                      fontColor: cubit.areInputsValid
+                                          ? Colors.white
+                                          : Color(0xFFA1A1A1),
                                       color: cubit.areInputsValid
                                           ? activeButtonColor
-                                          : kLightGreyColor,
+                                          : ThemeCubit.of(context).isDark
+                                              ? Color(0xFF1E1E26)
+                                              : Color(0xffFAFAFF),
+                                      // color: cubit.areInputsValid
+                                      //     ? activeButtonColor
+                                      //     : kLightGreyColor,
                                       onPressed: cubit.areInputsValid
                                           ? cubit.signUp
                                           : null,

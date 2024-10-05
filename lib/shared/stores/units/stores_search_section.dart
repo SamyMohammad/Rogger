@@ -8,9 +8,9 @@ import 'package:silah/shared/stores/cubit.dart';
 import 'package:silah/shared/stores/units/get_advertisers_model.dart';
 import 'package:silah/store/store_profile/view.dart';
 import 'package:silah/widgets/loading_indicator.dart';
-import 'package:silah/widgets/rate_widget.dart';
 
 import '../../../core/dio_manager/dio_manager.dart';
+import '../../../widgets/rate_widget.dart';
 
 class StoresSearchSection extends StatefulWidget {
   const StoresSearchSection({
@@ -262,7 +262,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
 
               // padding: const EdgeInsets.all(16),
               separatorBuilder: (context, index) => const SizedBox(
-                height: 8,
+                height: 10,
               ),
               builderDelegate: PagedChildBuilderDelegate<Advertisers>(
                 animateTransitions: true,
@@ -281,88 +281,105 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                       storeId: advertiser.customerId!,
                     ));
                   },
-                  child: Container(
-                    height: 60,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: advertiser.profile !=
-                                  'https://roogr.sa/api/image/'
-                              ? Image.network(
-                                  advertiser.profile ?? getAsset('person'),
-                                  height: 60,
-                                  width: 60,
-                                  fit: BoxFit.fill,
-                                )
-                              : Image.asset(
-                                  getAsset('person'),
-                                  height: 60,
-                                  width: 60,
-                                  fit: BoxFit.scaleDown,
-                                  scale: 1.5,
-                                ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    advertiser.name ?? '',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                  child: Material(
+                    elevation: 2, // Elevation (shadow)
+                    borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: kLightGreyColorEB),
+                      ),
+                      height: 80,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: advertiser.profile !=
+                                    'https://roogr.sa/api/image/'
+                                ? Image.network(
+                                    advertiser.profile ?? getAsset('person'),
+                                    height: 60,
+                                    width: 60,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.asset(
+                                    getAsset('person'),
+                                    height: 60,
+                                    width: 60,
+                                    fit: BoxFit.scaleDown,
+                                    scale: 1.5,
                                   ),
-                                  SizedBox(width: 10),
-                                  Text(
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      advertiser.name ?? '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(width: 2),
+                                    if (advertiser.verifiedFlag ?? false)
+                                      Image.asset(
+                                        getAsset("verified"),
+                                        height: 15,
+                                      )
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
                                     advertiser.nickname == null ||
                                             advertiser.nickname == ''
                                         ? ''
                                         : '${advertiser.nickname}@',
-                                    style: TextStyle(color: kLightGreyColorB4),
+                                    style: TextStyle(
+                                      color: Color(0xFF7C7A7A),
+                                    ),
                                   ),
-                                  SizedBox(width: 10),
-                                  if (advertiser.verifiedFlag ?? false)
-                                    Image.asset(
-                                      getAsset("verified"),
-                                      height: 20,
-                                    )
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RateWidget(
-                                        ignoreGestures: true,
-                                        rate: double.parse(
-                                            advertiser.rating ?? '0')),
-                                    // Row(
-                                    //   children: [
-                                    //     Image.asset(getAsset("unlike"),
-                                    //         height: 18),
-                                    //     SizedBox(width: 10),
-                                    //     Image.asset(getAsset("like"),
-                                    //         height: 18),
-                                    //     SizedBox(width: 10),
-                                    //     Text(
-                                    //       "123",
-                                    //       style: TextStyle(
-                                    //           fontWeight: FontWeight.bold),
-                                    //     )
-                                    //   ],
-                                    // )
-                                  ],
                                 ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                                if (advertiser.nickname != null &&
+                                    advertiser.nickname != '')
+                                  SizedBox(height: 10),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      RateWidget(
+                                          ignoreGestures: true,
+                                          hItemPadding: .5,
+                                          rate: double.parse(
+                                              advertiser.rating ?? '0')),
+                                      Row(
+                                        children: [
+                                          Image.asset(getAsset("unlike"),
+                                              height: 18),
+                                          SizedBox(width: 10),
+                                          Image.asset(getAsset("like"),
+                                              height: 18),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            "",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

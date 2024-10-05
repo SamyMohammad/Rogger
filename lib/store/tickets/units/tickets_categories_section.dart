@@ -11,6 +11,7 @@ import 'package:silah/widgets/drop_menu.dart';
 import 'package:silah/widgets/image_picker_form.dart';
 import 'package:silah/widgets/snack_bar.dart';
 
+import '../../../shared_cubit/theme_cubit/cubit.dart';
 import '../../../widgets/starter_divider.dart';
 import '../cubit/cubit.dart';
 
@@ -148,7 +149,7 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                           onItemSelected: (selectedCategory) {
                             print(selectedCategory.name);
                             print(selectedCategory.id);
-                            CategoryCubit.of(context).selectedSubCategory = null;
+                            CategoryCubit.of(context).selectedCategory = null;
                             CategoryCubit.of(context)
                                 .getSubCategories(selectedCategory.id);
                             CategoryCubit.of(context).selectedCategory =
@@ -273,11 +274,19 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                 child: ConfirmButton(
                   horizontalPadding: 30,
                   title: "طلب",
-                  color: state is ValidateState
-                      ? state.state == true
-                          ? activeButtonColor
-                          : kDarkGreyColor
-                      : kDarkGreyColor,
+                  fontColor: state is ValidateState && state.state == true
+                      ? Colors.white
+                      : Color(0xFFA1A1A1),
+                  color: state is ValidateState && state.state == true
+                      ? activeButtonColor
+                      : ThemeCubit.of(context).isDark
+                          ? Color(0xFF1E1E26)
+                          : Color(0xffFAFAFF),
+                  // color: state is ValidateState
+                  //     ? state.state == true
+                  //         ? activeButtonColor
+                  //         : kDarkGreyColor
+                  //     : kDarkGreyColor,
                   onPressed: () {
                     CategoryCubit.of(context).requestVerificationCategory();
                   },

@@ -11,6 +11,8 @@ import 'package:silah/widgets/snack_bar.dart';
 import 'package:silah/widgets/starter_divider.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
+import '../../shared_cubit/theme_cubit/cubit.dart';
+
 showReportDialog(int productID) => showDialog(
       context: RouteManager.currentContext,
       builder: (context) => _Dialog(productID: productID),
@@ -181,7 +183,14 @@ class _DialogState extends State<_Dialog> {
                 ? LoadingIndicator()
                 : ConfirmButton(
                     title: 'إرسـال',
-                    color: message.isEmpty ? kGreyButtonColorD9 : activeButtonColor,
+                    fontColor:
+                        message.isNotEmpty ? Colors.white : Color(0xFFA1A1A1),
+                    color: message.isNotEmpty
+                        ? activeButtonColor
+                        : ThemeCubit.of(context).isDark
+                            ? Color(0xFF1E1E26)
+                            : Color(0xffFAFAFF),
+                    // color: message.isEmpty ? kGreyButtonColorD9 : activeButtonColor,
                     onPressed: message.isEmpty
                         ? null
                         : widget.chatId != null

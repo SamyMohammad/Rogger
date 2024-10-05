@@ -11,6 +11,7 @@ import 'package:silah/widgets/custom_checkbox.dart';
 import 'package:silah/widgets/image_picker_form.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
+import '../../../shared_cubit/theme_cubit/cubit.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../widgets/starter_divider.dart';
 
@@ -34,6 +35,7 @@ class _TicketsVerificationSectionState
   }
 
   late TextEditingController commercialRegisterNumberController;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TicketsCubit, TicketsStates>(
@@ -118,9 +120,10 @@ class _TicketsVerificationSectionState
     }, builder: (context, state) {
       final cubit = TicketsCubit.of(context);
 
-      final category = cubit.categories[cubit.indexOfVerification];
-      commercialRegisterNumberController.text =
-          TicketsCubit.of(context).request?.verificationTypeNumber ?? '';
+      final category =
+          cubit.categories[cubit.veirificationMethodSelectedIndex ?? 0];
+      // commercialRegisterNumberController.text =
+      //     TicketsCubit.of(context).request?.verificationTypeNumber ?? '';
       String? commercialRegisterFee =
           cubit.settings?['data']['commercial_register_fee'];
       String? identityDocumentFee =
@@ -165,25 +168,6 @@ class _TicketsVerificationSectionState
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Row(
-                                                  children: List.generate(
-                                                      3, (index) => Container()
-                                                      // TODO:fix this issue
-                                                      // VerificationMethodWidget(
-                                                      //     onTap: () {
-                                                      //       onTabverificationMethodWidget(
-                                                      //           cubit,
-                                                      //           index,
-                                                      //           context);
-                                                      //     },
-                                                      //     icon:
-                                                      //         cubit.icons[index],
-                                                      //     isActive: index ==
-                                                      //         cubit
-                                                      //             .indexOfVerification,
-                                                      //     name: cubit
-                                                      //         .categories[index]),
-                                                      )),
                                               const SizedBox(height: 20),
                                               Container(
                                                 child: Column(
@@ -192,91 +176,63 @@ class _TicketsVerificationSectionState
                                                         category, cubit),
                                                     Padding(
                                                       padding: const EdgeInsets
-                                                          .symmetric(
+                                                              .symmetric(
                                                           horizontal: 30),
                                                       child: Column(
                                                         children: [
                                                           const SizedBox(
                                                               height: 10),
-                                                          Stack(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            children: [
-                                                              SizedBox(
-                                                                height: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .height /
-                                                                    3.5,
-                                                                width: double
-                                                                    .infinity,
-                                                                child: Column(
-                                                                  children: [
-                                                                    SvgPicture
-                                                                        .asset(
-                                                                      getIcon(cubit
-                                                                              .icons[
-                                                                          cubit
-                                                                              .indexOfVerification]),
-                                                                      width:
-                                                                          130,
-                                                                      height:
-                                                                          55,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            18),
-                                                                    BuildRegisterNumber(
-                                                                      commercialRegisterNumberController:
-                                                                          commercialRegisterNumberController,
-                                                                      cubit:
-                                                                          cubit,
-                                                                      category:
-                                                                          category,
-                                                                    ),
-                                                                    // buildRegisterNumber(
-                                                                    //     cubit,
-                                                                    //     category,
-                                                                    //     context),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            20),
-                                                                    buildcCategoryRecordImage(
-                                                                        cubit,
-                                                                        category),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            10),
-                                                                    Text(
-                                                                      "الرسوم السنوية $annualFee ريال",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                  ],
+                                                          SizedBox(
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                3.5,
+                                                            width:
+                                                                double.infinity,
+                                                            child: Column(
+                                                              children: [
+                                                                SvgPicture
+                                                                    .asset(
+                                                                  getIcon(cubit
+                                                                          .icons[
+                                                                      cubit.veirificationMethodSelectedIndex ??
+                                                                          0]),
+                                                                  width: 130,
+                                                                  height: 55,
                                                                 ),
-                                                              ),
-                                                              if (cubit.isAnyRequestExists ==
-                                                                      true &&
-                                                                  cubit.request
-                                                                          ?.isExpired ==
-                                                                      false &&
-                                                                  cubit.request
-                                                                          ?.sTATUS !=
-                                                                      'rejected' &&
-                                                                  cubit.request
-                                                                          ?.verificationRequired ==
-                                                                      '0')
-                                                                buildShadowContainerWithoutGuarantee(
-                                                                    context,
+                                                                const SizedBox(
+                                                                    height: 18),
+                                                                BuildRegisterNumber(
+                                                                  commercialRegisterNumberController:
+                                                                      commercialRegisterNumberController,
+                                                                  cubit: cubit,
+                                                                  category:
+                                                                      category,
+                                                                ),
+                                                                // buildRegisterNumber(
+                                                                //     cubit,
+                                                                //     category,
+                                                                //     context),
+                                                                const SizedBox(
+                                                                    height: 20),
+                                                                buildcCategoryRecordImage(
                                                                     cubit,
-                                                                    category)
-                                                            ],
+                                                                    category),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  "الرسوم السنوية $annualFee ريال",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
-                                                          const SizedBox(
-                                                              height: 15),
                                                           buildCopyOfTransferImage(
                                                               cubit),
                                                           const SizedBox(
@@ -399,15 +355,15 @@ class _TicketsVerificationSectionState
                                             ],
                                           ),
                                         ),
-                                        if (cubit.isAnyRequestExists == true &&
-                                            cubit.request?.isExpired == false &&
-                                            cubit.request?.sTATUS !=
-                                                'rejected' &&
-                                            cubit.request
-                                                    ?.verificationRequired ==
-                                                '1')
-                                          buildFullShadowContainer(
-                                              cubit, context)
+                                        // if (cubit.isAnyRequestExists == true &&
+                                        //     cubit.request?.isExpired == false &&
+                                        //     cubit.request?.sTATUS !=
+                                        //         'rejected' &&
+                                        //     cubit.request
+                                        //             ?.verificationRequired ==
+                                        //         '1')
+                                        //   buildFullShadowContainer(
+                                        //       cubit, context)
                                       ],
                                     ),
                                   ),
@@ -532,18 +488,22 @@ class _TicketsVerificationSectionState
         cubit.request?.sTATUS == 'processing';
     bool isVerificationRequired = cubit.request?.verificationRequired == '0';
 
-    if (isApprovedOrProcessing &&
-        isVerificationRequired &&
-        cubit.isValidGuaranteedStatus) {
-      print('in update determineOnPressedAction ');
-      cubit.updaterequestVerification();
-    }
+    // if (isApprovedOrProcessing &&
+    //     isVerificationRequired &&
+    //     cubit.isValidGuaranteedStatus) {
+    //   print('in update determineOnPressedAction ');
+    //   cubit.updaterequestVerification();
+    // }
   }
 
   Color determineButtonColor(TicketsCubit cubit) {
     if (cubit.isAnyRequestExists == false ||
         cubit.request?.sTATUS == 'rejected') {
-      return cubit.isValid ? activeButtonColor : kDarkGreyColor;
+      return cubit.isValid
+          ? activeButtonColor
+          : ThemeCubit.of(context).isDark
+              ? Color(0xFF1E1E26)
+              : Color(0xffFAFAFF);
     }
 
     bool isApprovedOrProcessing = cubit.request?.sTATUS == 'approved' ||
@@ -563,7 +523,7 @@ class _TicketsVerificationSectionState
     return ConfirmButton(
         title: "طلب",
         color: determineButtonColor(cubit),
-        onPressed: () => determineOnPressedAction(cubit));
+        onPressed: () => handleValidRequest(cubit));
   }
 
   Expanded buildverifiedText() {
@@ -582,29 +542,26 @@ class _TicketsVerificationSectionState
       alignment: Alignment.center,
       children: [
         ImagePickerForm(
-          fileFromApi: cubit.request?.isExpired == false &&
-                  cubit.request?.sTATUS != 'rejected' &&
-                  cubit.request?.verificationRequired == '1'
-              ? cubit.request?.transactionImage
-              : null,
-          onChange: cubit.request?.isExpired == false &&
-                  cubit.request?.sTATUS != 'rejected' &&
-                  cubit.request?.verificationRequired == '1'
-              ? null
-              : (File? file) {
-                  if (file == null) {
-                    cubit.isVisible = false;
-                    print('copyOfTransferImagefalse$cubit.isVisible');
-                  } else {
-                    cubit.isVisible = true;
-                    print('copyOfTransferImagetrue$cubit.isVisible');
-                  }
-                  print(file?.path);
-                  cubit.isValidateToVisible();
+          fileFromApi: null,
 
-                  cubit.copyOfTransferImageNotifier.value = file;
-                  cubit.isValidGuaranteed();
-                },
+          // onChange: cubit.request?.isExpired == false &&
+          //         cubit.request?.sTATUS != 'rejected' &&
+          //         cubit.request?.verificationRequired == '1'
+          //     ? null
+          onChange: (File? file) {
+            if (file == null) {
+              cubit.isVisible = false;
+              print('copyOfTransferImagefalse$cubit.isVisible');
+            } else {
+              cubit.isVisible = true;
+              print('copyOfTransferImagetrue$cubit.isVisible');
+            }
+            print(file?.path);
+            cubit.isValidateToVisible();
+
+            cubit.copyOfTransferImageNotifier.value = file;
+            cubit.isValidGuaranteed();
+          },
         ),
       ],
     );
@@ -616,30 +573,32 @@ class _TicketsVerificationSectionState
       children: [
         ImagePickerForm(
             // hasBorder:
-            fileFromApi: cubit.request?.verificationTypeImage != null &&
-                    cubit.request?.isExpired == false &&
-                    cubit.request?.sTATUS != 'rejected'
-                ? cubit.request?.verificationTypeImage
-                : null,
-            onChange: cubit.request?.verificationTypeImage != null &&
-                    cubit.request?.isExpired == false &&
-                    cubit.request?.sTATUS != 'rejected'
-                ? null
-                : (File? file) {
-                    cubit.categoryRecordImageNotifier.value = file;
-                    print(
-                        'cubit.categoryRecordImageNotifier.value${cubit.categoryRecordImageNotifier.value}');
-                    cubit.isValidateToVisible();
-                  },
+            // fileFromApi: cubit.request?.verificationTypeImage != null &&
+            //         cubit.request?.isExpired == false &&
+            //         cubit.request?.sTATUS != 'rejected'
+            //     ? cubit.request?.verificationTypeImage
+            //     : null,
+            fileFromApi: null,
+            // onChange:
+            // cubit.request?.verificationTypeImage != null &&
+            //         cubit.request?.isExpired == false &&
+            //         cubit.request?.sTATUS != 'rejected'
+            //     ? null
+            onChange: (File? file) {
+              cubit.categoryRecordImageNotifier.value = file;
+              print(
+                  'cubit.categoryRecordImageNotifier.value${cubit.categoryRecordImageNotifier.value}');
+              cubit.isValidateToVisible();
+            },
             hint: "أرفق صورة $category"),
       ],
     );
   }
 
-  // Stack buildRegisterNumber(
-  //     TicketsCubit cubit, String category, BuildContext context) {
-  //   return BuildRegisterNumber();
-  // }
+// Stack buildRegisterNumber(
+//     TicketsCubit cubit, String category, BuildContext context) {
+//   return BuildRegisterNumber();
+// }
 }
 
 class BuildRegisterNumber extends StatefulWidget {
@@ -680,9 +639,10 @@ class _BuildRegisterNumberState extends State<BuildRegisterNumber> {
               ? null
               : widget.cubit.request?.verificationTypeNumber,
           // controller: widget.commercialRegisterNumberController,
-          disabled: widget.cubit.request?.verificationTypeNumber != null &&
-              widget.cubit.request?.isExpired == false &&
-              widget.cubit.request?.sTATUS != 'rejected',
+          // disabled: widget.cubit.request?.verificationTypeNumber != null &&
+          //     widget.cubit.request?.isExpired == false &&
+          //     widget.cubit.request?.sTATUS != 'rejected',
+          disabled: false,
           hasBorder: true,
           hint: 'أدخل رقم ${widget.category}',
           // textColor: cubit.request?.verificationTypeNumber != null &&

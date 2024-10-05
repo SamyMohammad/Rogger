@@ -11,7 +11,6 @@ import 'package:silah/shared_models/categories_model.dart';
 import 'package:silah/shared_models/sub_categories_model.dart';
 
 import '../../constants.dart';
-import '../../store/add_product/categories_in_add_product.dart';
 
 class CategoryCubit extends Cubit<CategoryStates> {
   CategoryCubit() : super(CategoryInitState());
@@ -36,8 +35,8 @@ class CategoryCubit extends Cubit<CategoryStates> {
 
   bool isValid = false;
   void checkInputsValidity() {
-    print('selectedCategory : $selectedCategory' +
-        ' selectedSubCategory : $selectedSubCategory' +
+    print('selectedCategory : ${selectedCategory?.name}' +
+        ' selectedSubCategory : ${selectedSubCategory?.name}' +
         ' selectedCopyOfTransferImage : $selectedCopyOfTransferImage');
     if (selectedCategory != null &&
         selectedSubCategory != null &&
@@ -107,7 +106,6 @@ class CategoryCubit extends Cubit<CategoryStates> {
     }
   }
 
-
   Future<void> getPaidCategories() async {
     emit(CategoryLoadingState());
     try {
@@ -129,7 +127,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
         'category_id': id,
       };
       final response =
-      await DioHelper.post('common/category/sub_categories', data: data);
+          await DioHelper.post('common/category/sub_categories', data: data);
       print('GetSubCategoriesLoadingState  : ${response.data}');
       getSubCategory = GetSubCategory.fromJson(response.data);
       subCategories = getSubCategory?.categories ?? [];

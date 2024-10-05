@@ -35,7 +35,9 @@ dependencies:
   flutter_html: ^3.0.0-beta.1
   # For picking images from gallery or camera
   #  image_picker: ^0.8.5+3
-  images_picker: ^1.2.11
+  images_picker: 
+    git:
+      url: https://github.com/SamyMohammad/images_picker.git
   # Carousel Slider
   carousel_slider: ^5.0.0
   #shared pref
@@ -68,6 +70,8 @@ dependencies:
   scanly: ^0.0.3
   zxing2: any
   flutter_regex: ^0.0.3
+  image_picker: 1.0.8
+  zoom_pinch_overlay: ^1.4.3
 dependency_overrides:
   photo_manager: ^3.0.0-dev.2  
   custom_map_markers: ^0.0.2+1
@@ -90,7 +94,9 @@ dependency_overrides:
   equatable: any
   infinite_scroll_pagination: any
   flutter_debouncer: any
-  image_gallery_saver: any
+  photo_view: ^0.15.0
+
+  # image_gallery_saver: any
   screenshot: any
   drag_down_to_pop: any
   zxing2: any

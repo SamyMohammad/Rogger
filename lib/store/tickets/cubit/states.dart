@@ -35,6 +35,7 @@ class GetStatusVerificationSuccessState extends TicketsStates {
   GetStatusVerificationSuccessState(this.response);
 }
 
+class NavigateToVerifyMethodFormState extends TicketsStates {}
 class GetStatusVerificationErrorState extends TicketsStates {}
 
 class GetStatusVerificationLoadingState extends TicketsStates {}

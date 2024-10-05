@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/widgets/loading_indicator.dart';
-import 'package:widget_zoom/widget_zoom.dart';
 
 class ProductImagesView extends StatefulWidget {
   const ProductImagesView(
@@ -75,15 +75,40 @@ class _ProductImagesViewState extends State<ProductImagesView> {
                       width: double.infinity,
                       color: Colors.black.withOpacity(0.8),
                     ),
-                    WidgetZoom(
-                      heroAnimationTag: 'tag',
-                      zoomWidget: Image.network(
-                        urls[index],
-                        fit: BoxFit.fill,
-                        height: 500,
-                        width: double.infinity,
+                    // PhotoView.customChild(
+                    //   child: Image.network('https://example.com/your_image_url.jpg'),
+                    //   minScale: PhotoViewComputedScale.contained * 0.8,
+                    //   maxScale: PhotoViewComputedScale.covered * 2,
+                    //   gestureDetectorBehavior: (context, child, controllerValue) {
+                    //     return CustomPhotoViewGestureDetector(
+                    //       behavior: HitTestBehavior.opaque,
+                    //       child: child,
+                    //       onScaleStart: controllerValue.startScale,
+                    //       onScaleUpdate: controllerValue.updateScale,
+                    //       onScaleEnd: controllerValue.endScale,
+                    //       enablePinchZoom: true, // Enable pinch-to-zoom
+                    //       enableDoubleTapZoom: false, // Disable double-tap zoom
+                    //     );
+                    //   },
+                    // ),
+                    Container(
+                      child: PhotoView(
+                        heroAttributes: PhotoViewHeroAttributes(tag: 'tag'),
+                        imageProvider: NetworkImage(urls[index]),
+                        gestureDetectorBehavior: HitTestBehavior.translucent,
+                        minScale: PhotoViewComputedScale.contained * 0.8,
+                        maxScale: PhotoViewComputedScale.covered * 2,
                       ),
                     ),
+                    // WidgetZoom(
+                    //   heroAnimationTag: 'tag',
+                    //   zoomWidget: Image.network(
+                    //     urls[index],
+                    //     fit: BoxFit.fill,
+                    //     height: 500,
+                    //     width: double.infinity,
+                    //   ),
+                    // ),
                   ],
                 ),
               );

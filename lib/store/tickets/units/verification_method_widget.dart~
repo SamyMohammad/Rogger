@@ -63,7 +63,7 @@ class VerificationMethodWidget extends StatelessWidget {
   final String name;
   final bool isChoosen;
   final VoidCallback onTap;
-  final String? price;
+  final int? price;
   final bool isActivated;
   final bool isVerificationMethodContainer;
   final bool? isAnyMethodVerified;

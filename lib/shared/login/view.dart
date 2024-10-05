@@ -8,6 +8,7 @@ import 'package:silah/shared/forget_password/view.dart';
 import 'package:silah/shared/login/cubit/cubit.dart';
 import 'package:silah/shared/login/cubit/states.dart';
 import 'package:silah/shared/sign_up/view.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/loading_indicator.dart';
@@ -115,9 +116,14 @@ class LoginView extends StatelessWidget {
                           : ConfirmButton(
                               isExpanded: true,
                               title: 'تسجيل الدخول',
+                              fontColor: cubit.areInputsValid
+                                  ? Colors.white
+                                  : Color(0xFFA1A1A1),
                               color: cubit.areInputsValid
                                   ? activeButtonColor
-                                  : kLightGreyColor,
+                                  : ThemeCubit.of(context).isDark
+                                      ? Color(0xFF1E1E26)
+                                      : Color(0xffFAFAFF),
                               onPressed:
                                   cubit.areInputsValid ? cubit.login : null,
                             );

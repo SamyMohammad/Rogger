@@ -24,7 +24,15 @@ class _EditPhoneView extends StatelessWidget {
                 if (state is EditProfileLoadingState) return LoadingIndicator();
                 return ConfirmButton(
                   title: 'تعديل',
-                  color: cubit.areInputsValid ? activeButtonColor : kGreyColor,
+                  fontColor:
+                      cubit.areInputsValid ? Colors.white : Color(0xFFA1A1A1),
+                  color: cubit.areInputsValid
+                      ? activeButtonColor
+                      : ThemeCubit.of(context).isDark
+                          ? Color(0xFF1E1E26)
+                          : Color(0xffFAFAFF),
+
+                  // color: cubit.areInputsValid ? activeButtonColor : kGreyColor,
                   onPressed: cubit.areInputsValid ? cubit.editProfile : null,
                 );
               },

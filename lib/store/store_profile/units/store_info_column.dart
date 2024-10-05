@@ -30,8 +30,8 @@ class StoreInfoColumn extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 8),
-                  
-                  //  if(storeInfo!.)
+
+                  // if(storeInfo!.)
                   Image.asset(
                     getAsset("verified"),
                     height: 20,
@@ -89,8 +89,7 @@ class StoreInfoColumn extends StatelessWidget {
                                   child: SvgPicture.asset(
                                     getIcon("Vector"),
                                     fit: BoxFit.scaleDown,
-                                                                color: Theme.of(context).primaryColor,
-
+                                    color: Theme.of(context).primaryColor,
                                     height: 10,
                                   ),
                                 ),
@@ -121,8 +120,7 @@ class StoreInfoColumn extends StatelessWidget {
                                     child: SvgPicture.asset(
                                       getIcon("Vector-1"),
                                       fit: BoxFit.scaleDown,
-                                                                  color: Theme.of(context).primaryColor,
-
+                                      color: Theme.of(context).primaryColor,
                                       height: 9,
                                     ),
                                   ),
@@ -174,16 +172,21 @@ class StoreInfoColumn extends StatelessWidget {
                         context: context,
                         backgroundColor: Color(0xff022E47),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(topLeft:Radius.circular(20) ,topRight: Radius.circular(20),)
-                            ),
-                        builder: (context) => GenerateQRCodeView(id: storeId ,)),
+                            borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        )),
+                        builder: (context) => GenerateQRCodeView(
+                              id: storeId,
+                            )),
                     child: Container(
                       padding: const EdgeInsets.only(bottom: 6),
                       height: 25,
                       width: 25,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                            color: Theme.of(context).appBarTheme.backgroundColor,
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor,
                             boxShadow: [
                               BoxShadow(
                                   offset: Offset(0, .5),

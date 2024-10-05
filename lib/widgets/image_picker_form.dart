@@ -6,7 +6,7 @@ import 'package:images_picker/images_picker.dart';
 import 'package:silah/constants.dart';
 
 class ImagePickerForm extends StatefulWidget {
-  ImagePickerForm({super.key,  this.onChange, this.hint,this.fileFromApi});
+  ImagePickerForm({super.key, this.onChange, this.hint, this.fileFromApi});
   final Function(File? selectedImage)? onChange;
   final String? hint;
   final String? fileFromApi;
@@ -24,23 +24,27 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
     });
     if (widget.onChange != null) {
       widget.onChange!(selectedFile);
-    }  }
+    }
+  }
 
   void removeImage() {
     setState(() {
       selectedFile = null;
     });
-    if(widget.onChange != null)
-    {widget.onChange!(selectedFile);}
+    if (widget.onChange != null) {
+      widget.onChange!(selectedFile);
+    }
   }
 
   File? selectedFile;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:widget.fileFromApi== null? () {
-        _pickImage();
-      }:null,
+      onTap: widget.fileFromApi == null
+          ? () {
+              _pickImage();
+            }
+          : null,
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -56,10 +60,11 @@ class _ImagePickerFormState extends State<ImagePickerForm> {
             SizedBox(width: 10),
             Expanded(
               child: Text(
-                widget.fileFromApi== null?
-                selectedFile != null
-                    ? selectedFile!.path
-                    : widget.hint ?? 'أرفق صورة من التحويل':widget.fileFromApi!,
+                widget.fileFromApi == null
+                    ? selectedFile != null
+                        ? selectedFile!.path
+                        : widget.hint ?? 'أرفق صورة '
+                    : widget.fileFromApi!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: kDarkGreyColor),

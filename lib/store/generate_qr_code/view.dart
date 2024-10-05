@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
@@ -87,7 +87,8 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
   }
 
   _saved(Uint8List image) async {
-    final result = await ImageGallerySaver.saveImage(image);
+    // TODO: fix save issue
+    // final result = await ImageGallerySaver.saveImage(image);
     print("File Saved to Gallery");
     showSnackBar("تم الحفظ");
   }

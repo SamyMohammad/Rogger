@@ -4,6 +4,8 @@ import 'package:silah/store/tickets/choose_verification_method_view.dart';
 import 'package:silah/store/tickets/cubit/cubit.dart';
 import 'package:silah/store/tickets/cubit/states.dart';
 import 'package:silah/store/tickets/units/tickets_categories_section.dart';
+import 'package:silah/store/tickets/units/tickets_verification_section.dart';
+import 'package:silah/store/tickets/verification_gurantee_section.dart';
 import 'package:silah/widgets/custom_tabview.dart';
 
 class TicketsView extends StatelessWidget {
@@ -41,9 +43,14 @@ class TicketsView extends StatelessWidget {
                 //       .getModelIndexOfVerificatio('Commercial Register');
                 //   ticketsCubit
                 //       .isAnyRequestInTypeVerification('Commercial Register');
-                return ticketsCubit.isFirstSelected
-                    ? ChooseVerificationMethodSection()
-                    : TicketsCategoriesSection();
+
+                return !ticketsCubit.isFirstSelected
+                    ? TicketsCategoriesSection()
+                    : ticketsCubit.isNavigateToContinueVerifyMethodForm
+                        ? TicketsVerificationSection()
+                        : ticketsCubit.isNavigateToContinueGuaranteeForm
+                            ? VerificationGuaranteeSection()
+                            : ChooseVerificationMethodSection();
               }),
             ],
           ),
