@@ -43,6 +43,7 @@ class LocationManager {
     try {
       Position? position;
       if (latLng == null) position = await getLocationFromDevice();
+      print("setLocationnnn ${latLng?.latitude} ${latLng?.longitude}");
       currentLocationFromServer = LatLng(position?.latitude ?? latLng!.latitude,
           position?.longitude ?? latLng!.longitude);
       final city = await getCityByLatLng(
@@ -65,7 +66,7 @@ class LocationManager {
         return true;
       }
     } catch (e, s) {
-      debugPrint(e.toString());
+      debugPrint("provider/account/set_location ${e.toString()}");
       debugPrint(s.toString());
     }
     showLocationErrorBar();

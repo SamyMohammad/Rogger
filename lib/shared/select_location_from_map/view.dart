@@ -42,7 +42,7 @@ class SelectLocationFromMapView extends StatelessWidget {
                         horizontalMargin: VIEW_PADDING.horizontal,
                         onPressed: cubit.updateLocation,
                         verticalMargin: 10,
-                      ),
+                        color: activeButtonColor),
                 SizedBox(height: 20),
               ],
             );

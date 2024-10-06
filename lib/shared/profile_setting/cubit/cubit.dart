@@ -9,7 +9,9 @@ import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/widgets/snack_bar.dart';
 import 'package:silah/widgets/toast.dart';
 
+import '../../../core/router/router.dart';
 import '../../../user/advertisers_on_map/map_categories_model.dart';
+import '../../verify/view.dart';
 import 'states.dart';
 
 class EditProfileCubit extends Cubit<EditProfileStates> {
@@ -64,12 +66,12 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
           // RouteManager.navigateAndPopAll(NavBarView());
         } else {
           showToast("يجب تفعيل رقم الجوال");
-          // RouteManager.navigateAndPopUntilFirstPage(VerifyView(
-          //   customerId: AppStorage.customerID,
-          //   telephone: telephoneController.text,
-          //   customerGroup: AppStorage.getUserModel()!.customerGroup!,
-          //   reverifying: true,
-          // ));
+          RouteManager.navigateAndPopUntilFirstPage(VerifyView(
+            customerId: AppStorage.customerID,
+            telephone: telephoneController.text,
+            customerGroup: AppStorage.getUserModel()!.customerGroup!,
+            reverifying: true,
+          ));
         }
       } else if (data.toString().contains('message')) {
         showToast(data['message']);
@@ -154,13 +156,13 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
     emit(EditProfileInitState());
   }
 
-
   Future<void> updateMapCategory(String mapCategoryId) async {
     if (!AppStorage.isStore) {
       return;
     }
     try {
-      final response = await DioHelper.post('customer/account/update_map_category',data: {
+      final response =
+          await DioHelper.post('customer/account/update_map_category', data: {
         'map_category_id': mapCategoryId,
         'customer_id': AppStorage.customerID,
       });

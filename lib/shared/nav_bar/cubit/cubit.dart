@@ -57,6 +57,7 @@ class NavBarCubit extends Cubit<NavBarStates> {
     if (!isAssigned) {
       RouteManager.navigateAndPopAll(SelectLocationView());
     }
+
     emit(NavBarInitState());
   }
 

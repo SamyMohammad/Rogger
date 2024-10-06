@@ -21,7 +21,7 @@ import '../black_list/cubit/cubit.dart';
 import '../black_list/cubit/states.dart';
 import '../messages/cubit.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
   const ChatView({
     Key? key,
     required this.chatID,
@@ -43,17 +43,30 @@ class ChatView extends StatelessWidget {
   final MessagesCubit? messagesCubit;
 
   @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  final ValueNotifier<bool> isVisible = ValueNotifier<bool>(false);
+
+  @override
+  initState() {
+    super.initState();
+    // bool isVisible = widget.productImage != null;
+    isVisible.value = widget.productImage != null;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool isVisible = productImage != null;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => ChatCubit(
-            chatID: chatID,
-            productID: productID,
-            userID: userID,
-            username: username,
-            messagesCubit: messagesCubit,
+            chatID: widget.chatID,
+            productID: widget.productID,
+            userID: widget.userID,
+            username: widget.username,
+            messagesCubit: widget.messagesCubit,
           )..init(),
         ),
         BlocProvider(
@@ -69,8 +82,8 @@ class ChatView extends StatelessWidget {
           title: Row(
             children: [
               ProfileAvatar(
-                userID: userID,
-                image: profileImage,
+                userID: widget.userID,
+                image: widget.profileImage,
                 width: 35,
                 height: 35,
                 onlineDotRadius: 0,
@@ -80,12 +93,12 @@ class ChatView extends StatelessWidget {
                 onTap: AppStorage.isStore
                     ? null
                     : () => RouteManager.navigateTo(
-                        StoreProfileView(storeId: userID)),
+                        StoreProfileView(storeId: widget.userID)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      username,
+                      widget.username,
                       style: TextStyle(
                         fontSize: 16,
                         color: ThemeCubit.of(context).isDarkMode()
@@ -95,7 +108,8 @@ class ChatView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5),
-                    OnlineStatusTile(userID: userID, chatID: chatID),
+                    OnlineStatusTile(
+                        userID: widget.userID, chatID: widget.chatID),
                   ],
                 ),
               ),
@@ -198,7 +212,7 @@ class ChatView extends StatelessWidget {
                                       senderName: message.fromId ==
                                               AppStorage.customerID.toString()
                                           ? ''
-                                          : username,
+                                          : widget.username,
                                       message: message.text,
                                       attachment: message.attachment,
                                       isMe: isMe,
@@ -208,6 +222,69 @@ class ChatView extends StatelessWidget {
                                   },
                                 ),
                               ),
+                              ValueListenableBuilder(
+                                builder: (context, isVisible, setState) {
+                                  return Visibility(
+                                    visible: isVisible,
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFAFAFF),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: .5,
+                                            blurRadius: .5,
+                                            // offset: Offset(
+                                            //     0, 3), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(
+                                          15,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                child: Image.network(
+                                                  widget.productImage ?? '',
+                                                  fit: BoxFit.cover,
+                                                  width: 80,
+                                                  height: 80,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5.0),
+                                                child: Text(
+                                                  widget.productTitle ?? '',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                valueListenable: isVisible,
+                              ),
                               Container(
                                 padding: const EdgeInsets.only(
                                     top: 6, left: 16, right: 25, bottom: 6),
@@ -215,167 +292,138 @@ class ChatView extends StatelessWidget {
                                     ? Theme.of(context)
                                         .appBarTheme
                                         .backgroundColor
-                                    : kGreyColor,
+                                    : Color(0xffFCFCFC),
                                 child: cubit.isBlocked ?? false
                                     ? buildBlockBanner(blackListCubit, cubit)
-                                    : Column(
-                                        children: [
-                                          // Container(
-                                          //   width: double.infinity,
-                                          //   height: 30,
-                                          //   child: Image.asset(productID),
-                                          // ),
-                                          StatefulBuilder(
-                                              builder: (context, setState) {
-                                            return Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Visibility(
-                                                      visible: isVisible,
-                                                      child: Image.network(
-                                                        productImage ?? '',
-                                                        fit: BoxFit.fill,
-                                                        width: 80,
-                                                        height: 80,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      productTitle ?? '',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.black),
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 6,
-                                                ),
-                                                Text(
-                                                  productTitle ?? '',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline6,
-                                                ),
-                                                SizedBox(
-                                                  height: 6,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                      height: 30,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Spacer(),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                isVisible =
-                                                                    false;
-                                                              });
-                                                              cubit
-                                                                  .sendMessage();
-                                                            },
-                                                            child: CircleAvatar(
-                                                              maxRadius: 14,
-                                                              backgroundColor: cubit
-                                                                      .textEditingController
-                                                                      .text
-                                                                      .isEmpty
-                                                                  ? kDarkGreyColor
-                                                                  : kPrimaryColor,
-                                                              child: Center(
-                                                                child:
-                                                                    SvgPicture
-                                                                        .asset(
-                                                                  getIcon(
-                                                                      "large_back_arrow"),
-                                                                  height: 18,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 8),
-                                                    Expanded(
-                                                      child: ChatTextField(
-                                                          cubit: cubit),
-                                                      //     TextFormField(
-                                                      //   style: TextStyle(fontSize: 10, height: 1),
-                                                      //   decoration: InputDecoration(
-                                                      //       fillColor: kBackgroundColor,
-                                                      //       filled: true,
-                                                      //       contentPadding: EdgeInsets.all(8),
-                                                      //       prefixIcon: Container(
-                                                      //         width: 20,
-                                                      //         height: 20,
-                                                      //         decoration: BoxDecoration(
-                                                      //             color: kGreyButtonColorD9),
-                                                      //         child: Center(
-                                                      //           child: SvgPicture.asset(
-                                                      //             getIcon("large_back_arrow"),
-                                                      //             height: 10,
-                                                      //           ),
-                                                      //         ),
-                                                      //       ),
-                                                      //       border: OutlineInputBorder(
-                                                      //           borderSide:
-                                                      //               BorderSide(color: Colors.grey)),
-                                                      //       isDense: true),
-                                                      // )
-                                                      //     InputFormField(
-                                                      //   radius: 10,
-                                                      //   isDense: true,
-                                                      //   controller: cubit.textEditingController,
-                                                      //   onChanged: (_) => cubit.validateInput(),
-                                                      //   multiLine: true,
-                                                      //   minLines: 1,
-                                                      //   maxLines: 4,
-                                                      //   fontSize: 10,
-                                                      //   fillColor: Colors.white,
-                                                      //   iconWidget: IconButton(
-                                                      //       onPressed: cubit.sendMessage,
-                                                      //       icon: CircleAvatar(
-                                                      //         backgroundColor: cubit
-                                                      //                 .textEditingController
-                                                      //                 .text
-                                                      //                 .isEmpty
-                                                      //             ? kGreyButtonColorD9
-                                                      //             : kPrimaryColor,
-                                                      //         radius: 30,
-                                                      //         child: SvgPicture.asset(
-                                                      //           getIcon("large_back_arrow"),
-                                                      //         ),
-                                                      //       )),
-                                                      // ),
-                                                    ),
-                                                    SizedBox(width: 8),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        cubit.sendImage();
-                                                      },
-                                                      child: SvgPicture.asset(
-                                                          getIcon("image"),
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          height: 26),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            );
-                                          }),
-                                        ],
-                                      ),
+                                    : StatefulBuilder(
+                                        builder: (context, setState) {
+                                        return Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              child: ChatTextField(
+                                                  cubit: cubit,
+                                                  onTapPrefix: () {
+                                                    isVisible.value = false;
+// setState(() {});
+                                                    cubit.sendMessage();
+                                                  }),
+                                              //     TextFormField(
+                                              //   style: TextStyle(fontSize: 10, height: 1),
+                                              //   decoration: InputDecoration(
+                                              //       fillColor: kBackgroundColor,
+                                              //       filled: true,
+                                              //       contentPadding: EdgeInsets.all(8),
+                                              //       prefixIcon: Container(
+                                              //         width: 20,
+                                              //         height: 20,
+                                              //         decoration: BoxDecoration(
+                                              //             color: kGreyButtonColorD9),
+                                              //         child: Center(
+                                              //           child: SvgPicture.asset(
+                                              //             getIcon("large_back_arrow"),
+                                              //             height: 10,
+                                              //           ),
+                                              //         ),
+                                              //       ),
+                                              //       border: OutlineInputBorder(
+                                              //           borderSide:
+                                              //               BorderSide(color: Colors.grey)),
+                                              //       isDense: true),
+                                              // )
+                                              //     InputFormField(
+                                              //   radius: 10,
+                                              //   isDense: true,
+                                              //   controller: cubit.textEditingController,
+                                              //   onChanged: (_) => cubit.validateInput(),
+                                              //   multiLine: true,
+                                              //   minLines: 1,
+                                              //   maxLines: 4,
+                                              //   fontSize: 10,
+                                              //   fillColor: Colors.white,
+                                              //   iconWidget: IconButton(
+                                              //       onPressed: cubit.sendMessage,
+                                              //       icon: CircleAvatar(
+                                              //         backgroundColor: cubit
+                                              //                 .textEditingController
+                                              //                 .text
+                                              //                 .isEmpty
+                                              //             ? kGreyButtonColorD9
+                                              //             : kPrimaryColor,
+                                              //         radius: 30,
+                                              //         child: SvgPicture.asset(
+                                              //           getIcon("large_back_arrow"),
+                                              //         ),
+                                              //       )),
+                                              // ),
+                                            ),
+                                            SizedBox(width: 8),
+                                            InkWell(
+                                              onTap: () {
+                                                cubit.sendImage();
+                                              },
+                                              child: SvgPicture.asset(
+                                                  getIcon("image"),
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  height: 26),
+                                            )
+                                          ],
+                                        );
+                                      }),
+
+                                // Column(
+                                //         children: [
+                                //           // Container(
+                                //           //   width: double.infinity,
+                                //           //   height: 30,
+                                //           //   child: Image.asset(productID),
+                                //           // ),
+                                //           StatefulBuilder(
+                                //               builder: (context, setState) {
+                                //             return Column(
+                                //               children: [
+                                //                 Row(
+                                //                   children: [
+                                //                     Visibility(
+                                //                       visible: isVisible,
+                                //                       child: Image.network(
+                                //                         productImage ?? '',
+                                //                         fit: BoxFit.fill,
+                                //                         width: 80,
+                                //                         height: 80,
+                                //                       ),
+                                //                     ),
+                                //                     Text(
+                                //                       productTitle ?? '',
+                                //                       style: TextStyle(
+                                //                           fontSize: 12,
+                                //                           color: Colors.black),
+                                //                     )
+                                //                   ],
+                                //                 ),
+                                //                 // SizedBox(
+                                //                 //   height: 6,
+                                //                 // ),
+                                //                 // Text(
+                                //                 //   productTitle ?? '',
+                                //                 //   style: Theme.of(context)
+                                //                 //       .textTheme
+                                //                 //       .titleLarge,
+                                //                 // ),
+                                //                 SizedBox(
+                                //                   height: 6,
+                                //                 ),
+                                //               ],
+                                //             );
+                                //           }),
+                                //
+                                //         ],
+                                //       ),
                               ),
+                              SizedBox(height: 10),
                             ],
                           ),
                           // if (cubit.chatModel?.productInfo != null)
@@ -440,13 +488,15 @@ class ChatView extends StatelessWidget {
 }
 
 class ChatTextField extends StatelessWidget {
-  const ChatTextField({
+  ChatTextField({
     super.key,
     required this.cubit,
+    this.onTapPrefix,
   });
 
   final ChatCubit cubit;
-
+  VoidCallback? onTapPrefix;
+  // bool? isAttachedImageVisible;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -462,6 +512,20 @@ class ChatTextField extends StatelessWidget {
         LengthLimitingTextInputFormatter(200),
       ],
       decoration: InputDecoration(
+        // contentPadding: EdgeInsets.only(top: 10, right: 20),
+        // suffixIconConstraints: BoxConstraints.tight(Size(60, 30)),
+        prefixIcon: GestureDetector(
+          onTap: onTapPrefix,
+          child: CircleAvatar(
+            maxRadius: 15,
+            backgroundColor: cubit.textEditingController.text.isEmpty
+                ? Color(0xFFD9D9D9)
+                : activeButtonColor,
+            child: Center(
+              child: Icon(Icons.send, size: 21),
+            ),
+          ),
+        ),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: kGreyColor)),
@@ -514,7 +578,7 @@ class ChatTextField extends StatelessWidget {
         //       ),
         //     )),
         isDense: true, // Added this
-        contentPadding: EdgeInsets.all(8), // Added this
+        contentPadding: EdgeInsets.all(10), // Added this
       ),
     );
   }

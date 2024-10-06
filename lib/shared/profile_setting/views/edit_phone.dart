@@ -7,6 +7,8 @@ class _EditPhoneView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "AppStorage.getUserModel()?.modificationInterval${AppStorage.getUserModel()?.modificationInterval}");
     return Scaffold(
       appBar: AppBar(
         title: Text('رقم الجوال'),

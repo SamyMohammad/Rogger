@@ -48,7 +48,8 @@ class LoginCubit extends Cubit<LoginStates> {
           customerGroup: data['customer_group'],
         ));
         showSnackBar('برجاء تفعيل رقم الجوال');
-      } else if (data['logged'] == true) {
+      } else if (data['logged'] == true ||
+          data['customer_status'].toString() == "1") {
         // Home
         await getUserAndCache(data['customer_id'], data['customer_group']);
         RouteManager.navigateAndPopAll(NavBarView());

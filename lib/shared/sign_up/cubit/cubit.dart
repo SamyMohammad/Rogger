@@ -32,19 +32,20 @@ class SignUpCubit extends Cubit<SignUpStates> {
     };
     print('params: $params');
     try {
-      final response = await DioHelper.post('customer/account/register', data: {
-        "customer_group_id": groupId,
-        "name": name,
-        "email": email ?? "",
-        if (groupId == '2') "nickname": nickname,
-        "telephone": telephone,
-        "password": password,
-        "agree": "1",
-        // "country_id" : countryID,
-      });
-
+      final response = await DioHelper.post(
+        'customer/account/register',
+        data: {
+          "customer_group_id": groupId,
+          "name": name,
+          "email": email ?? "",
+          if (groupId == '2') "nickname": nickname,
+          "telephone": telephone,
+          "password": password,
+          "agree": "1",
+          // "country_id" : countryID,
+        },
+      );
       final data = response.data;
-      showToast(data['message']);
 
       if (!data.toString().contains('customer_id')) {
         showToast(data['message']);
@@ -61,6 +62,8 @@ class SignUpCubit extends Cubit<SignUpStates> {
         ));
       }
     } catch (e, s) {
+      print("signUpppppp${e}");
+
       print(e);
       print(s);
       showToast(e.toString());
