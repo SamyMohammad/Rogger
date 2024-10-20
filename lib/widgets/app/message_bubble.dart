@@ -12,7 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:silah/shared/product_details/view.dart';
 
 import '../../../constants.dart';
-import '../../shared/location_view/view.dart';
 import '../../shared/product_details/view.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -197,14 +196,21 @@ class LocationBubble extends StatelessWidget {
   final LatLng location;
   final bool isMe;
   final String date;
+  Future<void> _openGoogleMaps() async {
+    final url =
+        'https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}';
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not open Google Maps';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => RouteManager.navigateTo(LocationView(
-        viewOnly: true,
-        location: location,
-      )),
+      onTap: () => _openGoogleMaps(),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
