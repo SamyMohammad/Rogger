@@ -283,6 +283,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                   },
                   child: Material(
                     elevation: 2, // Elevation (shadow)
+                    color: Theme.of(context).appBarTheme.backgroundColor,
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                       padding: EdgeInsets.all(5),
@@ -360,13 +361,17 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                                       Row(
                                         children: [
                                           Image.asset(getAsset("unlike"),
-                                              height: 18),
+                                              height: 18,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                           SizedBox(width: 10),
                                           Image.asset(getAsset("like"),
-                                              height: 18),
+                                              height: 18,
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                           SizedBox(width: 10),
                                           Text(
-                                            "",
+                                            advertiser.ratingCount ?? "0",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           )

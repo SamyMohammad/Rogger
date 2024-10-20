@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silah/constants.dart';
+import 'package:silah/core/router/router.dart';
+import 'package:silah/shared/product_details/view.dart';
 import 'package:silah/shared/search/cubit.dart';
 import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/widgets/app_bar.dart';
@@ -38,7 +40,8 @@ class SearchView extends StatelessWidget {
                             cursorHeight: 20,
                             cursorColor: Theme.of(context).primaryColor,
                             style: TextStyle(
-                                  fontSize: 14, color:Theme.of(context).primaryColor),
+                                fontSize: 14,
+                                color: Theme.of(context).primaryColor),
                             textInputAction: TextInputAction.search,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
@@ -59,7 +62,8 @@ class SearchView extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context).appBarTheme.backgroundColor,
+                            color:
+                                Theme.of(context).appBarTheme.backgroundColor,
                           ),
                         ),
                       )
@@ -74,7 +78,9 @@ class SearchView extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: ThemeCubit.of(context).isDark?Colors.transparent : kGreyColor,
+                          color: ThemeCubit.of(context).isDark
+                              ? Colors.transparent
+                              : kGreyColor,
                           blurRadius: 1.5,
                           spreadRadius: 0.2,
                         )
@@ -140,19 +146,27 @@ class SearchView extends StatelessWidget {
                       child: ListView.builder(
                         itemCount: cubit.searchModel?.products.length ?? 0,
                         itemBuilder: (context, index) {
-                          return ProductItem(
-                            customerProfile: cubit
-                                .searchModel!.products[index].customerProfile,
-                            productId:
-                                cubit.searchModel!.products[index].productId,
-                            image: cubit.searchModel!.products[index].thumb,
-                            title: cubit.searchModel!.products[index].name,
-                            time:
-                                cubit.searchModel!.products[index].dateModified,
-                            personName:
-                                cubit.searchModel!.products[index].customerName,
-                            city: cubit.searchModel!.products[index].city,
-                            rate: cubit.searchModel!.products[index].rate,
+                          return InkWell(
+                            onTap: () {
+                              RouteManager.navigateTo(ProductDetailsView(
+                                productId: cubit
+                                    .searchModel!.products[index].productId,
+                              ));
+                            },
+                            child: ProductItem(
+                              customerProfile: cubit
+                                  .searchModel!.products[index].customerProfile,
+                              productId:
+                                  cubit.searchModel!.products[index].productId,
+                              image: cubit.searchModel!.products[index].thumb,
+                              title: cubit.searchModel!.products[index].name,
+                              time: cubit
+                                  .searchModel!.products[index].dateModified,
+                              personName: cubit
+                                  .searchModel!.products[index].customerName,
+                              city: cubit.searchModel!.products[index].city,
+                              rate: cubit.searchModel!.products[index].rate,
+                            ),
                           );
                         },
                       ),
@@ -168,7 +182,9 @@ class SearchView extends StatelessWidget {
               return Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: cubit.nearest ? Colors.black : kDarkGreyColor,
+                  color: cubit.nearest
+                      ? Color(0xFF019CF6).withOpacity(.9)
+                      : kPrimaryColor.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: IconButton(

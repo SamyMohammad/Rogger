@@ -21,7 +21,8 @@ class SelectLocationFromMapCubit extends Cubit<SelectLocationFromMapStates> {
     try {
       final position = await LocationManager.getLocationFromDevice();
       if (position != null) {
-        initialLocation = LatLng(position.latitude, position.longitude);
+        initialLocation = LatLng(position.latitude ?? defaultLatLng.latitude,
+            position.longitude ?? defaultLatLng.longitude);
       } else {
         throw Exception('Can not get location');
       }

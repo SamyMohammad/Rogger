@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+// import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 import '../../shared/nav_bar/cubit/cubit.dart';
 import '../app_storage/app_storage.dart';
@@ -14,17 +14,17 @@ class FirebaseMessagingHelper {
   static void init() async {
     onMessage();
     onMessageOpenedApp();
-    
+
     checkIfUserClickedNotificationFromBackground();
   }
 
   static void onMessage() {
     FirebaseMessaging.onMessage.listen((notification) {
-      FlutterRingtonePlayer().play(
-        android: AndroidSounds.notification,
-        ios: IosSounds.glass,
-        looping: false,
-      );
+      // FlutterRingtonePlayer.play(
+      //   android: AndroidSounds.notification,
+      //   ios: IosSounds.glass,
+      //   looping: false,
+      // );
       _handleNotificationReceiver(notification);
     });
   }

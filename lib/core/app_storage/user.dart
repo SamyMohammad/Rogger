@@ -37,7 +37,7 @@ class UserModel {
   int? mapCategoryID;
   String? brief;
   String? modifiedTelephone;
-  String? modificationInterval;
+  int? modificationInterval;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -55,7 +55,7 @@ class UserModel {
       profileCover: json['profile_cover'],
       modificationInterval: json['modification_interval'] == null
           ? null
-          : json['modification_interval'].toString(),
+          : json['modification_interval'],
     );
   }
 

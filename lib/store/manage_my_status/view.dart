@@ -90,7 +90,7 @@ class _ManageMyStatusViewState extends State<ManageMyStatusView> {
             title: Text(
               Jiffy.parseFromDateTime(i.dateAdded!).fromNow(),
               style: TextStyle(
-                color: kPrimaryColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             onTap: () => Navigator.push(

@@ -9,6 +9,7 @@ import 'package:silah/store/store_profile/comments_model.dart';
 import 'package:silah/store/store_profile/cubit/states.dart';
 import 'package:silah/store/store_profile/get_rate/get_rate.dart';
 import 'package:silah/store/store_profile/store_info_model.dart';
+import 'package:silah/store/tickets/get_status_verification/get_status_verification.dart';
 import 'package:silah/widgets/snack_bar.dart';
 
 import '../../../user/followers/cubit/cubit.dart';
@@ -61,6 +62,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
   }
 
   bool? isStoreVerified;
+  GetStatusVerification? getStatusVerification;
   Future<void> getStatusVerified() async {
     final response = await DioHelper.post(
       'customer/account/get_customer_verfication',
@@ -69,7 +71,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       },
     );
     final data = response.data;
-
+    getStatusVerification = GetStatusVerification.fromJson(data);
     // isStoreVerified = data['is_verified'] ?? false;
     print('getStatusVerifiedss $data');
     // storeInfoModel = StoreInfoModel.fromJson(data);

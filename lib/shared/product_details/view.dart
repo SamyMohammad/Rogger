@@ -47,8 +47,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ProductsDetailsCubit(widget.productId)..getProductsDetails(),
+      create: (context) => ProductsDetailsCubit(widget.productId)
+        ..getProductsDetails()
+        ..getStatusVerified(),
       child: BlocBuilder<ProductsDetailsCubit, ProductsDetailsStates>(
         builder: (context, state) {
           final cubit = ProductsDetailsCubit.of(context);
@@ -92,6 +93,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w700),
                               )),
+                          SizedBox(width: 5),
+                          if (cubit.isVerified ?? false)
+                            Image.asset(
+                              getAsset("verified"),
+                              height: 15,
+                            ),
                           Spacer(),
                           if (cubit.productsDetailsModel!.advertizerId ==
                               AppStorage.getUserModel()?.customerId.toString())

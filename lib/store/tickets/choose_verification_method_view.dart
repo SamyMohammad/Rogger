@@ -22,7 +22,7 @@ class _ChooseVerificationMethodSectionState
   String? commercialRegisterFee;
   String? identityDocumentFee;
   String? freelancerDocumentFee;
-  // @override
+  // @
   // initState() {
   //   // TODO: implement initState
   //   super.initState();
@@ -53,7 +53,7 @@ class _ChooseVerificationMethodSectionState
       children: [
         const SizedBox(height: 20),
         VerificationMethodWidget(
-          isGuranteed: cubit.getStatusVerification?.requests?.contains(
+          isGuranteed: cubit.getStatusVerification?.requests?.any(
                   (element) => element.verificationRequired == '1') ??
               false,
           icon: "verified",
@@ -103,7 +103,7 @@ class _ChooseVerificationMethodSectionState
             });
           },
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         // Second VerificationMethodWidget
         VerificationMethodWidget(
           icon: cubit.icons[2],
@@ -133,7 +133,7 @@ class _ChooseVerificationMethodSectionState
             });
           },
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         // Third VerificationMethodWidget
         VerificationMethodWidget(
           icon: cubit.icons[3],
@@ -164,7 +164,7 @@ class _ChooseVerificationMethodSectionState
             });
           },
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         // Continue Button
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),

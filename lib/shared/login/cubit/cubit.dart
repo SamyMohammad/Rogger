@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   String? telephone, password;
   final formKey = GlobalKey<FormState>();
-  int? customerId;
+  int? customerId;  
   int? customerGroup;
   bool rememberMe = false;
 

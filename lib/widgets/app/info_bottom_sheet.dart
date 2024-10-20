@@ -75,6 +75,7 @@ class InfoBottomSheet extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12),
               children: [
                 HtmlEncodedText(
+                  // isMe: false,
                   encodedText: info,
                   textStyle:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

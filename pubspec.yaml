@@ -4,10 +4,10 @@ description: A new Flutter project.
 
 publish_to: "none"
   
-version: 3.0.6+3061
+version: 3.0.8+3088
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: "3.3.0"
 
 dependencies:
   cupertino_icons: ^1.0.5
@@ -67,19 +67,26 @@ dependencies:
   firebase_core: ^3.4.0
   firebase_database: ^11.1.1
   flutter_swipe_detector: ^2.0.0
-  scanly: ^0.0.3
+  # scanly: ^0.0.3
   zxing2: any
   flutter_regex: ^0.0.3
-  image_picker: 1.0.8
   zoom_pinch_overlay: ^1.4.3
   pretty_dio_logger: any
+  location: any
+  widget_zoom: any
+  rename: ^3.0.2
+  device_info_plus: ^0.0.1
 dependency_overrides:
   photo_manager: ^3.0.0-dev.2  
   custom_map_markers: ^0.0.2+1
   media_cache_manager: any
   intl: ^0.19.0
   jiffy: ^6.1.0
-  flutter_ringtone_player: ^4.0.0+3
+  # flutter_ringtone_player: ^4.0.0+3
+  # flutter_ringtone_player:
+  #   git:
+  #     url: https://github.com/aarajput/flutter_ringtone_player.git
+  #     ref: 'issue/android_v2_embedding'
   path_provider: ^2.0.15
   widget_zoom: ^0.0.3
 
@@ -107,9 +114,12 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^4.0.0
 flutter_icons:
-  android: "ic_launcher"
+  android: false
   ios: true
-  image_path: "assets/images/logo-bg.png"
+
+  image_path: "assets/images/play_store_512.png"
+
+  remove_alpha_ios: true
   flutter_test:
     sdk: flutter
 

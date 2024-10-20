@@ -7,7 +7,6 @@ import 'package:silah/shared_models/categories_model.dart';
 import 'package:silah/shared_models/sub_categories_model.dart';
 import 'package:silah/store/change_map_activity/units/choose_bottom_sheet.dart';
 import 'package:silah/widgets/confirm_button.dart';
-import 'package:silah/widgets/drop_menu.dart';
 import 'package:silah/widgets/image_picker_form.dart';
 import 'package:silah/widgets/snack_bar.dart';
 
@@ -112,16 +111,16 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                   color: Theme.of(context).appBarTheme.backgroundColor,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
+                    // BoxShadow(
+                    //     // offset: Offset(0, 1),
+                    //     blurRadius: .5,
+                    //     color: Colors.grey.shade500,
+                    //     spreadRadius: .5),
                     BoxShadow(
-                        offset: Offset(0, 1),
-                        blurRadius: 2,
+                        // offset: Offset(1, 0),
                         color: Colors.grey.shade500,
-                        spreadRadius: -1),
-                    BoxShadow(
-                        offset: Offset(1, 0),
-                        color: Colors.grey.shade500,
-                        blurRadius: 2,
-                        spreadRadius: -1),
+                        blurRadius: .5,
+                        spreadRadius: .5),
                   ]),
               margin: EdgeInsets.symmetric(horizontal: 44),
               child: Column(
@@ -150,6 +149,9 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                             print(selectedCategory.name);
                             print(selectedCategory.id);
                             CategoryCubit.of(context).selectedCategory = null;
+                            CategoryCubit.of(context).selectedSubCategory =
+                                null;
+
                             CategoryCubit.of(context)
                                 .getSubCategories(selectedCategory.id);
                             CategoryCubit.of(context).selectedCategory =
@@ -186,6 +188,8 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                   ),
                   const SizedBox(height: 20),
                   BlocBuilder<CategoryCubit, CategoryStates>(
+                    buildWhen: (previous, current) =>
+                        state is GetSubCategoriesSuccessState,
                     builder: (context, state) {
                       final subCategories =
                           CategoryCubit.of(context).subCategories;
@@ -226,19 +230,19 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                           //   // setState(() {}); // Update the UI
                           // }
                         );
-                        return DropMenu(
-                          hint: 'اختيار نوع القسم',
-                          items: subCategories,
-                          isItemsModel: true,
-                          onChanged: subCategories.length == 0
-                              ? null
-                              : (v) {
-                                  CategoryCubit.of(context)
-                                      .selectedSubCategory = v;
-                                  CategoryCubit.of(context)
-                                      .checkInputsValidity();
-                                },
-                        );
+                        // return DropMenu(
+                        //   hint: 'اختيار نوع القسم',
+                        //   items: subCategories,
+                        //   isItemsModel: true,
+                        //   onChanged: subCategories.length == 0
+                        //       ? null
+                        //       : (v) {
+                        //           CategoryCubit.of(context)
+                        //               .selectedSubCategory = v;
+                        //           CategoryCubit.of(context)
+                        //               .checkInputsValidity();
+                        //         },
+                        // );
                       }
                       return SizedBox();
                     },
@@ -273,6 +277,7 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                 },
                 child: ConfirmButton(
                   horizontalPadding: 30,
+                  horizontalMargin: 20,
                   title: "طلب",
                   fontColor: state is ValidateState && state.state == true
                       ? Colors.white

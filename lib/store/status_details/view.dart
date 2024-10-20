@@ -149,8 +149,9 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                ///Todo: Add View Count
                                 Text(
-                                  "24",
+                                  "21",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

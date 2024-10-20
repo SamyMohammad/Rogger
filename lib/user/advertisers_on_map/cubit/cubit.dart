@@ -85,7 +85,8 @@ class AdvertisersOnMapCubit extends Cubit<AdvertisersOnMapStates> {
     final position = await LocationManager.getLocationFromDevice();
     googleMapController.animateCamera(CameraUpdate.newLatLng(position == null
         ? defaultLatLng
-        : LatLng(position.latitude, position.longitude)));
+        : LatLng(position.latitude ?? defaultLatLng.latitude,
+            position.longitude ?? defaultLatLng.longitude)));
   }
 
   @override

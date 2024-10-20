@@ -29,6 +29,7 @@ class Advertisers {
   String? nickname;
   String? profile;
   String? rating;
+  String? ratingCount;
   String? id;
   String? customerId;
   bool? verifiedFlag;
@@ -40,19 +41,18 @@ class Advertisers {
       this.rating,
       this.id,
       this.customerId,
-      this.verifiedFlag
-      });
+      this.ratingCount,
+      this.verifiedFlag});
 
   Advertisers.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     nickname = json['nickname'];
     profile = json['profile'];
     rating = json['rating'];
+    ratingCount = json['rating_count'];
     id = json['id'];
     customerId = json['customer_id'];
-      verifiedFlag =json['verified_flag'];
-
-
+    verifiedFlag = json['verified_flag'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,7 +64,8 @@ class Advertisers {
     data['id'] = this.id;
     data['customer_id'] = this.customerId;
     data['verified_flag'] = this.verifiedFlag;
-     
+    data['rating_count'] = this.ratingCount;
+
     return data;
   }
 }

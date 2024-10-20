@@ -131,9 +131,15 @@ class NavBarCubit extends Cubit<NavBarStates> {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       if (androidInfo.version.sdkInt >= 33) {
+        print('${await Permission.storage.status} is more than 33');
+
+        Permission.photos.request();
         videos = await Permission.videos.status.isGranted;
         photos = await Permission.photos.status.isGranted;
       } else {
+        print('${await Permission.storage.status} is less 33');
+        Permission.storage.request();
+
         storage = await Permission.storage.status.isGranted;
       }
 

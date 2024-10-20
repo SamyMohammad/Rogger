@@ -67,7 +67,8 @@ class ForgetPasswordView extends StatelessWidget {
                           child: BlocBuilder<ForgetPassCubit, ForgetPassStates>(
                               builder: (context, state) {
                             return InputFormField(
-                              fillColor: kBackgroundColor,
+                              fillColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
                               hasBorder: true,
                               hint: cubit.isPhone
                                   ? 'ادخل رقم الجوال'

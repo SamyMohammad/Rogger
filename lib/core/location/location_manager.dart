@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/location/location_info_model.dart';
@@ -13,37 +14,48 @@ class LocationManager {
   static LatLng? currentLocationFromServer;
   static LatLng? currentLocationFromDevice;
   static LocationInfoModel? locationInfoModel;
+  static Location location = new Location();
 
-  static Future<Position?> getLocationFromDevice() async {
+  static Future<LocationData?> getLocationFromDevice() async {
     bool serviceEnabled;
-    LocationPermission permission;
+    PermissionStatus permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      showLocationErrorBar();
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
+    try {
+      serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) {
         showLocationErrorBar();
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
-      showLocationErrorBar();
+      permission = await location.hasPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await location.requestPermission();
+        if (permission == LocationPermission.denied) {
+          showLocationErrorBar();
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        showLocationErrorBar();
+      }
+      final position = await location.getLocation();
+      currentLocationFromDevice = LatLng(
+          position.latitude ?? defaultLatLng.latitude,
+          position.longitude ?? defaultLatLng.longitude);
+      debugPrint(
+          "getLocationFromDevice${position.latitude} ${position.longitude}");
+
+      return position;
+    } catch (e) {
+      debugPrint("getLocationFromDevice${e.toString()}");
     }
-    final position = await Geolocator.getCurrentPosition();
-    currentLocationFromDevice = LatLng(position.latitude, position.longitude);
-    return position;
+    return null;
   }
 
   static Future<bool> setLocation([LatLng? latLng]) async {
     try {
-      Position? position;
+      LocationData? position;
       if (latLng == null) position = await getLocationFromDevice();
-      print("setLocationnnn ${latLng?.latitude} ${latLng?.longitude}");
+      print("setLocationnnn ${position?.latitude} ${position?.longitude}");
       currentLocationFromServer = LatLng(position?.latitude ?? latLng!.latitude,
           position?.longitude ?? latLng!.longitude);
       final city = await getCityByLatLng(
@@ -87,21 +99,24 @@ class LocationManager {
     final response = await Dio().post(url);
     if (response.statusCode == 200) {
       final data = response.data;
-      final result = data['results'][0]['address_components'] as List;
-      int counter = 0;
-      for (var i in result) {
-        if (i['types'].join("").contains("administrative_area_level_1") ||
-            i['types'].join("").contains("administrative_area_level_2") ||
-            i['types'].join("").contains("sublocality_level_1")) {
-          if (counter == 1 && onlyCity) {
-            return i['long_name'];
+      if (data['results'].length != 0) {
+        final result = data['results'][0]['address_components'] as List;
+        int counter = 0;
+        for (var i in result) {
+          if (i['types'].join("").contains("administrative_area_level_1") ||
+              i['types'].join("").contains("administrative_area_level_2") ||
+              i['types'].join("").contains("sublocality_level_1")) {
+            if (counter == 1 && onlyCity) {
+              return i['long_name'];
+            }
+            if (counter < 2) {
+              location = i['long_name'] + " " + location;
+            }
+            counter++;
           }
-          if (counter < 2) {
-            location = i['long_name'] + " " + location;
-          }
-          counter++;
         }
       }
+
       // location = result[1]['short_name'] ?? '';
       // location = location! + (location.isNotEmpty ? '\n' : '') + result[2]['short_name'];
       return location;
@@ -114,9 +129,11 @@ class LocationManager {
       try {
         final position = await getLocationFromDevice();
         currentLocationFromServer =
-            LatLng(position!.latitude, position.longitude);
+            LatLng(position!.latitude ?? 0, position.longitude ?? 0);
       } catch (e) {
         currentLocationFromServer = defaultLatLng;
+        print('Error getting location: $e.toString()');
+        // print(e.toString());
       }
       return true;
     }
@@ -134,7 +151,7 @@ class LocationManager {
       locationInfoModel = LocationInfoModel.fromJson(response.data);
       currentLocationFromServer = LatLng(double.parse(locationInfo['loc_lat']),
           double.parse(locationInfo['loc_long']));
-      return responseCity != null && responseCity.isNotEmpty;
+      return responseCity != null ;
     } catch (e) {
       return false;
     }

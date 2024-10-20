@@ -1,4 +1,3 @@
-import '../../store/tickets/ErrorModel.dart';
 
 abstract class CategoryStates {}
 

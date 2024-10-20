@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:silah/constants.dart';
 import 'package:silah/shared/verify/cubit/cubit.dart';
 
 class ResendCodeSection extends StatefulWidget {
@@ -38,10 +37,10 @@ class _ResendCodeSectionState extends State<ResendCodeSection> {
     });
   }
 
-  final _style = TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w700);
-
   @override
   Widget build(BuildContext context) {
+    final _style = TextStyle(
+        color: Theme.of(context).primaryColor, fontWeight: FontWeight.w700);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: seconds != 0

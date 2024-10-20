@@ -30,22 +30,27 @@ class _PhoneField extends StatelessWidget {
                   isNumber: true,
                   onChanged: (_) => cubit.checkInputsValidity(),
                   maxLength: 10,
-                  onTap: modificationInterval == null
-                      ? null
-                      : () {
-                          showCupertinoDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) => GestureDetector(
-                              onTap: RouteManager.pop,
-                              child: CupertinoAlertDialog(
-                                content: Text(
-                                    "لا يمكنك تعديل رقم الجوال الا بعد مرور $modificationInterval أيام"),
-                                actions: [],
-                              ),
-                            ),
-                          );
-                        },
+                  // onTap: modificationInterval == null
+                  //     ? null
+                  //     : () {
+                  //         showCupertinoDialog(
+                  //           context: context,
+                  //           barrierDismissible: true,
+                  //           builder: (context) => GestureDetector(
+                  //             onTap: RouteManager.pop,
+                  //             child: CupertinoAlertDialog(
+                  //               content: Text(
+                  //                   "لا يمكنك تعديل رقم الجوال الا بعد مرور $modificationInterval أيام"),
+                  //               actions: [
+                  //                 CupertinoButton(
+                  //                   child: Text("موافق"),
+                  //                   onPressed: RouteManager.pop,
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
                   suffixIcon: InkWell(
                     onTap: isPhoneVerified
                         ? null

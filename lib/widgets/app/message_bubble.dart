@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/chat/model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:silah/shared/product_details/view.dart';
 
@@ -109,7 +111,8 @@ class MessageBubble extends StatelessWidget {
                               ),
                             ),
                           ),
-                        Padding(
+                        Container(
+                          margin: EdgeInsets.all(5),
                           padding: const EdgeInsets.only(top: 2),
                           child: message == null || message!.isEmpty
                               ? GestureDetector(
@@ -287,60 +290,70 @@ class HtmlEncodedText extends StatelessWidget {
   final String encodedText;
   final TextStyle textStyle;
 
-  const HtmlEncodedText({required this.encodedText, required this.textStyle});
+  const HtmlEncodedText({
+    required this.encodedText,
+    required this.textStyle,
+  });
+  void _makePhoneCall(String phoneNumber) async {
+    final Uri callUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(callUri)) {
+      await launchUrl(callUri);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('encodedText$encodedText');
     // Decode HTML entities
-
     final decodedText = parse(encodedText).documentElement!.text;
 
-    return RichText(
-      text: TextSpan(
-        children: _getStyledMessage(decodedText),
-        style: TextStyle(color: Colors.black, fontSize: 16),
-      ),
-    );
+    // Use regex to split text by numbers
+    final RegExp numberRegex = RegExp(r'\b\d+\b');
+    final List<InlineSpan> spans = [];
 
-    // Text(
-    //   decodedText,
-    //   style: textStyle,
-    // );
-  }
+    int currentIndex = 0;
 
-  List<TextSpan> _getStyledMessage(String message) {
-    final List<TextSpan> spans = [];
-    // final RegExp regex = RegExp(r'\d+'); // Detect the number
-    // final RegExp phoneRegExp = RegExp(r'(\+?\d{1,3}[-.\s]??\d{1,4}[-.\s]??\d{1,4}[-.\s]??\d{1,9})');
-    final RegExp phoneRegExp = RegExp(
-        r'^(?:\+?(\d{1,3}))?[-.\s]?((\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9}))$');
-    final match =
-        phoneRegExp.firstMatch(message); // Get the first match of number
-
-    if (match != null) {
-      // Add text before the number
-      if (match.start > 0) {
-        spans.add(TextSpan(text: message.substring(0, match.start)));
+    // Find all numbers and create spans accordingly
+    numberRegex.allMatches(decodedText).forEach((match) {
+      // Add non-number text before the match
+      if (match.start > currentIndex) {
+        spans.add(TextSpan(
+          text: decodedText.substring(currentIndex, match.start),
+          style: textStyle,
+        ));
       }
 
-      // Add the number with blue color
+      // Add the clickable number
       spans.add(
         TextSpan(
-          text: message.substring(match.start, match.end),
-          style: TextStyle(color: Colors.blue),
+          text: match.group(0),
+          style: textStyle.copyWith(color: Colors.blue),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+              final tappedNumber = match.group(0);
+              _makePhoneCall(tappedNumber!);
+              print('Number tapped: $tappedNumber');
+              // Perform any action with the number, e.g., open dialer
+            },
         ),
       );
 
-      // Add text after the number
-      if (match.end < message.length) {
-        spans.add(TextSpan(text: message.substring(match.end)));
-      }
-    } else {
-      // If no number is found, just return the entire message as regular text
-      spans.add(TextSpan(text: message));
+      currentIndex = match.end;
+    });
+
+    // Add remaining text after the last match
+    if (currentIndex < decodedText.length) {
+      spans.add(TextSpan(
+        text: decodedText.substring(currentIndex),
+        style: textStyle,
+      ));
     }
 
-    return spans;
+    return RichText(
+      text: TextSpan(
+        children: spans,
+      ),
+    );
   }
 }

@@ -7,7 +7,6 @@ import 'package:silah/shared/verify/resend_code_section.dart';
 import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/loading_indicator.dart';
-import 'package:silah/widgets/logo.dart';
 import 'package:silah/widgets/pin_code_field.dart';
 
 class VerifyView extends StatelessWidget {
@@ -37,29 +36,34 @@ class VerifyView extends StatelessWidget {
               child: ListView(
                 padding: VIEW_PADDING,
                 children: [
-                  Logo(
-                    heightFraction: 4,
-                  ),
+                  // Logo(
+                  //   heightFraction: 4,
+                  // ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
                       'برجاء ادخال الكود المرسل الي',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: kAccentColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+
                   Text(
                     cubit.telephone,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: kPrimaryColor,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 30,
                     ),
                     textAlign: TextAlign.center,
                   ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+
                   // TextButton(
                   //   style: ButtonStyle(
                   //     visualDensity: VisualDensity(vertical: -4, horizontal: -4),
@@ -83,6 +87,8 @@ class VerifyView extends StatelessWidget {
                   state is VerifyLoadingState
                       ? LoadingIndicator()
                       : ConfirmButton(
+                          color: activeButtonColor,
+                          fontColor: Colors.white,
                           title: 'تـأكـيـد  ',
                           verticalMargin: 0,
                           onPressed: cubit.activate,

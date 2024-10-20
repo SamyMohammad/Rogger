@@ -36,6 +36,8 @@ class LoginToContinueWidget extends StatelessWidget {
               ),
             ),
             ConfirmButton(
+              color: activeButtonColor,
+              fontColor: Colors.white,
               title: 'تسجيل الدخول',
               onPressed: () => RouteManager.navigateAndPopAll(LoginView()),
             ),

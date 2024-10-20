@@ -105,13 +105,34 @@ class _FavouriteCardState extends State<_FavouriteCard> {
               },
               child: Container(
                 padding: EdgeInsets.all(4),
-                child: Icon(
-                  favourite ? Icons.favorite : Icons.favorite_border,
-                  color: favourite ? Colors.red : Colors.white,
-                ),
+                child: favourite
+                    ? Icon(
+                        favourite ? Icons.favorite : Icons.favorite_border,
+                        color: favourite ? Colors.red : Colors.white,
+
+                        // fill: favourite ? Colors.red : Colors.black,
+                      )
+                    : Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Icon(
+                            Icons.favorite, // Filled heart icon
+                            // size: 40, // Set the size of the icon
+                            color: Colors.black
+                                .withOpacity(.5), // Fill the inside with black
+                          ),
+                          Icon(
+                            Icons.favorite_border, // Outlined heart icon
+                            // size:
+                            //     45, // Slightly larger size for the white border effect
+                            color:
+                                Colors.white, // Set the border color to white
+                          ),
+                        ],
+                      ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color.fromRGBO(0, 0, 0, 0.5),
+                  // color: Color.fromRGBO(0, 0, 0, 0.5),
                 ),
               ),
             ),

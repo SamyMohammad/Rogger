@@ -123,10 +123,10 @@ class VerificationMethodWidget extends StatelessWidget {
               BoxShadow(
                 color: isChoosen
                     ? kBluePurpleColor.withOpacity(0.3)
-                    : Colors.grey.withOpacity(0.5),
-                offset: Offset(0, 3),
-                blurRadius: 2,
-                spreadRadius: 1,
+                    : Colors.grey.withOpacity(0.3),
+                // offset: Offset(0, 3),
+                blurRadius: .5,
+                spreadRadius: .5,
               ),
             ]),
         child: Stack(

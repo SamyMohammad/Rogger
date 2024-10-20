@@ -7,16 +7,22 @@ import 'package:silah/shared/chat/cubit.dart';
 import 'package:silah/shared/chat/view.dart';
 import 'package:silah/store/add_status/view.dart';
 import 'package:silah/store/generate_qr_code/view.dart';
+import 'package:silah/store/store_profile/cubit/cubit.dart';
 import 'package:silah/store/store_profile/store_info_model.dart';
 import 'package:silah/widgets/rate_widget.dart';
 
 class StoreInfoColumn extends StatelessWidget {
   const StoreInfoColumn(
-      {super.key, required this.storeInfo, required this.storeId, this.rate});
+      {super.key,
+      required this.storeInfo,
+      required this.storeId,
+      this.rate,
+      required this.cubit});
 
   final StoreInfoModel? storeInfo;
   final String storeId;
   final double? rate;
+  final StoreProfileCubit cubit;
   @override
   Widget build(BuildContext context) {
     return storeInfo == null
@@ -30,12 +36,13 @@ class StoreInfoColumn extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 8),
-
-                  // if(storeInfo!.)
-                  Image.asset(
-                    getAsset("verified"),
-                    height: 20,
-                  )
+                  if (cubit.getStatusVerification?.requests
+                          ?.any((element) => element.verified == '1') ??
+                      false)
+                    Image.asset(
+                      getAsset("verified"),
+                      height: 20,
+                    )
                 ],
               ),
               SizedBox(height: 5),
@@ -170,6 +177,7 @@ class StoreInfoColumn extends StatelessWidget {
                     onTap: () => showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
+                        
                         backgroundColor: Color(0xff022E47),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -227,8 +235,48 @@ class StoreInfoColumn extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 12),
-              SvgPicture.asset(getIcon("ministry"), fit: BoxFit.scaleDown)
+              // TODO: get store type verification methods
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (cubit.getStatusVerification?.requests != null &&
+                      cubit.getStatusVerification?.requests?.length != 0)
+                    ...List.generate(
+                      cubit.getStatusVerification!.requests!.length * 2 - 1,
+                      (index) {
+                        if (index.isEven) {
+                          // Return the SvgPicture for even indices
+                          final request = cubit
+                              .getStatusVerification!.requests![index ~/ 2];
+                          return SvgPicture.asset(
+                            getIcon(request.verificationType?.name ?? ''),
+                            fit: BoxFit.scaleDown,
+                          );
+                        } else {
+                          // Return the SizedBox for odd indices
+                          return SizedBox(
+                              width: 20); // Adjust the width as needed
+                        }
+                      },
+                    )
+                ],
+              )
             ],
           );
+  }
+}
+
+extension MyVerificationTypeExtension on String? {
+  String? get name {
+    switch (this) {
+      case 'Commercial Register':
+        return "tegara";
+      case "Freelancer Document":
+        return 'free';
+      case 'Identity Document':
+        return 'doc';
+      default:
+        return null;
+    }
   }
 }

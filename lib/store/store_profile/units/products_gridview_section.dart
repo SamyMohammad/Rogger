@@ -39,7 +39,7 @@ class ProductsGridviewSection extends StatelessWidget {
               ),
             ),
           );
-        } else if (products != null && products.isNotEmpty) {
+        } else if (products.isNotEmpty) {
           return GridView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,

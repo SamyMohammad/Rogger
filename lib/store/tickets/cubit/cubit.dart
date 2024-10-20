@@ -107,7 +107,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
   Future<FormData> _convertUpdateVerificationRequestDataToFormData() async {
     final data = {
       'verification_required': firstCheckbox == true ? '1' : '0',
-      'verification_id': request?.verificationRequestId,
+      'verification_id':
+          getStatusVerification?.requests?[0].verificationRequestId,
     };
     final formData = FormData.fromMap(data);
     // if (categoryRecordImageNotifier.value != null)
@@ -339,11 +340,17 @@ class TicketsCubit extends Cubit<TicketsStates> {
     "وثيقة معروف",
     "وثيقة العمل الحر"
   ];
+  // List<String> icons = [
+  //   "verified",
+  //   "ministry",
+  //   "wasika",
+  //   "freelancing",
+  // ];
   List<String> icons = [
     "verified",
-    "ministry",
-    "wasika",
-    "freelancing",
+    "tegara",
+    "doc",
+    "free",
   ];
   setIndex(int index) {
     indexOfVerification = index;

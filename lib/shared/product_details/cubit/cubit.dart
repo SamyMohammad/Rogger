@@ -5,6 +5,7 @@ import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/nav_bar/view.dart';
 import 'package:silah/shared/product_details/cubit/states.dart';
 import 'package:silah/shared/product_details/model.dart';
+import 'package:silah/store/tickets/get_status_verification/get_status_verification.dart';
 import 'package:silah/widgets/snack_bar.dart';
 
 class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
@@ -13,6 +14,7 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
   final String? productId;
   static ProductsDetailsCubit of(context) => BlocProvider.of(context);
   ProductsDetailsModel? productsDetailsModel;
+  bool? isVerified;
   Future<void> getProductsDetails() async {
     emit(ProductsDetailsLoadingState());
     try {
@@ -22,6 +24,7 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
       });
       final data = response.data;
       print(data);
+      isVerified = data['verified'];
       productsDetailsModel = ProductsDetailsModel.fromJson(data);
       if (productsDetailsModel?.video != null &&
           productsDetailsModel!.video!.isNotEmpty) {
@@ -31,6 +34,21 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
     } catch (e) {
       emit(ProductsDetailsErrorState(e.toString()));
     }
+  }
+
+  GetStatusVerification? getStatusVerification;
+  Future<void> getStatusVerified() async {
+    final response = await DioHelper.post(
+      'customer/account/get_customer_verfication',
+      data: {
+        'customer_id': AppStorage.customerID,
+      },
+    );
+    final data = response.data;
+    getStatusVerification = GetStatusVerification.fromJson(data);
+    // isStoreVerified = data['is_verified'] ?? false;
+    print('getStatusVerifiedss $data');
+    // storeInfoModel = StoreInfoModel.fromJson(data);
   }
 
   Future<void> toggleFavorite(

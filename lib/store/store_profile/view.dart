@@ -52,6 +52,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                         offset: Offset(0, -12),
                         child: StoreInfoColumn(
                             storeInfo: storeInfo,
+                            cubit: cubit,
                             storeId: widget.storeId,
                             rate: cubit.getOverAllRating != null
                                 ? double.parse(cubit.getOverAllRating ?? '0')

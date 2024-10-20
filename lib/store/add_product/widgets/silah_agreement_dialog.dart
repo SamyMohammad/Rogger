@@ -97,8 +97,10 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                   const SizedBox(height: 50),
                   ConfirmButton(
                     title: "نشر الإعلان",
-                    color:
-                        _isCheckedNotifier.value ? activeButtonColor : Colors.grey,
+                    fontColor: Theme.of(context).primaryColor,
+                    color: _isCheckedNotifier.value
+                        ? activeButtonColor
+                        : Colors.grey,
                     onPressed: _isCheckedNotifier.value
                         ? widget.addProductCubit.addProduct
                         : null,

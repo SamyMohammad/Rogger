@@ -96,12 +96,12 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.sizeOf(context).height * 0.65,
+        height: MediaQuery.sizeOf(context).height * 0.7,
         child: Column(
           children: [
             const SizedBox(height: 15),
             StarterDivider(height: 5, width: 50),
-            const SizedBox(height: 50),
+            const SizedBox(height: 40),
             Center(
               child: Container(
                 decoration: BoxDecoration(
@@ -117,8 +117,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                     backgroundColor: Colors.transparent,
                     embeddedImageStyle: QrEmbeddedImageStyle(
                       size: Size(25, 25),
-
-                      // color: Color(0xff009FFB)
                     ),
                     size: 200,
                     data: response?.result ?? AppStorage.customerID.toString(),
@@ -179,7 +177,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
               ),
             ),
             SizedBox(height: 20),
-
             Container(
               margin: EdgeInsets.symmetric(horizontal: 43),
               color: Colors.transparent,
@@ -244,7 +241,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
               ),
             ),
             const SizedBox(height: 30),
-
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 30,
@@ -268,74 +264,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                       : "يمكنك مشاركة الرمز مع الاصدقاء",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
             ),
-            const SizedBox(height: 10),
-            // const Spacer(),
-            // Container(
-            //   width: double.infinity,
-            //   padding: EdgeInsets.symmetric(horizontal: 30),
-            //   decoration: const BoxDecoration(
-            //       color: Colors.white,
-            //       borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(20),
-            //         topRight: Radius.circular(20),
-            //       )),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       const SizedBox(height: 5),
-            //       Center(child: const StarterDivider(width: 80)),
-            //       const SizedBox(height: 20),
-            //       Text("لديك رمز QR",
-            //           style: TextStyle(fontSize: 16, color: kPrimaryColor)),
-            //       const SizedBox(height: 20),
-            //       Text("يمكنك مشاركة الرمز الخاص بك مع الأصدقاء",
-            //           style: TextStyle(fontSize: 16, color: kDarkGreyColor)),
-            //       const SizedBox(height: 20),
-            //       _TabWithIcon(
-            //         title: "مشاركة رمز صلة",
-            //         iconData: Icons.share_outlined,
-            //         onTap: () {
-            //           copyText(response?.result);
-            //         },
-            //       ),
-            //       const SizedBox(height: 10),
-            //       _TabWithIcon(
-            //         title: "الحفظ في ألبوم الكاميرا",
-            //         iconData: Icons.save_alt_rounded,
-            //         onTap: () async {
-            //           final directory =
-            //               (await getApplicationDocumentsDirectory())
-            //                   .path; //from path_provide package
-            //           int fileName = DateTime.now().microsecondsSinceEpoch;
-            //           String path = '$directory';
-            //           screenshotController
-            //               //     .captureFromLongWidget(QrImageView(
-            //               //   size: 140,
-            //               //   data: response?.result ??
-            //               //       AppStorage.customerID.toString(),
-            //               // ))
-            //               .capture(delay: const Duration(milliseconds: 10))
-            //               .then((Uint8List? image) async {
-            //             if (image != null) {
-            //               print('inCapture');
-            //               final directory =
-            //                   await getApplicationDocumentsDirectory();
-            //               final imagePath =
-            //                   await File('${directory.path}/image.png')
-            //                       .create();
-            //               await imagePath.writeAsBytes(image);
-            //               _saved(image);
-            //             }
-            //           });
-            //           //     .then((File e) {
-            //           //   _saved(e);
-            //           // });
-            //         },
-            //       ),
-            //       const SizedBox(height: 40),
-            //     ],
-            //   ),
-            // )
+            // const SizedBox(height: 20),
           ],
         ));
   }

@@ -26,16 +26,16 @@ class PinCodeField extends StatelessWidget {
               autoDismissKeyboard: true,
               enablePinAutofill: true,
               keyboardType: TextInputType.number,
-              textStyle: const TextStyle(
+              textStyle: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: Theme.of(context).primaryColor),
               pastedTextStyle: const TextStyle(color: Colors.black),
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,
-                selectedColor: kPrimaryColor,
+                selectedColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(10),
-                activeColor: kPrimaryColor,
+                activeColor: Theme.of(context).primaryColor,
                 inactiveColor: Colors.grey,
                 fieldWidth: 55,
                 fieldHeight: 55,

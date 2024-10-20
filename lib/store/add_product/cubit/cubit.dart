@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:images_picker/images_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/shared/product_details/model.dart';
@@ -212,7 +213,6 @@ class AddProductCubit extends Cubit<AddProductStates> {
       emit(AddProductInitState());
     }
   }
-
   void editImage(int index) async {
     final pickedFiles =
         await ImagesPicker.pick(count: 1, pickType: PickType.image);
