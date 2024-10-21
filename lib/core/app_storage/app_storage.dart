@@ -17,6 +17,15 @@ class AppStorage {
     _preferences = await SharedPreferences.getInstance();
   }
 
+  static const String IsCheckedRememberKey = 'remember_me';
+  static Future<void> cacheIsCheckedRemember(bool value) async {
+    await _preferences.setBool(IsCheckedRememberKey, value);
+  }
+
+  static bool? getIsCheckedRemember() {
+    return _preferences.getBool(IsCheckedRememberKey);
+  }
+
   static String? getTheme() {
     return _preferences.getString('theme');
   }
@@ -53,13 +62,14 @@ class AppStorage {
       products = [];
     }
     products.add(product);
-    
+
     await _preferences.setStringList(
         getUserModel()!.customerId.toString(), products);
   }
+
   static List<String>? getAdvertisers() {
     final advertisers =
-    _preferences.getStringList(getUserModel()?.customerId.toString() ?? '');
+        _preferences.getStringList(getUserModel()?.customerId.toString() ?? '');
     if (advertisers != null) return advertisers;
     return null;
   }

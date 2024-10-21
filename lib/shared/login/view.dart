@@ -15,15 +15,49 @@ import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/saudi_flag_with_num.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  bool _isChecked = false;
+  // void _handleRemeberme(bool value) {
+  //   _isChecked = value;
+  //   SecureStorageHelper.setSecuredString(
+  //     SecureStorageKeys.userName,
+  //   );
+  //   SecureStorageHelper.setSecuredString(
+  //     SecureStorageKeys.userPassword,
+  //   );
+  //   SharedPreferences.getInstance().then(
+  //     (prefs) {
+  //       prefs.setBool("remember_me", value);
+  //       prefs.setString('email', _emailController.text);
+  //       prefs.setString('password', _passwordController.text);
+  //     },
+  //   );
+  //   setState(() {
+  //     _isChecked = value;
+  //   });
+  // }
+  LoginCubit loginCubit = LoginCubit();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginCubit.loadRememberMe();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => loginCubit,
       child: Scaffold(
         appBar: appBar(elevation: false),
         body: BlocBuilder<LoginCubit, LoginStates>(
@@ -53,6 +87,7 @@ class LoginView extends StatelessWidget {
                         hint: 'أدخل رقم الجوال',
                         // maxLength: 10,
                         multiLine: false,
+                        controller: cubit.telephoneController,
                         validator: Validator.phoneNumber,
                         onChanged: (v) => cubit.checkInputsValidity(),
                         onSave: (v) => cubit.telephone = v,
@@ -63,6 +98,7 @@ class LoginView extends StatelessWidget {
                         // horizontalMargin: 5,
                         hasBorder: true,
                         hint: 'كلمة المرور',
+                        controller: cubit.passwordController,
                         validator: Validator.password,
                         secure: true,
                         onSave: (v) => cubit.password = v,
@@ -72,19 +108,23 @@ class LoginView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Row(
                           children: [
-                            SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Checkbox(
-                                side: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  // width: 2.0,
-                                ),
-                                value: cubit.rememberMe,
-                                onChanged: (value) {
-                                  cubit.toggleRememberMe();
-                                },
-                              ),
+                            BlocBuilder<LoginCubit, LoginStates>(
+                              builder: (context, state) {
+                                return SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: Checkbox(
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      // width: 2.0,
+                                    ),
+                                    value: cubit.rememberMe,
+                                    onChanged: (value) {
+                                      cubit.toggleRememberMe();
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                             Text(
                               'تذكرني',
