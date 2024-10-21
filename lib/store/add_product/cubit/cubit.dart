@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
@@ -190,18 +190,43 @@ class AddProductCubit extends Cubit<AddProductStates> {
   }
 
   void pickVideo() async {
-    final pickedFile =
-        await ImagesPicker.pick(count: 1, pickType: PickType.video);
-    if (pickedFile != null && pickedFile.isNotEmpty) {
-      video = File(pickedFile.first.path);
-      emit(AddProductInitState());
+    final permission = await Permission.videos.request();
+    if (permission.isGranted) {
+      final pickedFile =
+          await ImagePicker().pickVideo(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        video = File(pickedFile.path);
+        emit(AddProductInitState());
+      }
     }
   }
 
+  // void pickImages() async {
+  //   final pickedFiles = await ImagesPicker.pick(
+  //     count: 5,
+  //     pickType: PickType.image,
+  //   );
+  //   if (pickedFiles != null) {
+  //     int length = pickedFiles.length;
+  //     if (length > (5 - images.length)) {
+  //       length = 5 - images.length;
+  //       showSnackBar('عفوا اقصي عدد للصور 5');
+  //     }
+  //     for (int i = 0; i < length; i++) {
+  //       images.add(File(pickedFiles[i].path));
+  //     }
+  //     emit(AddProductInitState());
+  //   }
+  // }
+
   void pickImages() async {
-    final pickedFiles =
-        await ImagesPicker.pick(count: 5, pickType: PickType.image);
-    if (pickedFiles != null) {
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final pickedFiles = await ImagePicker().pickMultiImage(
+
+          // count: 5,
+          // pickType: PickType.image,
+          );
       int length = pickedFiles.length;
       if (length > (5 - images.length)) {
         length = 5 - images.length;
@@ -213,10 +238,11 @@ class AddProductCubit extends Cubit<AddProductStates> {
       emit(AddProductInitState());
     }
   }
+
   void editImage(int index) async {
-    final pickedFiles =
-        await ImagesPicker.pick(count: 1, pickType: PickType.image);
-    if (pickedFiles != null) {
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final pickedFiles = await ImagePicker().pickMultiImage(limit: 1);
       images[index] = File(pickedFiles.first.path);
       emit(AddProductInitState());
     }

@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/widgets/snack_bar.dart';
@@ -84,19 +85,21 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
   }
 
   Future<File?> _getImage() async {
-    List<Media> files = await ImagesPicker.pick(
-            count: 1,
-            pickType: PickType.image,
-            cropOpt: CropOption(
-              cropType: CropType.rect,
-              aspectRatio: CropAspectRatio(1, 1),
-            )) ??
-        [];
-    if (files.isEmpty) {
-      return null;
-    } else {
-      return File(files.first.path);
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final file = await ImagePicker().pickMultiImage(limit: 1
+          // cropOpt: CropOption(
+          //   cropType: CropType.rect,
+          //   aspectRatio: CropAspectRatio(1, 1),
+          // ),
+          );
+      if (file.isNotEmpty) {
+        return File(file.first.path);
+      } else {
+        return null;
+      }
     }
+    return null;
   }
 
   Future<void> updateImage() async {

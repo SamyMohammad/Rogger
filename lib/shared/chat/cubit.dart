@@ -5,7 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/shared/chat/model.dart';
@@ -222,8 +223,12 @@ class ChatCubit extends Cubit<ChatStates> {
   }
 
   Future<String?> _pickImage() async {
-    final images = await ImagesPicker.pick(count: 1, pickType: PickType.image);
-    return images == null || images.isEmpty ? null : images.first.path;
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final images = await ImagePicker().pickImage(source: ImageSource.gallery);
+      return images == null ? null : images.path;
+    }
+    return null;
   }
 
   @override

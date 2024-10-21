@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/router/router.dart';
@@ -78,33 +79,40 @@ class AddStatusCubit extends Cubit<AddStatusStates> {
   }
 
   Future<File?> getImageFromGallery() async {
-    List<Media> files = await ImagesPicker.pick(
-          count: 1,
-          pickType: PickType.image,
-        ) ??
-        [];
-    if (files.isEmpty) {
-      return null;
-    } else {
-      final file = File(files.first.path);
-      addStatus(file: file, isImage: true);
-      return file;
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final files = await ImagePicker().pickMultiImage(
+        limit: 1,
+      );
+      if (files.isEmpty) {
+        return null;
+      } else {
+        final file = File(files.first.path);
+        addStatus(file: file, isImage: true);
+        return file;
+      }
     }
+    return null;
   }
 
   Future<File?> getVideoFromGallery() async {
-    List<Media> files = await ImagesPicker.pick(
-          count: 1,
-          pickType: PickType.video,
-        ) ??
-        [];
-    if (files.isEmpty) {
-      return null;
-    } else {
-      final file = File(files.first.path);
-      addStatus(file: file, isImage: false);
-      return file;
+    final permission = await Permission.videos.request();
+    if (permission.isGranted) {
+      XFile? file;
+      ImagePicker()
+          .pickVideo(
+            source: ImageSource.gallery,
+          )
+          .then((value) => file = value);
+      if (file == null) {
+        return null;
+      } else {
+        // final file = File(file.path);
+        addStatus(file: File(file!.path), isImage: false);
+        return File(file!.path);
+      }
     }
+    return null;
   }
 
   @override

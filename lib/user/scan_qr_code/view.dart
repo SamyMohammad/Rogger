@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_tools/qr_code_tools.dart';
 import 'package:silah/core/dynamic_links_constants.dart';
@@ -155,17 +156,20 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
           ElevatedButton(
               onPressed: () async {
                 try {
-                  final image = await ImagesPicker.pick(
-                    count: 1,
-                    pickType: PickType.image,
-                  );
-                  if (image == null) return;
-                  setState(() {
-                    selectedFile = File(image.first.path);
-                  });
+                  final permission = await Permission.photos.request();
+                  if (permission.isGranted) {
+                    final image = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                    );
+                    if (image == null) return;
+                    setState(() {
+                      selectedFile = File(image.path);
+                    });
+                    await decode(selectedFile!.path);
+                  }
+
                   // controller!.scannedDataStream.(selectedFile!.path);
-                  await decode(selectedFile!.path);
-                  FlutterBranchSdk.handleDeepLink(_data ?? '');
+                  FlutterBranchSdk.handleDeepLink(_data);
                 } catch (_) {
                   showSnackBar("رمز خاطئ!", errorMessage: true);
                 }

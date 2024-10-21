@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/constants.dart';
 
 class ImagePickerForm extends StatefulWidget {
@@ -17,13 +18,16 @@ class ImagePickerForm extends StatefulWidget {
 
 class _ImagePickerFormState extends State<ImagePickerForm> {
   Future _pickImage() async {
-    final image = await ImagesPicker.pick(count: 1, pickType: PickType.image);
-    if (image == null) return;
-    setState(() {
-      selectedFile = File(image.first.path);
-    });
-    if (widget.onChange != null) {
-      widget.onChange!(selectedFile);
+    final permission = await Permission.photos.request();
+    if (permission.isGranted) {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      setState(() {
+        selectedFile = File(image.path);
+      });
+      if (widget.onChange != null) {
+        widget.onChange!(selectedFile);
+      }
     }
   }
 
