@@ -30,6 +30,7 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
 
   @override
   void initState() {
+
     currentIndex = widget.initialIndex;
     restartTimer();
     super.initState();
@@ -52,6 +53,7 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
         if (currentIndex >= widget.status.length) {
           Navigator.maybePop(context);
         } else {
+          
           _controller.animateToPage(currentIndex);
         }
       }

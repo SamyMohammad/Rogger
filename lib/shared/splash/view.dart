@@ -39,7 +39,6 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
 
     FirebaseMessagingHelper.init();
-    checkNavigation();
     listenDeepLinkData(context);
 
     // listenDeepLinkData(context);
@@ -57,6 +56,8 @@ class _SplashViewState extends State<SplashView> {
         RouteManager.navigateTo(StoreProfileView(
           storeId: data[AppConstants.deepLinkTitle],
         ));
+      } else {
+        checkNavigation();
       }
     }, onError: (error) {
       debugPrint('exception: $error');
@@ -73,7 +74,7 @@ class _SplashViewState extends State<SplashView> {
 
   void checkNavigation() async {
     Timer(
-      Duration(seconds: 3),
+      Duration(seconds: 2),
       () => RouteManager.navigateAndPopAll(NavBarView()),
     );
   }
