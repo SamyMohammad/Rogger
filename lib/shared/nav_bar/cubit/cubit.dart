@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/location/location_manager.dart';
@@ -115,40 +112,40 @@ class NavBarCubit extends Cubit<NavBarStates> {
   void checkPermissions() async {
     // var status = await Permission.storage.status;
 
-    if (Platform.isIOS) {
-      bool storage = await Permission.storage.status.isGranted;
-      if (storage) {
-        // Awesome
-      } else {
-        // Crap
-      }
-    } else {
-      bool storage = true;
-      bool videos = true;
-      bool photos = true;
+    // if (Platform.isIOS) {
+    //   bool storage = await Permission.storage.status.isGranted;
+    // if (storage) {
+    //   // Awesome
+    // } else {
+    //   // Crap
+    // }
+    // } else {
+    // bool storage = true;
+    // bool videos = true;
+    // bool photos = true;
 
-      // Only check for storage < Android 13
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      if (androidInfo.version.sdkInt >= 33) {
-        print('${await Permission.storage.status} is more than 33');
+    // // Only check for storage < Android 13
+    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    // AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    // if (androidInfo.version.sdkInt >= 33) {
+    //   print('${await Permission.storage.status} is more than 33');
 
-        Permission.photos.request();
-        videos = await Permission.videos.status.isGranted;
-        photos = await Permission.photos.status.isGranted;
-      } else {
-        print('${await Permission.storage.status} is less 33');
-        Permission.storage.request();
+    //   Permission.photos.request();
+    //   videos = await Permission.videos.status.isGranted;
+    //   photos = await Permission.photos.status.isGranted;
+    // } else {
+    //   print('${await Permission.storage.status} is less 33');
+    //   Permission.storage.request();
 
-        storage = await Permission.storage.status.isGranted;
-      }
+    //   storage = await Permission.storage.status.isGranted;
+    // }
 
-      if (storage && videos && photos) {
-        // Awesome
-      } else {
-        // Crap
-      }
-    }
+    // if (storage && videos && photos) {
+    //   // Awesome
+    // } else {
+    //   // Crap
+    // }
+    // }
     // if (!status.isGranted) {
     //   // await Permission.manageExternalStorage.request();
     //   await Permission.storage.request();

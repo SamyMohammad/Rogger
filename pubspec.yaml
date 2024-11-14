@@ -4,7 +4,7 @@ description: A new Flutter project.
 
 publish_to: "none"
   
-version: 3.0.8+3088
+version: 3.0.8+3090
 
 environment:
   sdk: "3.3.0"
@@ -77,8 +77,9 @@ dependencies:
   rename: ^3.0.2
   device_info_plus: ^0.0.1
   image_picker: ^1.1.2
-  flutter_branch_sdk: 8.2.0
+  # flutter_branch_sdk: 8.1.1
   flutter_secure_storage: ^8.1.0
+  flutter_branch_sdk: ^8.2.0
 dependency_overrides:
   photo_manager: ^3.0.0-dev.2  
   custom_map_markers: ^0.0.2+1

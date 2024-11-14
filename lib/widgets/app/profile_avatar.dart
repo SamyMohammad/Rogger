@@ -68,6 +68,8 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
     return GestureDetector(
       onTap: widget.onTap ??
           () async {
+            getStatus();
+
             if (widget.userID == AppStorage.customerID.toString()) {
               if (statusModel?.stories?.isNotEmpty == true) {
                 RouteManager.navigateTo(
@@ -219,7 +221,7 @@ class _DragDownUpToPopTransition extends StatelessWidget {
           ).animate(animation),
           child: GestureDetector(
             onVerticalDragUpdate: (details) {
-              if (details.primaryDelta! > 0) {
+              if (details.primaryDelta != null && details.primaryDelta! > 100) {
                 Navigator.of(context).pop();
               }
             },

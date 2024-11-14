@@ -79,9 +79,9 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 				<!-- REPLACE `android:host` with your `app.link` domain -->
-				<data android:scheme="https" android:host="@string/deeplink_test_link" />
+				<data android:scheme="https" android:host="@string/deeplink_link" />
 				<!-- REPLACE `android:host` with your `-alternate` domain (required for proper functioning of App Links and Deepviews) -->
-				<data android:scheme="https" android:host="@string/deeplink_alternate_test_link" />
+				<data android:scheme="https" android:host="@string/deeplink_alternate_link" />
 			</intent-filter>
 
 			<!-- Branch App Links - Test App -->

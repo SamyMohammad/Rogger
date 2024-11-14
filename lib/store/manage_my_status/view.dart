@@ -5,12 +5,11 @@ import 'package:silah/constants.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/shared/product_details/units/delete_product_dialog.dart';
+import 'package:silah/store/status_details/view.dart';
 import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/snack_bar.dart';
 
-import '../../widgets/app/profile_avatar.dart';
 import '../status_details/model.dart';
-import '../status_details/view.dart';
 
 class ManageMyStatusView extends StatefulWidget {
   const ManageMyStatusView({Key? key, required this.statusModel})
@@ -93,12 +92,27 @@ class _ManageMyStatusViewState extends State<ManageMyStatusView> {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            onTap: () => Navigator.push(
-              context,
-              ImageViewerPageRoute(
+            onTap: () {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  backgroundColor: Color(0xff022E47),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
                   builder: (context) =>
-                      StatusDetailsView(status: status, initialIndex: index)),
-            ),
+                      StatusDetailsView(status: status, initialIndex: index));
+            },
+
+            // => Navigator.push(
+            //   context,
+            //   ImageViewerPageRoute(
+            //       builder: (context) =>
+            //           StatusDetailsView(status: status, initialIndex: index)),
+            // ),
             trailing: IconButton(
               icon: Icon(FontAwesomeIcons.trash),
               color: Colors.red,

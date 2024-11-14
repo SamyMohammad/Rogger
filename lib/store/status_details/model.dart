@@ -32,14 +32,17 @@ class Status {
     this.attachment,
     this.attachmentType,
     this.dateAdded,
+    this.views,
   });
 
   int? storyId;
   String? attachment;
   String? attachmentType;
   DateTime? dateAdded;
+  int? views;
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
+        views: json["views"],
         storyId: json["story_id"],
         attachment: json["attachment"],
         attachmentType: json["attachment_type"],
@@ -50,6 +53,7 @@ class Status {
 
   Map<String, dynamic> toJson() => {
         "story_id": storyId,
+        "views": views,
         "attachment": attachment,
         "attachment_type": attachmentType,
         "date_added": dateAdded?.toIso8601String(),

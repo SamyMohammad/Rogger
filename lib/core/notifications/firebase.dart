@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:silah/core/notifications/notification_dialog.dart';
+
 // import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 import '../../shared/nav_bar/cubit/cubit.dart';
@@ -70,10 +72,10 @@ class FirebaseMessagingHelper {
   static Future<void> _handleNotificationReceiver(
       RemoteMessage notification) async {
     NavBarCubit.get(NavBarCubit.currentContext).checkIfHasUnreadMessages();
-    // showNotificationDialog(
-    //   title: notification.notification?.title ?? '',
-    //   body: notification.notification?.body ?? '',
-    //   type: notification.data['type'] ?? '',
-    // );
+    showNotificationDialog(
+      title: notification.notification?.title ?? '',
+      body: notification.notification?.body ?? '',
+      type: notification.data['type'] ?? '',
+    );
   }
 }

@@ -9,6 +9,7 @@ import 'package:silah/core/bloc_observer.dart';
 import 'package:silah/core/cities/cubit/cubit.dart';
 import 'package:silah/core/customer_groups/cubit/cubit.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
+import 'package:silah/shared/splash/view.dart';
 import 'package:silah/shared_cubit/home_products/cubit.dart';
 import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/shared_cubit/theme_cubit/states.dart';
@@ -16,7 +17,6 @@ import 'package:silah/shared_cubit/theme_cubit/states.dart';
 import 'constants.dart';
 import 'core/firebase_options.dart';
 import 'core/router/router.dart';
-import 'shared/splash/view.dart';
 import 'shared_cubit/category_cubit/cubit.dart';
 import 'widgets/pop_scaffold.dart';
 
@@ -24,7 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
-await DownloadCacheManager.instance.init();
+  await DownloadCacheManager.instance.init();
   await DownloadCacheManager.instance.setExpireDate(daysToExpire: 3);
   await AppStorage.init();
   await Firebase.initializeApp(
@@ -62,8 +62,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => CategoryCubit()
               ..getCategories()
-              ..getPaidCategories()
-              ,
+              ..getPaidCategories(),
             lazy: false),
         BlocProvider(
             create: (context) => HomeProductsCubit()

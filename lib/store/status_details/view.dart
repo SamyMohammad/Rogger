@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:media_cache_manager/media_cache_manager.dart';
+import 'package:silah/core/app_storage/app_storage.dart';
+import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/widgets/video_view.dart';
 
 import '../../constants.dart';
@@ -22,6 +24,18 @@ class StatusDetailsView extends StatefulWidget {
 }
 
 class _StatusDetailsViewState extends State<StatusDetailsView> {
+  Future<void> viewStatus() async {
+    try {
+      final response = await DioHelper.post('provider/story/view', data: {
+        'customer_id': AppStorage.customerID,
+        'story_id': widget.status[currentIndex].storyId
+      });
+      // print('checkIfHasUnreadMessages${response.data['message_status']}');
+      // hasUnreadMessages = response.data['message_status'];
+    } catch (e) {}
+    // emit(NavBarInitState());
+  }
+
   final CarouselSliderController _controller = CarouselSliderController();
   double progress = 0;
   int currentIndex = 0;
@@ -30,8 +44,8 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
 
   @override
   void initState() {
-
     currentIndex = widget.initialIndex;
+    viewStatus();
     restartTimer();
     super.initState();
   }
@@ -53,8 +67,8 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
         if (currentIndex >= widget.status.length) {
           Navigator.maybePop(context);
         } else {
-          
           _controller.animateToPage(currentIndex);
+          viewStatus();
         }
       }
     });
@@ -153,7 +167,7 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
                               children: [
                                 ///Todo: Add View Count
                                 Text(
-                                  "21",
+                                  e.views.toString(),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

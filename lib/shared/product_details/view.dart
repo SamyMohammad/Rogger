@@ -223,25 +223,32 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   //             initialIndex: imagesList.indexOf(e),
                                   //             urls: imagesList,
                                   //           )));
+
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      backgroundColor: Color(0xff022E47),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      builder: (context) => ProductImagesView(
+                                            initialIndex: imagesList.indexOf(e),
+                                            urls: imagesList,
+                                          ));
                                 },
-                                child: OpenContainer(
-                                  openBuilder: (context, action) =>
-                                      ProductImagesView(
-                                    initialIndex: imagesList.indexOf(e),
-                                    urls: imagesList,
+                                child: CachedNetworkImage(
+                                  imageUrl: e,
+                                  height: 350,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                  placeholder: (context, url) => Center(
+                                    child: LoadingIndicator(),
                                   ),
-                                  closedBuilder: (context, action) =>
-                                      CachedNetworkImage(
-                                    imageUrl: e,
-                                    height: 350,
-                                    width: double.infinity,
-                                    fit: BoxFit.fill,
-                                    placeholder: (context, url) => Center(
-                                      child: LoadingIndicator(),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
                               ),
                               Center(

@@ -6,6 +6,7 @@ import 'package:silah/core/app_storage/user.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/notifications/firebase.dart';
 import 'package:silah/core/router/router.dart';
+import 'package:silah/shared/mintainence/view.dart';
 import 'package:silah/shared/splash/view.dart';
 
 import '../../widgets/snack_bar.dart';
@@ -138,3 +139,4 @@ Future<void> checkUserIfBanned() async {
     RouteManager.navigateAndPopAll(SplashView());
   }
 }
+
