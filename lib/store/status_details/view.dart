@@ -88,7 +88,28 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
       // },
       onLongPress: () => pauseStatus = true,
       onLongPressEnd: (_) => pauseStatus = false,
+      onTapDown: (TapDownDetails details) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double tapPosition = details.globalPosition.dx;
 
+        if (tapPosition < screenWidth / 2) {
+          // Right half tapped - move to the next story
+          if (currentIndex + 1 < widget.status.length) {
+            final index = currentIndex + 1;
+            restartTimer(index);
+            _controller.animateToPage(index);
+          } else {
+            Navigator.pop(context); // Exit if it's the last story
+          }
+        } else {
+          // Left half tapped - move to the previous story
+          if (currentIndex > 0) {
+            final index = currentIndex - 1;
+            restartTimer(index);
+            _controller.animateToPage(index);
+          }
+        }
+      },
       // onTapDown: (TapDownDetails details) {
       //   double screenWidth = MediaQuery.of(context).size.width;
       //   double tapPosition = details.globalPosition.dx;
@@ -112,86 +133,67 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
           children: [
             CarouselSlider(
               controller: _controller,
-              items: widget.status.map((e) {
-                if (e.attachmentType == 'video') {
-                  return DownloadMediaBuilder(
-                    url: e.attachment!,
-                    onLoading: (snapshot) {
-                      return CircularProgressIndicator(
-                        value: snapshot.progress,
-                        color: kAccentColor,
-                        valueColor: AlwaysStoppedAnimation(kPrimaryColor),
-                      );
-                    },
-                    onSuccess: (snapshot) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          top: topDevicePadding,
-                          bottom: bottomDevicePadding,
-                        ),
-                        // child: VideoBubble(
-                        //   file: snapshot.filePath,
-                        //   aspectRatio: sizeFromWidth(1) /
-                        //       sizeFromHeight(1, removeAppBarSize: false),
-                        //   onVideoFinished: () => restartTimer(currentIndex + 1),
-                        // ),
-                        child: VideoPlayerThumbnail(
-                          url: snapshot.filePath!,
-                          network: false,
-                        ),
-                      );
-                    },
-                  );
-                }
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(
-                        e.attachment.toString(),
-                        height: double.infinity,
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                      ),
-                      Container(
-                        height: double.infinity,
-                        width: double.infinity,
-                        color: Colors.black.withOpacity(0.8),
-                      ),
-                      Positioned.fill(
-                          bottom: 20,
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ///Todo: Add View Count
-                                Text(
-                                  e.views.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(width: 5),
-                                SvgPicture.asset(
-                                  getIcon("view"),
-                                  color: Colors.white,
-                                )
-                              ],
+              items: widget.status.isEmpty
+                  ? []
+                  : widget.status.map((e) {
+                      if (e.attachmentType == 'video') {
+                        return DownloadMediaBuilder(
+                          url: e.attachment!,
+                          onLoading: (snapshot) {
+                            return CircularProgressIndicator(
+                              value: snapshot.progress,
+                              color: kAccentColor,
+                              valueColor: AlwaysStoppedAnimation(kPrimaryColor),
+                            );
+                          },
+                          onSuccess: (snapshot) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                top: topDevicePadding,
+                                bottom: bottomDevicePadding,
+                              ),
+                              // child: VideoBubble(
+                              //   file: snapshot.filePath,
+                              //   aspectRatio: sizeFromWidth(1) /
+                              //       sizeFromHeight(1, removeAppBarSize: false),
+                              //   onVideoFinished: () => restartTimer(currentIndex + 1),
+                              // ),
+                              child: VideoPlayerThumbnail(
+                                url: snapshot.filePath!,
+                                network: false,
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(0),
+                        child: Stack(
+                          children: <Widget>[
+                            if (widget.status.isNotEmpty)
+                              Image.network(
+                                e.attachment.toString(),
+                                height: double.infinity,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
+                            Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              color: Colors.black.withOpacity(0.8),
                             ),
-                          )),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Image.network(
-                          e.attachment.toString(),
-                          height: MediaQuery.of(context).size.height * .8,
-                          width: double.infinity,
+                            Align(
+                              alignment: Alignment.center,
+                              child: Image.network(
+                                e.attachment.toString(),
+                                height: MediaQuery.of(context).size.height * .8,
+                                width: double.infinity,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                      );
+                    }).toList(),
               options: CarouselOptions(
                 autoPlay: false,
                 enableInfiniteScroll: false,
@@ -291,6 +293,36 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
                     ),
                   ],
                 ),
+              ),
+            ),
+            Positioned.fill(
+              bottom: 30,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ///Todo: Add View Count
+                        Text(
+                          widget.status.isNotEmpty
+                              ? widget.status[currentIndex].views.toString()
+                              : '',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 5),
+                        SvgPicture.asset(
+                          getIcon("view"),
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
               ),
             ),
           ],

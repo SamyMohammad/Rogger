@@ -1,8 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
+import 'package:gal/gal.dart';
 // import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -86,7 +87,17 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
     }
   }
 
-  _saved(Uint8List image) async {
+  _saved(File imageFile) async {
+    try {
+      await Gal.requestAccess();
+      if (await Gal.hasAccess()) {
+        await Gal.putImage(imageFile.path);
+        // final imagePath = await directory.createFile('image.png');
+      }
+    } on GalException catch (e) {
+      log(e.type.message);
+    }
+
     // TODO: fix save issue
     // final result = await ImageGallerySaver.saveImage(image);
     print("File Saved to Gallery");
@@ -191,23 +202,23 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                     final directory = (await getApplicationDocumentsDirectory())
                         .path; //from path_provide package
                     int fileName = DateTime.now().microsecondsSinceEpoch;
-                    String path = '$directory';
+                    String path = '$fileName$directory';
                     screenshotController
                         //     .captureFromLongWidget(QrImageView(
                         //   size: 140,
                         //   data: response?.result ??
                         //       AppStorage.customerID.toString(),
                         // ))
-                        .capture(delay: const Duration(milliseconds: 10))
-                        .then((Uint8List? image) async {
+                        .captureAndSave(path)
+                        .then((String? image) async {
                       if (image != null) {
                         print('inCapture');
                         final directory =
                             await getApplicationDocumentsDirectory();
-                        final imagePath =
+                        final imageFile =
                             await File('${directory.path}/image.png').create();
-                        await imagePath.writeAsBytes(image);
-                        _saved(image);
+                        // await imagePath.writeAsBytes(image);
+                        _saved(imageFile);
                       }
                     });
                   },
@@ -300,4 +311,18 @@ class _TabWithIcon extends StatelessWidget {
       ),
     );
   }
+}
+
+enum GalExceptionType {
+  accessDenied,
+  notEnoughSpace,
+  notSupportedFormat,
+  unexpected;
+
+  String get message => switch (this) {
+        accessDenied => 'Permission to access the gallery is denied.',
+        notEnoughSpace => 'Not enough space for storage.',
+        notSupportedFormat => 'Unsupported file formats.',
+        unexpected => 'An unexpected error has occurred.',
+      };
 }

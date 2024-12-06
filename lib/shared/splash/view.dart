@@ -42,7 +42,7 @@ class _SplashViewState extends State<SplashView> {
 
     FirebaseMessagingHelper.init();
     checkNaviagtionOrListenDeepLink();
-    
+
     // listenDeepLinkData(context);
   }
 
@@ -53,7 +53,7 @@ class _SplashViewState extends State<SplashView> {
       'maintenance',
       // data: {'customer_id': AppStorage.customerID},
     );
-    if (response.data["data"][0]['maintenance'] == "0") {
+    if (response.data["data"][0]['maintenance'] == "1") {
       print(" Navigate to maintainence");
       NavigationToMaintainence();
     } else {
@@ -74,6 +74,7 @@ class _SplashViewState extends State<SplashView> {
           NavigationToNavBarView();
         }
       }, onError: (error) {
+        print("error Navigate to relative screen FlutterBranch");
         debugPrint('exception: $error');
       });
     }

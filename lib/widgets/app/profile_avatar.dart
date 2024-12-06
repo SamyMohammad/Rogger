@@ -1,6 +1,7 @@
 import 'package:drag_down_to_pop/drag_down_to_pop.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/store/add_status/view.dart';
@@ -79,12 +80,26 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
               }
             } else if (statusModel?.stories?.isNotEmpty == true) {
               print('statusModel?.stories ${widget.userID}');
-              Navigator.push(
-                context,
-                ImageViewerPageRoute(
-                    builder: (context) =>
-                        StatusDetailsView(status: statusModel!.stories!)),
-              );
+              showMaterialModalBottomSheet(
+                  // isScrollControlled: true,
+                  // showDragHandle: true,
+                  expand: true,
+                  context: context,
+                  backgroundColor: Color(0xff022E47),
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.only(
+                  //     topLeft: Radius.circular(20),
+                  //     topRight: Radius.circular(20),
+                  //   ),
+                  // ),
+                  builder: (context) =>
+                      StatusDetailsView(status: statusModel?.stories ?? []));
+              // Navigator.push(
+              //   context,
+              //   ImageViewerPageRoute(
+              //       builder: (context) =>
+              //           StatusDetailsView(status: statusModel!.stories!)),
+              // );
               // Navigator.push(
               //   context,
               //   _createRoute(),

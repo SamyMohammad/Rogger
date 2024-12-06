@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:silah/core/location/location_manager.dart';
 import 'package:silah/core/router/router.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/confirm_button.dart';
 
@@ -61,6 +62,12 @@ class _LocationViewState extends State<LocationView> {
             ConfirmButton(
               horizontalMargin: VIEW_PADDING.horizontal,
               title: 'ارسال الموقع',
+              fontColor: ThemeCubit.of(context).isDark
+                  ? Color(0xFF1E1E26)
+                  : Color(0xffFAFAFF),
+              color: !ThemeCubit.of(context).isDark
+                  ? Color(0xFF1E1E26)
+                  : Color(0xffFAFAFF),
               onPressed: markers.isEmpty
                   ? null
                   : () {

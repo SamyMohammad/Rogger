@@ -55,7 +55,7 @@ android {
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multiDexEnabled true
+        // multiDexEnabled true
 
         resValue "string", "google_maps_key", localProperties['MAPS_API_KEY']
     }
@@ -85,6 +85,6 @@ flutter {
 
 
 
-dependencies {
-  implementation "androidx.multidex:multidex:2.0.1"
-}
+// dependencies {
+//   implementation 'io.branch.sdk.android:library:5.12.4' // Check for latest version before hard-coding
+// }

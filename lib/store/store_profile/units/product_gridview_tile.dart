@@ -47,6 +47,13 @@ class ProductGridviewTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 1.5,
+                      spreadRadius: 0.2,
+                    )
+                  ],
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,

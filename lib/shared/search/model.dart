@@ -47,19 +47,19 @@ class Product {
     required this.city,
   });
 
-  final String productId;
-  final String categoryName;
-  final String customerId;
-  final String customerProfile;
-  final String thumb;
-  final String name;
-  final String description;
-  final String price;
-  final String customerName;
-  final String dateAdded;
-  final String dateModified;
-  final double rate;
-  final String city;
+  final String? productId;
+  final String? categoryName;
+  final String? customerId;
+  final String? customerProfile;
+  final String? thumb;
+  final String? name;
+  final String? description;
+  final String? price;
+  final String? customerName;
+  final String? dateAdded;
+  final String? dateModified;
+  final double? rate;
+  final String? city;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         productId: json["product_id"],

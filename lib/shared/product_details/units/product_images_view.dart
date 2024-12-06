@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:silah/core/router/router.dart';
 
 class ProductImagesView extends StatefulWidget {
   const ProductImagesView(
@@ -43,6 +42,7 @@ class _ProductImagesViewState extends State<ProductImagesView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 800,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: const BorderRadius.only(
@@ -51,20 +51,21 @@ class _ProductImagesViewState extends State<ProductImagesView> {
         ),
       ),
       child: Stack(
+        alignment: Alignment.center,
         children: [
           Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const SizedBox(height: 12.0),
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2.0),
-                ),
-              ),
-              const SizedBox(height: 16.0),
+              // const SizedBox(height: 12.0),
+              // Container(
+              //   width: 40,
+              //   height: 4,
+              //   decoration: BoxDecoration(
+              //     color: Colors.white.withOpacity(0.3),
+              //     borderRadius: BorderRadius.circular(2.0),
+              //   ),
+              // ),
+              // const SizedBox(height: 16.0),
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -72,7 +73,7 @@ class _ProductImagesViewState extends State<ProductImagesView> {
                   itemBuilder: (context, index) {
                     return Stack(
                       alignment: Alignment.center,
-                      fit: StackFit.loose,
+                      fit: StackFit.expand,
                       children: [
                         SizedBox(
                           // height: 800,
@@ -86,27 +87,6 @@ class _ProductImagesViewState extends State<ProductImagesView> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: 50,
-                          child: Container(
-                            height: 40,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '${urls.length} /${currentIndex + 1}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     );
                   },
@@ -117,18 +97,26 @@ class _ProductImagesViewState extends State<ProductImagesView> {
             ],
           ),
           Positioned(
-            top: 50,
-            right: 10,
-            child: IconButton(
-              onPressed: () => RouteManager.pop(),
-              // padding: EdgeInsets.all(-20),
-              icon: Icon(
-                color: Colors.white,
-                Icons.arrow_back_ios_new_sharp,
-                weight: 5,
+            bottom: 15,
+            child: Container(
+              height: 40,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Center(
+                child: Text(
+                  '${urls.length} /${currentIndex + 1}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

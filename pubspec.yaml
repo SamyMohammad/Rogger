@@ -7,7 +7,8 @@ publish_to: "none"
 version: 3.0.8+3090
 
 environment:
-  sdk: "3.3.0"
+
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   cupertino_icons: ^1.0.5
@@ -80,6 +81,8 @@ dependencies:
   # flutter_branch_sdk: 8.1.1
   flutter_secure_storage: ^8.1.0
   flutter_branch_sdk: ^8.2.0
+  modal_bottom_sheet: ^3.0.0
+  gal: ^2.3.0
 dependency_overrides:
   photo_manager: ^3.0.0-dev.2  
   custom_map_markers: ^0.0.2+1
@@ -99,7 +102,7 @@ dependency_overrides:
   animated_snack_bar: ^0.4.0
   # photo_manager: ^2.7.1
   cached_network_image: ^3.3.0    
-  flutter_svg: ^2.0.9
+  flutter_svg: 2.0.10+1
   flutter_branch_sdk: any
   device_info_plus: any
   carousel_slider_plus: any
@@ -109,7 +112,7 @@ dependency_overrides:
   photo_view: ^0.15.0
 
   # image_gallery_saver: any
-  screenshot: any
+  screenshot: 2.5.0
   drag_down_to_pop: any
   zxing2: any
   qr_code_tools: 

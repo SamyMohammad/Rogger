@@ -154,18 +154,26 @@ class SearchView extends StatelessWidget {
                               ));
                             },
                             child: ProductItem(
-                              customerProfile: cubit
-                                  .searchModel!.products[index].customerProfile,
-                              productId:
-                                  cubit.searchModel!.products[index].productId,
-                              image: cubit.searchModel!.products[index].thumb,
-                              title: cubit.searchModel!.products[index].name,
-                              time: cubit
-                                  .searchModel!.products[index].dateModified,
-                              personName: cubit
-                                  .searchModel!.products[index].customerName,
-                              city: cubit.searchModel!.products[index].city,
-                              rate: cubit.searchModel!.products[index].rate,
+                              customerProfile: cubit.searchModel!
+                                      .products[index].customerProfile ??
+                                  '',
+                              productId: cubit
+                                      .searchModel!.products[index].productId ??
+                                  '',
+                              image: cubit.searchModel!.products[index].thumb ??
+                                  '',
+                              title:
+                                  cubit.searchModel!.products[index].name ?? '',
+                              time: cubit.searchModel!.products[index]
+                                      .dateModified ??
+                                  '',
+                              personName: cubit.searchModel!.products[index]
+                                      .customerName ??
+                                  '',
+                              city:
+                                  cubit.searchModel!.products[index].city ?? '',
+                              rate:
+                                  cubit.searchModel!.products[index].rate ?? 0,
                             ),
                           );
                         },

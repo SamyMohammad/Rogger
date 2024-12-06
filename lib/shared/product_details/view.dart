@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:media_cache_manager/media_cache_manager.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/chat/cubit.dart';
@@ -223,17 +224,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   //             initialIndex: imagesList.indexOf(e),
                                   //             urls: imagesList,
                                   //           )));
-
-                                  showModalBottomSheet(
-                                      isScrollControlled: true,
+// showModal(
+//   context: context,
+//   builder: (context) => Container(),
+// );
+                                  showMaterialModalBottomSheet(
+                                      // isScrollControlled: true,
+                                      // showDragHandle: true,
+                                      expand: true,
                                       context: context,
                                       backgroundColor: Color(0xff022E47),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                        ),
-                                      ),
+                                      // shape: RoundedRectangleBorder(
+                                      //   borderRadius: BorderRadius.only(
+                                      //     topLeft: Radius.circular(20),
+                                      //     topRight: Radius.circular(20),
+                                      //   ),
+                                      // ),
                                       builder: (context) => ProductImagesView(
                                             initialIndex: imagesList.indexOf(e),
                                             urls: imagesList,
@@ -241,7 +247,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 },
                                 child: CachedNetworkImage(
                                   imageUrl: e,
-                                  height: 350,
+                                  height: 500,
                                   width: double.infinity,
                                   fit: BoxFit.fill,
                                   placeholder: (context, url) => Center(
