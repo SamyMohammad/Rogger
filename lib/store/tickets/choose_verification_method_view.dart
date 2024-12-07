@@ -53,8 +53,8 @@ class _ChooseVerificationMethodSectionState
       children: [
         const SizedBox(height: 20),
         VerificationMethodWidget(
-          isGuranteed: cubit.getStatusVerification?.requests?.any(
-                  (element) => element.verificationRequired == '1') ??
+          isGuranteed: cubit.getStatusVerification?.requests
+                  ?.any((element) => element.verificationRequired == '1') ??
               false,
           icon: "verified",
           isVerificationMethodContainer: false,
@@ -95,7 +95,7 @@ class _ChooseVerificationMethodSectionState
           onTap: () {
             setState(() {
               // Toggle selection: if already selected, deselect it
-              print("status of request ${cubit.request?.sTATUS}");
+
               cubit.veirificationMethodSelectedIndex =
                   cubit.veirificationMethodSelectedIndex == 1 ? null : 1;
               onTabverificationMethodWidget(

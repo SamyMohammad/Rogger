@@ -37,7 +37,6 @@ class StoreInfoModel {
   String? totalFollowerCount;
 
   factory StoreInfoModel.fromJson(Map<String, dynamic> json) {
-    print('json["brief"] ${json["brief"]}');
     return StoreInfoModel(
         profileImage: json["profile_image"],
         name: json["name"],

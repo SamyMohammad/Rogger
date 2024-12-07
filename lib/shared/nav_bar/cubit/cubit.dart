@@ -75,7 +75,7 @@ class NavBarCubit extends Cubit<NavBarStates> {
     try {
       final response = await DioHelper.post('messages/unread_message_check',
           data: {'customer_id': AppStorage.customerID});
-      print('checkIfHasUnreadMessages${response.data['message_status']}');
+
       hasUnreadMessages = response.data['message_status'];
     } catch (e) {}
     emit(NavBarInitState());
@@ -128,13 +128,13 @@ class NavBarCubit extends Cubit<NavBarStates> {
     // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     // AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     // if (androidInfo.version.sdkInt >= 33) {
-    //   print('${await Permission.storage.status} is more than 33');
+    //
 
     //   Permission.photos.request();
     //   videos = await Permission.videos.status.isGranted;
     //   photos = await Permission.photos.status.isGranted;
     // } else {
-    //   print('${await Permission.storage.status} is less 33');
+    //
     //   Permission.storage.request();
 
     //   storage = await Permission.storage.status.isGranted;

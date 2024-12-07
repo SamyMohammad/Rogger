@@ -30,7 +30,7 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
         'customer_id': AppStorage.customerID,
         'story_id': widget.status[currentIndex].storyId
       });
-      // print('checkIfHasUnreadMessages${response.data['message_status']}');
+      //
       // hasUnreadMessages = response.data['message_status'];
     } catch (e) {}
     // emit(NavBarInitState());
@@ -303,26 +303,26 @@ class _StatusDetailsViewState extends State<StatusDetailsView> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ///Todo: Add View Count
-                        Text(
-                          widget.status.isNotEmpty
-                              ? widget.status[currentIndex].views.toString()
-                              : '',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(width: 5),
-                        SvgPicture.asset(
-                          getIcon("view"),
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ///Todo: Add View Count
+                      Text(
+                        widget.status.isNotEmpty
+                            ? widget.status[currentIndex].views.toString()
+                            : '',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 5),
+                      SvgPicture.asset(
+                        getIcon("view"),
+                        color: Colors.white,
+                      )
+                    ],
                   ),
+                ),
               ),
             ),
           ],

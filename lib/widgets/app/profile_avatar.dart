@@ -45,7 +45,6 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
 
   void getStatus() {
     if (AppStorage.isLogged) {
-      print('widget.userID ${widget.userID}');
       DioHelper.post(
         'provider/story/story_list',
         data: {
@@ -54,9 +53,8 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
       ).then((value) {
         try {
           statusModel = StatusModel.fromJson(value.data);
-          print('value.data ${value.data}');
+
           statusModel?.stories = statusModel?.stories?.reversed.toList();
-          print('value.data ${value.data}');
 
           if (mounted) setState(() {});
         } catch (e) {}
@@ -79,7 +77,6 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                 RouteManager.navigateTo(AddStatusView());
               }
             } else if (statusModel?.stories?.isNotEmpty == true) {
-              print('statusModel?.stories ${widget.userID}');
               showMaterialModalBottomSheet(
                   // isScrollControlled: true,
                   // showDragHandle: true,

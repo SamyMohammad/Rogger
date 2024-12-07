@@ -29,7 +29,7 @@ class ThemeCubit extends Cubit<ThemeStates> {
     if (appTheme == newMode) {
       return;
     }
-    print(newMode);
+
     appTheme = newMode;
     AppStorage.cacheTheme(newMode);
     emit(SetThemeState());

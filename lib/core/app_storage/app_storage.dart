@@ -6,7 +6,6 @@ import 'package:silah/core/app_storage/user.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/notifications/firebase.dart';
 import 'package:silah/core/router/router.dart';
-import 'package:silah/shared/mintainence/view.dart';
 import 'package:silah/shared/splash/view.dart';
 
 import '../../widgets/snack_bar.dart';
@@ -58,7 +57,7 @@ class AppStorage {
 
   static Future<void> cacheProduct(String product) async {
     var products = getProduct();
-    print('products$products');
+
     if (products == null) {
       products = [];
     }
@@ -77,7 +76,7 @@ class AppStorage {
 
   static Future<void> cacheAdvertiser(String advertiserId) async {
     var advertisers = getProduct();
-    print('products$advertisers');
+
     if (advertisers == null) {
       advertisers = [];
     }
@@ -118,8 +117,6 @@ Future<void> getUserAndCache(int customerID, int customerGroup) async {
     await AppStorage.cacheUser(UserModel.fromJson(data));
     FirebaseMessagingHelper.sendFCMToServer();
   } catch (e, s) {
-    print(e);
-    print(s);
     throw e;
   }
 }
@@ -139,4 +136,3 @@ Future<void> checkUserIfBanned() async {
     RouteManager.navigateAndPopAll(SplashView());
   }
 }
-

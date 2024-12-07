@@ -41,7 +41,6 @@ class CategoryCubit extends Cubit<CategoryStates> {
     if (selectedCategory != null &&
         selectedSubCategory != null &&
         selectedCopyOfTransferImage != null) {
-      print('isValid$isValid');
       emit(ValidateState(state: true));
       return;
     }
@@ -69,10 +68,8 @@ class CategoryCubit extends Cubit<CategoryStates> {
       final response = await DioHelper.post(
           'customer/account/create_categort_subscription',
           formData: formData);
-      print(response.data);
 
       if (response.data.containsKey('success')) {
-        print('Success');
         emit(RequestVerificationSucessState(response.data));
       } else {
         emit(RequestVerificationErrorState(response.data));
@@ -85,10 +82,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     // emit(TicketsInitState());
   }
 
@@ -97,7 +91,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
     try {
       final response = await DioHelper.post('common/category/main_categories');
       final data = response.data;
-      print('common/category/main_categories${response.data}');
+
       categoriesModel = CategoriesModel.fromJson(data);
       // categoriesModel.categories[0].
       emit(CategoryInitState());
@@ -111,7 +105,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
     try {
       final response = await DioHelper.post('common/category/paid_categories');
       final data = response.data;
-      print('common/category/paid_categories${response.data}');
+
       paidCategoriesModel = CategoriesModel.fromJson(data);
       // categoriesModel.categories[0].
       emit(CategoryInitState());
@@ -128,14 +122,13 @@ class CategoryCubit extends Cubit<CategoryStates> {
       };
       final response =
           await DioHelper.post('common/category/sub_categories', data: data);
-      print('GetSubCategoriesLoadingState  : ${response.data}');
+
       getSubCategory = GetSubCategory.fromJson(response.data);
       subCategories = getSubCategory?.categories ?? [];
-      print('subCategories : $subCategories');
+
       isSubCategoryShow = subCategories.isNotEmpty;
       emit(GetSubCategoriesSuccessState());
     } catch (e) {
-      print('GetSubCategoriesErrorState: ${e.toString()}');
       emit(GetSubCategoriesErrorState(e.toString()));
     }
   }
@@ -143,12 +136,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
   Future<void> getCategoryProducts(String id, bool nearestAds) async {
     _canGetMoreProducts = true;
     emit(CategoryLoadingState());
-    print('');
 
-    print(AppStorage.getUserModel()?.customerId);
-    print(AppStorage.getUserModel()?.customerGroup);
-    print(id);
-    print(nearestAds);
     try {
       final data = {
         'start': 0,
@@ -158,9 +146,9 @@ class CategoryCubit extends Cubit<CategoryStates> {
         'category_id': id,
         "location_status": nearestAds ? "1" : "0",
       };
-      print('$data');
+
       final response = await DioHelper.post('common/category', data: data);
-      print('common/category${response.data}');
+
       categoryProductsModel = CategoryProductsModel.fromJson(response.data);
       emit(CategoryInitState());
     } catch (e) {
@@ -191,7 +179,6 @@ class CategoryCubit extends Cubit<CategoryStates> {
         categoryProductsModel?.products
             ?.addAll(moreHomeProductsModel.products!);
       } catch (e) {
-        print(e);
         _canGetMoreProducts = false;
       }
       emit(CategoryInitState());

@@ -75,8 +75,8 @@
 //         showToast(data['message']);
 //       }
 //     }catch(e, s){
-//       print(e);
-//       print(s);
+//       
+//       
 //     }
 //     emit(EditProfileInitState());
 //   }
@@ -109,7 +109,7 @@
 //       final formData = FormData.fromMap(data);
 //       formData.files.addAll({MapEntry('file[0]', await MultipartFile.fromFile(image.path))});
 //       await DioHelper.post('customer/account/user_avatar', formData: formData);
-//       // print(response.data);
+//       // 
 //       showSnackBar("تم تحديث صورة البروفايل بنجاح");
 //       await getUserAndCache(AppStorage.customerID, AppStorage.getUserModel()!.customerGroup!);
 //       emit(EditProfileInitState());

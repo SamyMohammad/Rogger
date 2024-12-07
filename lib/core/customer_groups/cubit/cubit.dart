@@ -17,8 +17,6 @@ class CustomerGroupsCubit extends Cubit<CustomerGroupsState> {
       customerGroupsModel = CustomerGroupsModel.fromJson(response.data);
       emit(CustomerGroupsInitState());
     } catch (e, s) {
-      print(e);
-      print(s);
       // emit(HomeErrorState(e.toString()));
     }
   }

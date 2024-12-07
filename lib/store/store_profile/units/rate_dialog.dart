@@ -18,7 +18,6 @@ showRateDialog(
     double? rate,
     String? rateId}) {
   showCupertinoDialog(
-  
       context: RouteManager.currentContext,
       barrierDismissible: true,
       builder: (_) => _Dialog(
@@ -55,11 +54,12 @@ class _DialogState extends State<_Dialog> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('widget.rating${widget.rating}');
-    if (widget.rating!= null) {
+
+    if (widget.rating != null) {
       rating = widget.rating!;
     }
   }
+
   void rate() async {
     setState(() => isLoading = true);
     try {
@@ -72,7 +72,7 @@ class _DialogState extends State<_Dialog> {
           'comment': comment,
         },
       );
-    print( 'customer/account/rating_add${response.data}');
+
       if (response.data['success'] == true) {
         showSnackBar('تم ارسال تقييمكم بنجاح!');
       } else {
@@ -98,7 +98,6 @@ class _DialogState extends State<_Dialog> {
           'comment': comment,
         },
       );
-          print('update_rating${response.data}');
 
       if (response.data['success'] == true) {
         showSnackBar('تم ارسال تقييمكم بنجاح!');
@@ -115,7 +114,6 @@ class _DialogState extends State<_Dialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -124,12 +122,10 @@ class _DialogState extends State<_Dialog> {
           const SizedBox(height: 10),
           Text("اضغط على النجوم للتقييم"),
           RateWidget(
-            
             rate: rating,
             hItemPadding: 0,
             itemSize: 20,
             onRate: (v) => rating = v,
-
           ),
           const SizedBox(height: 10),
           Padding(
@@ -140,7 +136,6 @@ class _DialogState extends State<_Dialog> {
               fillColor: Theme.of(context).appBarTheme.backgroundColor,
               onChanged: (newComment) {
                 comment = newComment;
-                print(comment);
               },
               hasBorder: true,
               multiLine: true,

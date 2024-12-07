@@ -22,7 +22,7 @@ class FavouriteCubit extends Cubit<FavouriteStates> {
       });
       final data = response.data;
       favouriteModel = FavouriteModel.fromJson(data);
-      // print(data);
+      //
       emit(FavouriteInitStates());
     } catch (e) {
       emit(FavouriteErrorStates(e.toString()));

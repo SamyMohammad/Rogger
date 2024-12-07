@@ -27,9 +27,9 @@
 //           });
 //       final data = response.data;
 //       productsModel = ProductsModel.fromJson(data);
-//       // print(categoryId);
-//       // print(productsModel!.toJson());
-//       print(productsModel!.productsCount);
+//       // 
+//       // 
+//       
 //       emit(ProductInitState());
 //     }catch(e){
 //       emit(ProductErrorState(e.toString()));
@@ -45,7 +45,7 @@
 //           });
 //       final data = response.data;
 //       categoryAssignedModel = CategoryAssignedModel.fromJson(data);
-//       // print(data['categories']);
+//       // 
 //       emit(ProductInitState());
 //     }catch(e){
 //       emit(ProductErrorState(e.toString()));

@@ -9,6 +9,7 @@ import 'package:silah/shared_models/home_products_model.dart';
 import 'package:silah/shared_models/sub_categories_model.dart';
 
 import '../category_details/category_products_model.dart';
+
 part 'states.dart';
 
 class StoresCubit extends Cubit<StoresStates> {
@@ -27,6 +28,7 @@ class StoresCubit extends Cubit<StoresStates> {
     print(
         'getSubCategory!.categories!.first.id${getSubCategory?.categories?.length}');
   }
+
   Future<void> getSubCategories(String? id) async {
     emit(GetSubCategoriesLoadingState());
     try {
@@ -35,16 +37,14 @@ class StoresCubit extends Cubit<StoresStates> {
       };
       final response =
           await DioHelper.post('common/category/sub_categories', data: data);
-      print('GetSubCategoriesLoadingState  : ${response.data}');
+
       getSubCategory = GetSubCategory.fromJson(response.data);
       subCategories = getSubCategory?.categories ?? [];
-      print('subCategories : $subCategories');
+
       await init();
 
       emit(GetSubCategoriesSuccessState());
-    } catch (e) {
-      print('GetSubCategoriesErrorState: ${e.toString()}');
-    }
+    } catch (e) {}
   }
 
   toggleSelection(bool state) {
@@ -58,14 +58,13 @@ class StoresCubit extends Cubit<StoresStates> {
       final response = await DioHelper.post(
         'customer/account/vaild_ads_slider',
       );
-      print('GetSubCategoriesLoadingState  : ${response.data}');
+
       ads = Ads.fromJson(response.data);
       // subCategories = getSubCategory?.categories??[];
-      // print('subCategories : $subCategories');
-      print('ads ${ads?.data}');
+      //
+
       emit(GetAdsSuccessState());
     } catch (e) {
-      print('GetSubCategoriesErrorState  : ${e.toString()}');
       emit(GetAdsErrorState(e.toString()));
     }
   }
@@ -91,14 +90,12 @@ class StoresCubit extends Cubit<StoresStates> {
       final response = await DioHelper.post('customer/account/advertisers',
           data: requestData);
 
-      print('filterStores  : ${response.data}');
       getAdvertisersModel = GetAdvertisersModel.fromJson(response.data);
       // subCategories = getSubCategory?.categories??[];
-      // print('subCategories : $subCategories');
-      print('ads ${getAdvertisersModel?.advertisers}');
+      //
+
       final newItems = getAdvertisersModel?.advertisers ?? [];
-      
-      print('advertiser pagination ${getAdvertisersModel?.advertisers}');
+
       bool isLastPage = newItems.length < 10;
 
       if (isLastPage) {
@@ -110,7 +107,6 @@ class StoresCubit extends Cubit<StoresStates> {
       }
       emit(GetAdvertisersSuccessState(newItems));
     } catch (e) {
-      print('filterStoresErrorState  : ${e.toString()}');
       emit(GetAdvertisersErrorState(e.toString()));
     }
   }
@@ -128,7 +124,7 @@ class StoresCubit extends Cubit<StoresStates> {
 
   Future<void> getCategoryProducts({
     String? id,
-  } ) async {
+  }) async {
     if (id == null) {
       id = subCategories[0].id;
     }
@@ -142,11 +138,10 @@ class StoresCubit extends Cubit<StoresStates> {
         "location_status": "0",
       };
       final response = await DioHelper.post('common/category', data: data);
-      print('common/category  : ${response.data}');
+
       categoryProductsModel = CategoryProductsModel.fromJson(response.data);
       emit(StoresInit());
     } catch (e) {
-      print(e);
       // throw Exception(e);
     }
   }

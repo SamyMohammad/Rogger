@@ -53,7 +53,7 @@ class _DialogState extends State<_Dialog> {
           'message': message
         },
       );
-      print('response $response');
+
       RouteManager.pop();
       if (response.data.containsKey('success')) {
         showReportDialogs(response);
@@ -80,10 +80,10 @@ class _DialogState extends State<_Dialog> {
           'message': message
         },
       );
-      print('response $response');
+
       ResponseChatReport responseChatReport =
           ResponseChatReport.fromJson(response.data);
-      print('{responseChatReport.data!.id} ${responseChatReport.data!.id}');
+
       RouteManager.pop();
       if (responseChatReport.data!.id != null) {
         showReportDialogs(response, isChat: true);

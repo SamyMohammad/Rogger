@@ -23,7 +23,7 @@ class ProductsGridviewSection extends StatelessWidget {
         // }
 
         final products = StoreProfileCubit.of(context).productsModel?.products;
-        print(products);
+
         if (state is GetRelatedProductsLoadingState ||
             state is StoreProfileLoadingState ||
             products == null) {

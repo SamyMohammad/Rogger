@@ -16,13 +16,13 @@ class SecureStorageHelper {
   /// Gets an String value from FlutterSecureStorage with given [key].
   static getSecuredString(String key) async {
     const flutterSecureStorage = FlutterSecureStorage();
-    debugPrint('FlutterSecureStorage : getSecuredString with key :');
+    debug
     return await flutterSecureStorage.read(key: key) ?? '';
   }
 
   /// Removes all keys and values in the FlutterSecureStorage
   static clearAllSecuredData() async {
-    debugPrint('FlutterSecureStorage : all data has been cleared');
+    debug
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.deleteAll();
   }

@@ -382,7 +382,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                 1)
                                             .toString();
                                   }
-                                  print(productsDetailsModel.inWishlist);
+
                                   setState(() {
                                     isLikeVisible = true;
                                     if (productsDetailsModel.inWishlist !=
@@ -776,7 +776,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 //                               1)
                 //                           .toString();
                 //                 }
-                //                 print(productsDetailsModel.inWishlist);
+                //
                 //                 setState(() {
                 //                   isLikeVisible = true;
                 //                   if (productsDetailsModel.inWishlist != true) {
@@ -1185,7 +1185,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 //                                       1)
                 //                                   .toString();
                 //                         }
-                //                         print(productsDetailsModel.inWishlist);
+                //
                 //                         setState(() {
                 //                           isLikeVisible = true;
                 //                           if (productsDetailsModel.inWishlist !=
@@ -1558,7 +1558,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             (int.parse(relatedProduct.totalWishlist!) - 1)
                                 .toString();
                       }
-                      print(relatedProduct.inWishlist);
+
                       setState(() {
                         isLikeVisibleRelated = true;
                         if (relatedProduct.inWishlist != true) {

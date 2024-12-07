@@ -4,7 +4,6 @@ import 'package:silah/constants.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/shared/black_list/cubit/cubit.dart';
 import 'package:silah/shared/chat/cubit.dart';
-import 'package:silah/shared/contact_us/view.dart';
 import 'package:silah/shared/location_view/view.dart';
 import 'package:silah/shared/nav_bar/view.dart';
 import 'package:silah/shared/product_details/report_dialog.dart';
@@ -29,9 +28,6 @@ class _Dialog extends StatelessWidget {
   final bool isBlocked;
   @override
   Widget build(BuildContext context) {
-    print('isBlockedisBlocked$isBlocked');
-
-    print('isBlockedisBlocked$isBlocked');
     final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -55,7 +51,8 @@ class _Dialog extends StatelessWidget {
                       RouteManager.navigateAndPopAll(NavBarView());
                       cubit.deleteChat();
                     },
-                    icon: Image.asset(getAsset("trash"), height: 25, color: kDarkGreyColor)),
+                    icon: Image.asset(getAsset("trash"),
+                        height: 25, color: kDarkGreyColor)),
                 // if (AppStorage.isStore)
 
                 _tile(
@@ -67,29 +64,31 @@ class _Dialog extends StatelessWidget {
                       onConfirm: cubit.sendLocation,
                     ));
                   },
-                  icon: SvgPicture.asset(getIcon("icon3"), height: 21,color: kDarkGreyColor),
+                  icon: SvgPicture.asset(getIcon("icon3"),
+                      height: 21, color: kDarkGreyColor),
                 ),
                 _tile(
                   title: 'بلاغ',
                   onPressed: () {
                     RouteManager.pop();
-                    print('cubit.chatID${cubit.chatID}');
-                    print('cubit.userID${cubit.userID}');
+
                     showReportDialogChat(
                         chatId: int.parse(cubit.chatID),
                         reportedCustomerId: int.parse(cubit.userID));
                     // RouteManager.navigateTo(ContactUsView());
                   },
-                  icon: SvgPicture.asset(getIcon("exclamation_2"), height: 20, color: kDarkGreyColor),
+                  icon: SvgPicture.asset(getIcon("exclamation_2"),
+                      height: 20, color: kDarkGreyColor),
                 ),
-                if (cubit.isBlocked==false||cubit.isBlocked==null)
+                if (cubit.isBlocked == false || cubit.isBlocked == null)
                   _tile(
                     title: 'حظر',
                     onPressed: () {
                       RouteManager.navigateAndPopAll(NavBarView());
                       BlackListCubit().blocUser(cubit.userID);
                     },
-                    icon: SvgPicture.asset(getIcon("block"), height: 20, color: kDarkGreyColor),
+                    icon: SvgPicture.asset(getIcon("block"),
+                        height: 20, color: kDarkGreyColor),
                   ),
 
                 const SizedBox(height: 20),

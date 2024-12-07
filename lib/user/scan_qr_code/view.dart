@@ -32,7 +32,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
 
   void listenDeepLinkData(BuildContext context) async {
     streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
-      debugPrint('data: $data');
+      debug
       if (data.containsKey(AppConstants.clickedBranchLink) &&
           data[AppConstants.clickedBranchLink] == true) {
         // Navigate to relative screen
@@ -44,7 +44,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
       }
     }, onError: (error) {
       PlatformException platformException = error as PlatformException;
-      debugPrint('exception: $platformException');
+      debug
     });
   }
 
@@ -82,7 +82,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
               // onDetect: (capture) {
               //   final List<Barcode> barcodes = capture.barcodes;
               //   for (final barcode in barcodes) {
-              //     print(barcode.rawValue);
+              //     
               //   }
               // },
               // : controller,
@@ -97,7 +97,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
                     setState(() {
                       result = scanData;
                     });
-                    print('beforeScanscanly');
+                    
                     if (result != null) {
                       FlutterBranchSdk.handleDeepLink(result?.code ?? '');
                     }
@@ -105,12 +105,12 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
                   // int.parse(qr!);
                   // RouteManager.navigateAndPopUntilFirstPage(
                   //     StoreProfileView(storeId: '50'));
-                  print('beforeScanscanly');
+                  
                   if (result != null) {
                     FlutterBranchSdk.handleDeepLink(result?.code ?? '');
                   }
 
-                  print('scanscanly');
+                  
                   enableOnScanData = false;
                   Future.delayed(
                       Duration(seconds: 2), () => enableOnScanData = true);
@@ -130,7 +130,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
             //       //     StoreProfileView(storeId: '50'));
             //       FlutterBranchSdk.handleDeepLink(qr!);
             //       //  FlutterBranchSdk.listSession().listen((data) {
-            //       //     debugPrint('data: $data');
+            //       //     debug
             //       //     if (data.containsKey(AppConstants.clickedBranchLink) &&
             //       //         data[AppConstants.clickedBranchLink] == true) {
             //       //       // Navigate to relative screen
@@ -141,9 +141,9 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
             //       //   }, onError: (error) {
             //       //     PlatformException platformException =
             //       //         error as PlatformException;
-            //       //     debugPrint('exception: $platformException');
+            //       //     debug
             //       //   });
-            //       print('scanscanly');
+            //       
             //       enableOnScanData = false;
             //       Future.delayed(
             //           Duration(seconds: 2), () => enableOnScanData = true);

@@ -46,7 +46,7 @@ class LocationManager {
 
       return position;
     } catch (e) {
-      debugPrint("getLocationFromDevice${e.toString()}");
+      debug
     }
     return null;
   }
@@ -55,7 +55,7 @@ class LocationManager {
     try {
       LocationData? position;
       if (latLng == null) position = await getLocationFromDevice();
-      print("setLocationnnn ${position?.latitude} ${position?.longitude}");
+      
       currentLocationFromServer = LatLng(position?.latitude ?? latLng!.latitude,
           position?.longitude ?? latLng!.longitude);
       final city = await getCityByLatLng(
@@ -78,8 +78,8 @@ class LocationManager {
         return true;
       }
     } catch (e, s) {
-      debugPrint("provider/account/set_location ${e.toString()}");
-      debugPrint(s.toString());
+      debug
+      debug
     }
     showLocationErrorBar();
     return false;
@@ -132,8 +132,8 @@ class LocationManager {
             LatLng(position!.latitude ?? 0, position.longitude ?? 0);
       } catch (e) {
         currentLocationFromServer = defaultLatLng;
-        print('Error getting location: $e.toString()');
-        // print(e.toString());
+        
+        // 
       }
       return true;
     }

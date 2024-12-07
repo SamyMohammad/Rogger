@@ -78,13 +78,13 @@ class AddProductCubit extends Cubit<AddProductStates> {
         'customer_id': AppStorage.customerID,
       });
       final data = response.data;
-      print('common/category/product_categories${response.data}');
+      
 
       categoriesInAddProduct = CategoriesInAddProduct.fromJson(data);
       // categoriesModel.categories[0].
       emit(AddProductInitState());
     } catch (e) {
-      print(e);
+      
     }
   }
 
@@ -97,10 +97,10 @@ class AddProductCubit extends Cubit<AddProductStates> {
     try {
       final response =
           await DioHelper.post('provider/products/add', formData: formData);
-      debugPrint('provider/products/add${response.data}', wrapWidth: 1024);
+      debug
       if (response.data['success']) {
         closeKeyboard();
-        print(response.data);
+        
         RouteManager.pop();
         makeValuesToNull();
         showSnackBar('تمت الإضافة!', duration: 100);
@@ -108,8 +108,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
         throw Exception(response.data);
       }
     } catch (e, s) {
-      print(e);
-      print(s);
+      
+      
       showSnackBar('فشلت اضافة المنتج!', errorMessage: true);
     }
     emit(AddProductInitState());
@@ -163,7 +163,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
         throw Exception(response.data);
       }
     } catch (e) {
-      print(e);
+      
       showSnackBar('فشل تعديل المنتج!', errorMessage: true);
     }
     emit(AddProductInitState());
@@ -177,7 +177,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
       'price': priceController.text,
       'product_description[2][description]': descriptionController.text,
     };
-    print('_convertProductDataToFormData$data');
+    
     final formData = FormData.fromMap(data);
     if (video != null)
       formData.files.add(

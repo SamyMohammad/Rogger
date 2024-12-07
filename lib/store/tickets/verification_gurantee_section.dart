@@ -99,7 +99,6 @@ class _VerificationGuaranteeSectionState
             });
       }
       if (state is RequestVerificationErrorState) {
-        print('RequestVerificationErrorState');
         showSnackBar("تحذير: ضبط تفاصيل الرقم !", errorMessage: true);
       }
       if (state is UpdateRequestVerificationSuccessState) {
@@ -109,7 +108,6 @@ class _VerificationGuaranteeSectionState
         );
       }
       if (state is UpdateRequestVerificationErrorState) {
-        print('RequestVerificationErrorState');
         showSnackBar("هناك خطأ", errorMessage: true);
       }
     }, builder: (context, state) {
@@ -378,12 +376,10 @@ Stack buildCopyOfTransferImage(TicketsCubit cubit) {
         onChange: (File? file) {
           if (file == null) {
             cubit.isVisible = false;
-            print('copyOfTransferImagefalse$cubit.isVisible');
           } else {
             cubit.isVisible = true;
-            print('copyOfTransferImagetrue$cubit.isVisible');
           }
-          print(file?.path);
+
           cubit.isValidateToVisible();
 
           cubit.copyOfTransferImageNotifier.value = file;

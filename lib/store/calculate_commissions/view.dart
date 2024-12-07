@@ -192,7 +192,6 @@ class _SCalculateCommissionsViewState extends State<SCalculateCommissionsView> {
               onChanged: (v) {
                 value = v;
                 if (value!.isEmpty) {
-                  print('value!.isEmpty');
                   commission = null;
                 }
                 setState(() {});
@@ -235,7 +234,7 @@ class _SCalculateCommissionsViewState extends State<SCalculateCommissionsView> {
             //         onChanged: (v) {
             //           value = v;
             //           if (value!.isEmpty) {
-            //             print('value!.isEmpty');
+            //
             //             commission = null;
             //           }
             //           setState(() {});

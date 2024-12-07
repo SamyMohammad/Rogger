@@ -18,8 +18,8 @@
 //         //       items: state is CitiesLoadingState ? [] : CitiesCubit.of(context).citiesModel!.countries!,
 //         //       onChanged: (v) {
 //         //         cubit.countryId = (v as Country).countryId;
-//         //         // print((v as Country).name);
-//         //         // print(cubit.countryId);
+//         //         // 
+//         //         // 
 //         //       },
 //         //     );
 //         //   },

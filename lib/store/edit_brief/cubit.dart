@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
@@ -18,9 +16,7 @@ class EditBriefCubit extends Cubit<EditBriefStates> {
   final formKey = GlobalKey<FormState>();
   TextEditingController brief =
       TextEditingController(text: AppStorage.getUserModel()!.brief!);
-  printBrief() {
-    print('brief.text${brief.text}');
-  }
+  printBrief() {}
 
   Future<void> editBrief() async {
     formKey.currentState!.save();
@@ -32,7 +28,7 @@ class EditBriefCubit extends Cubit<EditBriefStates> {
         'logged': 'true',
         'customer_id': AppStorage.customerID,
       };
-      print('editBriefBeforeSend $editBrief');
+
       final response = await DioHelper.post(
         'provider/account/edit_brief',
         data: editBrief,
@@ -55,7 +51,6 @@ class EditBriefCubit extends Cubit<EditBriefStates> {
   void checkInputsValidity() {
     formKey.currentState?.save();
     areInputsValid = formKey.currentState?.validate() ?? false;
-    print('brief.text${brief.text}');
 
     emit(EditBriefInit());
   }

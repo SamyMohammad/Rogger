@@ -20,7 +20,7 @@
 //           });
 //       final data = response.data;
 //       categoryAssignedModel = CategoryAssignedModel.fromJson(data);
-//       // print(data);
+//       // 
 //       emit(CategoryAssignedInitState());
 //     }catch(e){
 //       emit(CategoryAssignedErrorState(e.toString()));

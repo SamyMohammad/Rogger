@@ -30,9 +30,8 @@ class AdvertisersOnMapCubit extends Cubit<AdvertisersOnMapStates> {
           await DioHelper.post('customer/account/get_advertizers', data: {
         "map_category_id": selectedMapCategory?.id ?? 0,
       });
-      print('map_category_id$response');
+
       final data = response.data;
-      print('AdvertisersOnMapLoadingStates$data');
 
       advertisersOnMapModel = AdvertisersOnMapModel.fromJson(data);
       print(

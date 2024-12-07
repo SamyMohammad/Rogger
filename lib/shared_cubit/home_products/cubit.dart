@@ -33,18 +33,15 @@ class HomeProductsCubit extends Cubit<HomeProductsStates> {
         'customer_group_id': AppStorage.getUserModel()?.customerGroup ?? 1,
         "location_status": nearestAds ? 1 : 0,
       };
-      print('requestData:getHomeProductsData $requestData');
+
       final response =
           await DioHelper.post('common/home/get_latest_ads', data: requestData);
-      print('getHomeProductsData$response');
 
       final data = response.data;
-      print('getHomeProductsData$data');
 
       homeProductsModel = HomeProductsModel.fromJson(data);
       emit(HomeProductsInitState());
     } catch (e) {
-      print('getHomeProductsData${e.toString()}');
       emit(HomeProductsErrorState(e.toString()));
     }
   }
@@ -55,20 +52,15 @@ class HomeProductsCubit extends Cubit<HomeProductsStates> {
       Map<String, dynamic>? requestData = {
         'customer_id': AppStorage.customerID,
       };
-      print('requestData: _______$requestData');
+
       final response = await DioHelper.post('customer/account/block_status',
           data: requestData);
-      print('checkIfUserBanned$response');
-      print('checkIfUserBanned${AppStorage.customerID}');
 
       final data = response.data;
-      print('checkIfUserBanned$data');
 
       isUserBanned = data['is_banned'] ?? false;
       emit(IsUserBannedState(isUserBanned));
     } catch (e) {
-      print('checkIfUserBanned${e.toString()}');
-
       emit(HomeProductsErrorState(e.toString()));
     }
   }

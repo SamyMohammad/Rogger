@@ -77,10 +77,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
       } else if (data.toString().contains('message')) {
         showToast(data['message']);
       }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     emit(EditProfileInitState());
   }
 
@@ -115,7 +112,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
       formData.files.addAll(
           {MapEntry('file[0]', await MultipartFile.fromFile(image.path))});
       await DioHelper.post('customer/account/user_avatar', formData: formData);
-      // print(response.data);
+      //
       showSnackBar("تم تحديث صورة البروفايل بنجاح");
       await getUserAndCache(
           AppStorage.customerID, AppStorage.getUserModel()!.customerGroup!);
@@ -137,7 +134,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
       formData.files
           .addAll({MapEntry('file', await MultipartFile.fromFile(image.path))});
       await DioHelper.post('provider/account/edit_cover', formData: formData);
-      // print(response.data);
+      //
       showSnackBar("تم تحديث صورة الغلاف بنجاح");
       await getUserAndCache(
           AppStorage.customerID, AppStorage.getUserModel()!.customerGroup!);
@@ -169,7 +166,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
         'map_category_id': mapCategoryId,
         'customer_id': AppStorage.customerID,
       });
-      print('updateMapCategory ${response.data}');
+
       // mapCategoriesModel = MapCategoriesModel.fromJson(response.data);
       // selectedMapCategory = (mapCategoriesModel?.mapCategories ?? [])
       //     .firstWhere((element) =>

@@ -82,7 +82,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                             onTap: () {
                               setState(() {
                                 cubit.subject = 'inquiry';
-                                // print(cubit.subject);
+                                //
                               });
                             },
                             child: Container(
@@ -113,7 +113,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                             onTap: () {
                               setState(() {
                                 cubit.subject = 'suggestion';
-                                // print(cubit.subject);
+                                //
                               });
                             },
                             child: Container(
@@ -144,7 +144,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                             onTap: () {
                               setState(() {
                                 cubit.subject = 'issue';
-                                // print(cubit.subject);
+                                //
                               });
                             },
                             child: Container(
@@ -187,7 +187,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                     //         onPressed: () {
                     //           setState(() {
                     //             cubit.subject = 'استفسار';
-                    //             // print(cubit.subject);
+                    //             //
                     //           });
                     //         },
                     //         child: Text(
@@ -213,7 +213,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                     //         onPressed: () {
                     //           setState(() {
                     //             cubit.subject = 'الاقتراحات';
-                    //             // print(cubit.subject);
+                    //             //
                     //           });
                     //         },
                     //         child: Text(
@@ -239,7 +239,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                     //         onPressed: () {
                     //           setState(() {
                     //             cubit.subject = 'البلاغات';
-                    //             // print(cubit.subject);
+                    //             //
                     //           });
                     //         },
                     //         child: Text(

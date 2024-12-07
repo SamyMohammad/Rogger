@@ -60,12 +60,9 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
     response =
         await FlutterBranchSdk.getShortUrl(buo: buo!, linkProperties: lp!);
     if (response?.success ?? false) {
-      print('FlutterBranchSdk.getShortUrl${response?.result}');
       setState(() {});
-      // print("${response.result}");
-    } else {
-      print('${response?.errorCode} - ${response?.errorMessage}');
-    }
+      //
+    } else {}
   }
 
   void _generateQrCode(BuildContext context) async {
@@ -79,12 +76,9 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
             backgroundColor: Colors.white,
             imageFormat: BranchImageFormat.PNG));
     if (responseQrCodeImage?.success ?? false) {
-      print('FlutterBranchSdk.BranchImageFormat${response?.result}');
       setState(() {});
-      // print("${response.result}");
-    } else {
-      print('${responseQrCodeImage?.errorCode} - ${response?.errorMessage}');
-    }
+      //
+    } else {}
   }
 
   _saved(File imageFile) async {
@@ -100,7 +94,7 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
 
     // TODO: fix save issue
     // final result = await ImageGallerySaver.saveImage(image);
-    print("File Saved to Gallery");
+
     showSnackBar("تم الحفظ");
   }
 
@@ -212,7 +206,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                         .captureAndSave(path)
                         .then((String? image) async {
                       if (image != null) {
-                        print('inCapture');
                         final directory =
                             await getApplicationDocumentsDirectory();
                         final imageFile =

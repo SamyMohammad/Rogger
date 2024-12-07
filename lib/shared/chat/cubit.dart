@@ -93,7 +93,6 @@ class ChatCubit extends Cubit<ChatStates> {
   // bool _isTyping = false;
 
   void validateInput() {
-    print('textEditingController.text${textEditingController.text}');
     emit(ChatInitStates());
   }
 
@@ -102,12 +101,10 @@ class ChatCubit extends Cubit<ChatStates> {
       'chat_id': chatID,
       'user_id': AppStorage.customerID,
     });
-    print('chatID$response');
-    print('AppStorage.customerID${AppStorage.customerID}');
+
     chatModel = ChatModel();
     chatModel?.chatDetails = [];
     isBlocked = response.data["is_blocked"];
-    print('chatIDisBlocked$isBlocked');
 
     for (var i = 0; i < response.data["chat_details"].length; i++) {
       final item = (response.data["chat_details"] as List).toList()[i];
@@ -145,7 +142,6 @@ class ChatCubit extends Cubit<ChatStates> {
 
   Future<void> sendMessage() async {
     if (textEditingController.text.isNotEmpty) {
-      print('textEditingController.textinSend${textEditingController.text}');
       Map<String, dynamic> body = {
         'chat_id': chatID,
         'from_id': AppStorage.customerID,
@@ -242,7 +238,7 @@ class ChatCubit extends Cubit<ChatStates> {
   static Future<String> getChatID(String storeID) async {
     final response = await DioHelper.post('messages/chat',
         data: {'customer_id': AppStorage.customerID, 'advertizer_id': storeID});
-    print('response.data[chat_id]${response.data['chat_id'].toString()}');
+
     return response.data['chat_id'].toString();
   }
 }

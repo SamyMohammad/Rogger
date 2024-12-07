@@ -18,7 +18,6 @@ class InfoBottomSheet extends StatelessWidget {
     required String title,
     required String info,
   }) {
-    print('InfoBottomSheetinfo$info');
     showModalBottomSheet(
       context: RouteManager.currentContext,
       enableDrag: true,

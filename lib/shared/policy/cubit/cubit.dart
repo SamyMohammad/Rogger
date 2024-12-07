@@ -16,10 +16,10 @@ class PolicyCubit extends Cubit<PolicyStates> {
       final response =
           await DioHelper.post('information', data: {"information_id": 5});
       final data = response.data;
-      print('policy information$data');
+
       policyModel = PolicyModel.fromJson(data);
       emit(PolicyInitState());
-      // print(data);
+      //
     } catch (e) {
       emit(PolicyErrorState(e.toString()));
     }

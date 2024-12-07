@@ -356,7 +356,6 @@ void initializeFirebaseCrashlytics() async {
   // };
 }
 copyText(String text) {
-  print("object");
   showSnackBar("نسخ", duration: 500);
   Clipboard.setData(ClipboardData(text: text));
 }

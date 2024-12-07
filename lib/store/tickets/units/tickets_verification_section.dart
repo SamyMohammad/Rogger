@@ -104,7 +104,6 @@ class _TicketsVerificationSectionState
             });
       }
       if (state is RequestVerificationErrorState) {
-        print('RequestVerificationErrorState');
         showSnackBar("تحذير: ضبط تفاصيل الرقم !", errorMessage: true);
       }
       if (state is UpdateRequestVerificationSuccessState) {
@@ -114,7 +113,6 @@ class _TicketsVerificationSectionState
         );
       }
       if (state is UpdateRequestVerificationErrorState) {
-        print('RequestVerificationErrorState');
         showSnackBar("هناك خطأ", errorMessage: true);
       }
     }, builder: (context, state) {
@@ -176,7 +174,7 @@ class _TicketsVerificationSectionState
                                                         category, cubit),
                                                     Padding(
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal: 30),
                                                       child: Column(
                                                         children: [
@@ -459,28 +457,12 @@ class _TicketsVerificationSectionState
   }
 
   void handleValidRequest(TicketsCubit cubit) {
-    print('oNisValid');
     cubit.requestVerification();
   }
 
   determineOnPressedAction(TicketsCubit cubit) {
-    print('determineOnPressedAction');
-    print(cubit.categoryRecordImageNotifier.value);
-    print(cubit.copyOfTransferImageNotifier.value);
-    print(cubit.registerNumberControllerNotifier.value);
-    print(cubit.verifiedNotifier.value);
-    print(cubit.guaranteedNotifier.value);
-    print(cubit.isValid);
     if (cubit.isAnyRequestExists == false ||
         cubit.request?.sTATUS == 'rejected') {
-      print('handleValidRequest');
-      print(cubit.categoryRecordImageNotifier.value);
-      print(cubit.copyOfTransferImageNotifier.value);
-      print(cubit.registerNumberControllerNotifier.value);
-      print(cubit.verifiedNotifier.value);
-      print(cubit.guaranteedNotifier.value);
-      print(cubit.isValid);
-
       cubit.isValid ? handleValidRequest(cubit) : null;
     }
 
@@ -491,7 +473,7 @@ class _TicketsVerificationSectionState
     // if (isApprovedOrProcessing &&
     //     isVerificationRequired &&
     //     cubit.isValidGuaranteedStatus) {
-    //   print('in update determineOnPressedAction ');
+    //
     //   cubit.updaterequestVerification();
     // }
   }
@@ -551,12 +533,10 @@ class _TicketsVerificationSectionState
           onChange: (File? file) {
             if (file == null) {
               cubit.isVisible = false;
-              print('copyOfTransferImagefalse$cubit.isVisible');
             } else {
               cubit.isVisible = true;
-              print('copyOfTransferImagetrue$cubit.isVisible');
             }
-            print(file?.path);
+
             cubit.isValidateToVisible();
 
             cubit.copyOfTransferImageNotifier.value = file;

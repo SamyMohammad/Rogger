@@ -30,7 +30,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
       "agree": "1",
       // "country_id" : countryID,
     };
-    print('params: $params');
+
     try {
       final response = await DioHelper.post(
         'customer/account/register',
@@ -62,10 +62,6 @@ class SignUpCubit extends Cubit<SignUpStates> {
         ));
       }
     } catch (e, s) {
-      print("signUpppppp${e}");
-
-      print(e);
-      print(s);
       showToast(e.toString());
 
       // emit(HomeErrorState(e.toString()));

@@ -16,8 +16,6 @@ class CitiesCubit extends Cubit<CitiesStates> {
       citiesModel = CitiesModel.fromJson(response.data);
       emit(CitiesInitState());
     } catch (e, s) {
-      print(e);
-      print(s);
       // emit(HomeErrorState(e.toString()));
     }
   }

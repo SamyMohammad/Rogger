@@ -85,7 +85,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       'verification_type_number': registerNumberControllerNotifier.value,
       'verification_required': firstCheckbox ? '1' : '0',
     };
-    print('_convertVerificationRequestDataToFormDatadata${data}');
+
     final formData = FormData.fromMap(data);
     if (categoryRecordImageNotifier.value != null)
       formData.files.add(MapEntry(
@@ -93,14 +93,12 @@ class TicketsCubit extends Cubit<TicketsStates> {
           await MultipartFile.fromFile(
               categoryRecordImageNotifier.value!.path)));
     if (copyOfTransferImageNotifier.value != null) {
-      print('inCopyOfTransferImageNotifier ');
       formData.files.add(MapEntry(
           'transaction_image',
           await MultipartFile.fromFile(
               copyOfTransferImageNotifier.value!.path)));
     }
-    print('formDatsa${copyOfTransferImageNotifier.value!.path}');
-    print('formData${categoryRecordImageNotifier.value!.path}');
+
     return formData;
   }
 
@@ -133,10 +131,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
       final response = await DioHelper.post(
           'customer/account/update_verficiation',
           formData: formData);
-      print(response.data);
 
       if (response.data.containsKey('success')) {
-        print('_convertUpdateVerificationRequestDataToFormData');
         emit(UpdateRequestVerificationSuccessState(response.data));
       } else {
         emit(UpdateRequestVerificationErrorState(
@@ -150,10 +146,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     emit(TicketsInitState());
   }
 
@@ -166,10 +159,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
       final response = await DioHelper.post(
           'customer/account/create_verifiy_request',
           formData: formData);
-      print(response.data);
 
       if (response.data.containsKey('success')) {
-        print('Success');
         emit(RequestVerificationSuccessState(response.data));
       } else {
         emit(RequestVerificationErrorState(
@@ -183,10 +174,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     emit(TicketsInitState());
   }
 
@@ -198,25 +186,21 @@ class TicketsCubit extends Cubit<TicketsStates> {
           data: {
             'customer_id': AppStorage.customerID,
           });
-      print('getStatusTicketsVerification${response.data}');
 
       if (response.data.containsKey('success')) {
-        print('Success');
-        print('getStatusVerification ${response.data}');
         print(
             'getStatusVerificationPPPP ${response.data["requests"][0].toString()}');
         accountIsVerified = response.data["requests"].any((request) {
-          print("accountIsVerified___ ${request['STATUS'] == "approved"}");
           return request['STATUS'] == "approved";
         });
-        print("accountIsVerified $accountIsVerified");
+
         getStatusVerification = GetStatusVerification.fromJson(response.data);
         // getStatusVerification?.requests?.any((request) {
-        //   print("accountIsVerified*** ${request.verificationRequired == 1}");
+        //
         //   return request.verificationRequired == 1 &&
         //       request.sTATUS == "approved";
         // });
-        print('getStatusVerification $getStatusVerification');
+
         emit(GetStatusVerificationSuccessState(getStatusVerification));
       } else {
         emit(GetStatusVerificationErrorState());
@@ -230,10 +214,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     // emit(TicketsInitState());
   }
 
@@ -278,12 +259,8 @@ class TicketsCubit extends Cubit<TicketsStates> {
   Future<void> getSettings() async {
     try {
       final response = await DioHelper.post('customer/account/get_settings');
-      print('getSettings${response.data}');
 
       if (response.data.containsKey('success')) {
-        print('Success');
-        print('getSettingsSuccess ${response.data}');
-
         settings = response.data;
         getTotalFee();
       } else {
@@ -291,10 +268,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
         // ErrorModel.fromJson(response.data['error'])));
         throw Exception(response.data);
       }
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
+    } catch (e, s) {}
     return null;
     // emit(TicketsInitState());
   }
@@ -371,7 +345,6 @@ class TicketsCubit extends Cubit<TicketsStates> {
         copyOfTransferImageNotifier.value != null &&
         registerNumberControllerNotifier.value != '' &&
         verifiedNotifier.value != null);
-    print('inFunction$isVisible');
   }
 
   Request? getModelIndexOfVerificatio(String verificationType) {
@@ -384,7 +357,6 @@ class TicketsCubit extends Cubit<TicketsStates> {
       request = item;
     }
 
-    print('request?.verificationTypeNumber${request?.sTATUS}');
     if (item?.verificationTypeNumber != null) {
       return item;
     }
@@ -398,7 +370,6 @@ class TicketsCubit extends Cubit<TicketsStates> {
         false;
     isAnyRequestExists = isAnyRequest;
 
-    print(isAnyRequestExists);
     if (isAnyRequest) {
       return isAnyRequest;
     }
@@ -425,7 +396,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
         verifiedNotifier.value == true &&
         guaranteedNotifier.value == true;
     isValidGuaranteedStatus = value;
-    print('isValidGuaranteedStatus$isValidGuaranteedStatus');
+
     print(
         'printStatus${copyOfTransferImageNotifier.value} ${verifiedNotifier.value} ${guaranteedNotifier.value}');
   }

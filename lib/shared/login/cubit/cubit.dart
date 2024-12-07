@@ -18,7 +18,7 @@ class LoginCubit extends Cubit<LoginStates> {
   Future<void> close() async {
     telephoneController.dispose();
     passwordController.dispose();
-    print("indisposed login cubit");
+
     return super.close();
   }
 
@@ -99,7 +99,6 @@ class LoginCubit extends Cubit<LoginStates> {
         RouteManager.navigateAndPopAll(NavBarView());
       }
     } catch (e) {
-      print(e);
       emit(LoginErroeState(e.toString()));
     }
     emit(LoginInitState());

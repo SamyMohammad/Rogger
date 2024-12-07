@@ -24,7 +24,6 @@ class CategoryItem extends StatelessWidget {
   final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
-    print(image);
     if (isCategoriesInStoreSearch ?? false) {
       return InkWell(
         onTap: isSelected ? null : onPressed,
@@ -86,7 +85,9 @@ class CategoryItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: isSelected ? 14 : 12,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? Theme.of(context).primaryColor : kDarkGreyColor,
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
+                      : kDarkGreyColor,
                 ),
               ),
             ],

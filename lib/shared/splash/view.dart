@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
 
   // void listenDeepLinkData(BuildContext context) async {
   //   streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
-  //     debugPrint('data: $data');
+  //     debug
   //     if (data.containsKey(AppConstants.clickedBranchLink) &&
   //         data[AppConstants.clickedBranchLink] == true) {
   //       // Navigate to relative screen
@@ -32,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
   //     }
   //   }, onError: (error) {
   //     PlatformException platformException = error as PlatformException;
-  //     debugPrint('exception: $platformException');
+  //     debug
   //   });
   // }
 
@@ -54,28 +54,28 @@ class _SplashViewState extends State<SplashView> {
       // data: {'customer_id': AppStorage.customerID},
     );
     if (response.data["data"][0]['maintenance'] == "1") {
-      print(" Navigate to maintainence");
+      
       NavigationToMaintainence();
     } else {
       streamSubscriptionDeepLink =
           FlutterBranchSdk.listSession().listen((data) {
-        debugPrint('data:________ $data');
+        debug
         if (data.containsKey(AppConstants.clickedBranchLink) &&
             data[AppConstants.clickedBranchLink] == true) {
-          print("Navigate to relative screen");
-          // Navigate to relative screen              print("Navigate to relative screen");
+          
+          // Navigate to relative screen              
 
-          print("Navigate to relative screen FlutterBranch");
+          
           RouteManager.navigateTo(StoreProfileView(
             storeId: data[AppConstants.deepLinkTitle],
           ));
         } else {
-          print("Navigate to relative screen");
+          
           NavigationToNavBarView();
         }
       }, onError: (error) {
-        print("error Navigate to relative screen FlutterBranch");
-        debugPrint('exception: $error');
+        
+        debug
       });
     }
   }

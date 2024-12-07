@@ -30,8 +30,8 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
         "telephone": telephone,
       });
       final data = response.data;
-      // print(data);
-      // print(telephone);
+      //
+      //
       if (data.containsKey('success')) {
         showSnackBar(data['success']);
         RouteManager.navigateAndPopAll(LoginView());

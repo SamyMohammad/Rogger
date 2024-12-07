@@ -48,7 +48,7 @@ class SellerHeaderSection extends StatelessWidget {
           child: Container(
             height: 35,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),  
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
@@ -127,13 +127,13 @@ class SellerHeaderSection extends StatelessWidget {
                     showLoginACustomerDialog(context, 'التقييم');
                   }
                 } else {
-                  print('cubit.getRateModel?.rating ${cubit.getRateModel}');
                   showRateDialog(
                       storeId: storeId,
                       storeName: storeInfo?.name ?? '',
                       rate: cubit.getRateModel?.rating != null
                           ? double.parse(cubit.getRateModel!.rating!.rating!)
-                          : null,rateId: cubit.getRateModel?.rating?.ratingId);
+                          : null,
+                      rateId: cubit.getRateModel?.rating?.ratingId);
                 }
               }
               // if (AppStorage.isStore) {

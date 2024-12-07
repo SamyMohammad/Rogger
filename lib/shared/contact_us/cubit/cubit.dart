@@ -26,7 +26,7 @@ class ContactUsCubit extends Cubit<ContactUsStates> {
         "enquiry": enquiry
       });
       final data = response.data;
-      print(response.data);
+
       if (data.containsKey('success')) {
         showToast(data['success']);
         RouteManager.pop();

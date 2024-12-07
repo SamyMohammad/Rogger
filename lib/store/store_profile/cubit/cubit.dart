@@ -57,7 +57,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       },
     );
     final data = response.data;
-    print('getStoreInfo $data');
+
     storeInfoModel = StoreInfoModel.fromJson(data);
   }
 
@@ -73,7 +73,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
     final data = response.data;
     getStatusVerification = GetStatusVerification.fromJson(data);
     // isStoreVerified = data['is_verified'] ?? false;
-    print('getStatusVerifiedss $data');
+
     // storeInfoModel = StoreInfoModel.fromJson(data);
   }
 
@@ -116,7 +116,7 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       if (categories!.categories!.isEmpty) {
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     emit(StoreProfileInitState());
   }
@@ -131,11 +131,11 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       });
       final data = response.data;
       commentsModel = CommentsModel.fromJson(data);
-      print('customer/account/customer_comments$data');
+
       if (commentsModel!.data!.isEmpty) {
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     emit(StoreProfileInitState());
   }
@@ -149,16 +149,13 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
         "customer_id": storeId,
       });
       final data = response.data;
-      print('getOverAllRating$data');
+
       if (data.containsKey('success')) {
         getOverAllRating = data['rating'];
-        print('getOverAllRating$data');
       } else {
-        print('getOverAllRatingError $data');
-
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     emit(StoreProfileInitState());
   }
@@ -175,15 +172,13 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       final data = response.data;
 
       if (data['success'] == true) {
-        print('getRateModelInGetRateSuccess$data');
-
         getRateModel = GetRate.fromJson(data);
       }
-      print('getRateModelInGetRate${getRateModel?.rating?.rating.toString()}');
+
       if (getRateModel?.rating?.rating == null) {
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     // emit(GetRateInitState());
   }
@@ -198,11 +193,11 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       });
       final data = response.data;
       getRateModel = GetRate.fromJson(data);
-      print(data.toString());
+
       if (getRateModel?.rating?.rating == null) {
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     emit(StoreProfileInitState());
   }
@@ -217,11 +212,11 @@ class StoreProfileCubit extends Cubit<StoreProfileStates> {
       });
       final data = response.data;
       getRateModel = GetRate.fromJson(data);
-      print(data.toString());
+
       if (getRateModel?.rating?.rating == null) {
         throw Exception();
       }
-      // print(data['categories']);
+      //
     } catch (e) {}
     emit(StoreProfileInitState());
   }

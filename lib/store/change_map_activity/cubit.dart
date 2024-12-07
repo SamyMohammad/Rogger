@@ -27,31 +27,29 @@ class ChangeMapActivityCubit extends Cubit<ChangeMapActivityStates> {
     try {
       final response = await DioHelper.post('provider/account/map_categories');
       mapCategoriesModel = MapCategoriesModel.fromJson(response.data);
-      print('AppStorage.getUserModel()?.mapCategoryID${AppStorage.getUserModel()?.mapCategoryID}');
 
-      selectedMapCategory = (mapCategoriesModel?.mapCategories ?? [])
-          .firstWhere((element) {
-            print('element.id${element.id}');
-            print(AppStorage.getUserModel()?.mapCategoryID);
-             return element.id == AppStorage.getUserModel()?.mapCategoryID;});
-              print('selectedMapCategory${selectedMapCategory!.name}');
+      selectedMapCategory =
+          (mapCategoriesModel?.mapCategories ?? []).firstWhere((element) {
+        return element.id == AppStorage.getUserModel()?.mapCategoryID;
+      });
     } catch (e) {}
     emit(ChangeMapActivityInitState());
   }
-   Future<void> updateMapCategory(int mapCategoryId) async {
+
+  Future<void> updateMapCategory(int mapCategoryId) async {
     if (!AppStorage.isStore) {
       return;
     }
-     print('updateMapCategory ');
-     
+
     try {
-      final response = await DioHelper.post('customer/account/update_map_category',data: {
+      final response =
+          await DioHelper.post('customer/account/update_map_category', data: {
         'map_category_id': mapCategoryId,
         'customer_id': AppStorage.customerID,
       });
-      print('updateMapCategory ${response.data}');
 
-      AppStorage.cacheUser(AppStorage.getUserModel()!..mapCategoryID = mapCategoryId);
+      AppStorage.cacheUser(
+          AppStorage.getUserModel()!..mapCategoryID = mapCategoryId);
       // getMapCategories();
       // mapCategoriesModel = MapCategoriesModel.fromJson(response.data);
       // selectedMapCategory = (mapCategoriesModel?.mapCategories ?? [])

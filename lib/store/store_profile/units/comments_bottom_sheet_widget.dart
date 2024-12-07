@@ -47,7 +47,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
             child: ListView.separated(
                 itemBuilder: (context, index) {
                   final comment = commentsModel?.data?[index];
-                  print('commentsModel?.data?[index]${comment?.comment}');
+
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

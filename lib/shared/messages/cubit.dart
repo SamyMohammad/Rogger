@@ -21,7 +21,6 @@ class MessagesCubit extends Cubit<MessagesStates> {
     getMessages();
     _messagesStream =
         _database.ref('chats/${AppStorage.customerID}').onValue.listen((event) {
-      print('_isMessagesStreamInitialized');
       if (!_isMessagesStreamInitialized) {
         _isMessagesStreamInitialized = true;
         return;

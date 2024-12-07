@@ -339,7 +339,7 @@ class HtmlEncodedText extends StatelessWidget {
             ..onTap = () {
               final tappedNumber = match.group(0);
               _makePhoneCall(tappedNumber!);
-              print('Number tapped: $tappedNumber');
+
               // Perform any action with the number, e.g., open dialer
             },
         ),

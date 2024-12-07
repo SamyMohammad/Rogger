@@ -23,7 +23,7 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
         "customer_id": AppStorage.customerID
       });
       final data = response.data;
-      print(data);
+
       isVerified = data['verified'];
       productsDetailsModel = ProductsDetailsModel.fromJson(data);
       if (productsDetailsModel?.video != null &&
@@ -47,7 +47,7 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
     final data = response.data;
     getStatusVerification = GetStatusVerification.fromJson(data);
     // isStoreVerified = data['is_verified'] ?? false;
-    print('getStatusVerifiedss $data');
+
     // storeInfoModel = StoreInfoModel.fromJson(data);
   }
 
@@ -67,7 +67,6 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
           });
       // showSnackBar(response.data['message']);
     } catch (e) {
-      print(e);
       showSnackBar(e.toString());
     }
   }
@@ -88,7 +87,6 @@ class ProductsDetailsCubit extends Cubit<ProductsDetailsStates> {
         emit(ProductsDetailsInitState());
       }
     } catch (e) {
-      print(e.toString());
       emit(ProductsDetailsErrorState(e.toString()));
     }
     emit(ProductsDetailsInitState());

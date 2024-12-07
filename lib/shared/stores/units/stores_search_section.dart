@@ -60,17 +60,14 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
       final response = await DioHelper.post('customer/account/advertisers',
           data: requestData);
 
-      print('filterStores  : ${response.data}');
       getAdvertisersModel = GetAdvertisersModel.fromJson(response.data);
       // subCategories = getSubCategory?.categories??[];
-      // print('subCategories : $subCategories');
-      print('ads ${getAdvertisersModel?.advertisers}');
+      //
+
       final newItems = getAdvertisersModel?.advertisers ?? [];
 
-      newItems.forEach((element) {
-        print('element ${element.name}${element.verifiedFlag}');
-      });
-      print('advertiser pagination ${getAdvertisersModel?.advertisers}');
+      newItems.forEach((element) {});
+
       bool isLastPage = newItems.length < 10;
 
       if (isLastPage) {
@@ -85,7 +82,6 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
       // pagingController.refresh();
       // emit(GetAdvertisersSuccessState(newItems));
     } catch (e) {
-      print('filterStoresErrorState  : ${e.toString()}');
       // emit(GetAdvertisersErrorState(e.toString()));
     }
   }
@@ -98,7 +94,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
     //   if (scrollController.position.atEdge) {
     //     bool isTop = scrollController.position.pixels == 0;
     //     if (!isTop) {
-    //       print('At the bottom');
+    //
     //       shouldLoadNextPage = true;
     //       setState(() {});
     //     }
@@ -120,7 +116,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
         _searchTerm = text;
         pagingController.itemList?.clear();
         // filterStores(1, term: _searchTerm ?? '');
-        print("searchTerm : ${text}");
+
         pagingController.refresh();
       },
     );
@@ -137,7 +133,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
         "Identity Document",
         "Freelancer Document"
       ];
-      print('verificationTypesList${verificationTypesList[index - 2]}');
+
       return verificationTypesList[index - 2];
     }
 

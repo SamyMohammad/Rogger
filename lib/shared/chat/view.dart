@@ -169,9 +169,8 @@ class _ChatViewState extends State<ChatView> {
 
                 print(
                     'BlackListCubittt ${blackListCubit.isUserBlocked(cubit.userID)}');
-                // print('${ blackListCubit.}');
-                print('${blackListCubit.blackListModel?.bannedList}');
-                print('cubit.chatModel?.isBlocked __${cubit.isBlocked}');
+                //
+
                 return state is ChatLoadingStates
                     ? LoadingIndicator()
                     : Stack(

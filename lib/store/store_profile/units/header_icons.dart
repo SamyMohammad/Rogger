@@ -24,7 +24,6 @@ class HeaderIcons extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                print("object");
                 RouteManager.pop();
               },
               child: CircleAvatar(

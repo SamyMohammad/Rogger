@@ -21,8 +21,8 @@ class BankCubit extends Cubit<BankStates> {
       });
       final data = response.data;
       bankModel = BankModel.fromJson(data);
-      // print(bankModel!.toJson());
-      // print(customerId);
+      //
+      //
     } catch (e) {
       emit(BankErrorState(e.toString()));
     }

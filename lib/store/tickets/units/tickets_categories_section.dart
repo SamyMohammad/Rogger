@@ -90,7 +90,6 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
               });
         }
         if (state is RequestVerificationErrorState) {
-          print('RequestVerificationErrorState');
           if (state.response['error'] ==
               'can not subscrip to the same categorey more than onec') {
             showSnackBar('لا يمكنك الاشتراك في نفس القسم أكثر من مرة',
@@ -146,8 +145,6 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                               category.name ??
                               '', // Customize how the category name is shown
                           onItemSelected: (selectedCategory) {
-                            print(selectedCategory.name);
-                            print(selectedCategory.id);
                             CategoryCubit.of(context).selectedCategory = null;
                             CategoryCubit.of(context).selectedSubCategory =
                                 null;
@@ -173,8 +170,8 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                       //   items: categories ?? [],
                       //   isItemsModel: true,
                       //   onChanged: (v) {
-                      //     print(v.name);
-                      //     print(v.id);
+                      //
+                      //
                       //     CategoryCubit.of(context).getSubCategories(v.id);
                       //     CategoryCubit.of(context).selectedCategory = v;
                       //     CategoryCubit.of(context).checkInputsValidity();
@@ -212,8 +209,8 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                           },
 
                           //  (selectedCategory) {
-                          //   print(selectedCategory.name);
-                          //   print(selectedCategory.id);
+                          //
+                          //
                           //   CategoryCubit.of(context)
                           //       .getSubCategories(selectedCategory.id);
                           //   CategoryCubit.of(context).selectedCategory =
@@ -258,7 +255,6 @@ class _TicketsCategoriesSectionState extends State<TicketsCategoriesSection> {
                       CategoryCubit.of(context).selectedCopyOfTransferImage =
                           selectedImage;
                       CategoryCubit.of(context).checkInputsValidity();
-                      print(selectedImage?.path);
                     },
                   ),
                   const SizedBox(height: 40),
