@@ -18,71 +18,108 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  // StreamSubscription<Map>? streamSubscriptionDeepLink;
-
-  // void listenDeepLinkData(BuildContext context) async {
-  //   streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
-  //     debug
-  //     if (data.containsKey(AppConstants.clickedBranchLink) &&
-  //         data[AppConstants.clickedBranchLink] == true) {
-  //       // Navigate to relative screen
-  //       RouteManager.navigateTo(StoreProfileView(
-  //         storeId: data[AppConstants.deepLinkTitle],
-  //       ));
-  //     }
-  //   }, onError: (error) {
-  //     PlatformException platformException = error as PlatformException;
-  //     debug
-  //   });
-  // }
+  StreamSubscription<Map>? streamSubscriptionDeepLink;
+  bool navigationCompleted = false; // Prevent duplicate navigation
 
   @override
   void initState() {
     super.initState();
-
     FirebaseMessagingHelper.init();
-    checkNaviagtionOrListenDeepLink();
+    initializeSplash();
 
-    // listenDeepLinkData(context);
+    // Fallback navigation after 10 seconds to prevent hanging
+    Future.delayed(Duration(seconds: 2), () {
+      if (!navigationCompleted && mounted) {
+        print("Fallback triggered");
+        navigationToNavBarView();
+      }
+    });
   }
 
-  StreamSubscription<Map>? streamSubscriptionDeepLink;
+  Future<void> initializeSplash() async {
+    try {
+      print("Starting maintenance API call...");
+      final response = await DioHelper.get('maintenance').timeout(
+        Duration(seconds: 2),
+        onTimeout: () {
+          print("API call timeout");
+          navigationToNavBarView();
+          throw TimeoutException("API call timed out");
+        },
+      );
 
-  Future<void> checkNaviagtionOrListenDeepLink() async {
-    final response = await DioHelper.get(
-      'maintenance',
-      // data: {'customer_id': AppStorage.customerID},
-    );
-    if (response.data["data"][0]['maintenance'] == "1") {
-      
-      NavigationToMaintainence();
-    } else {
-      streamSubscriptionDeepLink =
-          FlutterBranchSdk.listSession().listen((data) {
-        debug
-        if (data.containsKey(AppConstants.clickedBranchLink) &&
-            data[AppConstants.clickedBranchLink] == true) {
-          
-          // Navigate to relative screen              
+      if (response.data != null &&
+          response.data["data"] != null &&
+          response.data["data"].isNotEmpty) {
+        bool isUnderMaintenance =
+            response.data["data"][0]['maintenance'] == "1";
+        if (isUnderMaintenance) {
+          navigationToMaintenance();
+        } else {
+          listenToDeepLinks();
+        }
+      } else {
+        print("Invalid API response: ${response.data}");
+        navigationToNavBarView();
+      }
+    } catch (e) {
+      print("Error during API call: $e");
+      navigationToNavBarView();
+    }
+  }
 
-          
+  void listenToDeepLinks() {
+    print("Listening to deep links...");
+    streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
+      print("Deep link data received: $data");
+      if (data.containsKey(AppConstants.clickedBranchLink) &&
+          data[AppConstants.clickedBranchLink] == true) {
+        completeNavigation(() {
           RouteManager.navigateTo(StoreProfileView(
             storeId: data[AppConstants.deepLinkTitle],
           ));
-        } else {
-          
-          NavigationToNavBarView();
-        }
-      }, onError: (error) {
-        
-        debug
-      });
+        });
+      } else {
+        navigationToNavBarView();
+      }
+    }, onError: (error) {
+      print("Error in Branch SDK: $error");
+      navigationToNavBarView(); // Fallback navigation
+    });
+  }
+
+  void navigationToNavBarView() {
+    if (!navigationCompleted) {
+      navigationCompleted = true;
+      if (mounted) {
+        RouteManager.navigateAndPopAll(NavBarView());
+      }
+      // Future.delayed(
+      //   Duration(seconds: 2),
+      //   () {},
+      // );
     }
   }
-//   void listenDeepLinkData(BuildContext context) async {
-// if ()
 
-//   }
+  void navigationToMaintenance() {
+    if (!navigationCompleted) {
+      navigationCompleted = true;
+      if (mounted) {
+        RouteManager.navigateAndPopAll(MaintainenceView());
+      }
+      // Future.delayed(
+      //   Duration(seconds: 2),
+      //   () {},
+      // );
+    }
+  }
+
+  void completeNavigation(VoidCallback navigationAction) {
+    if (!navigationCompleted) {
+      navigationCompleted = true;
+      navigationAction();
+    }
+  }
 
   @override
   void dispose() {
@@ -90,74 +127,15 @@ class _SplashViewState extends State<SplashView> {
     super.dispose();
   }
 
-  void NavigationToNavBarView() {
-    Timer(
-      Duration(seconds: 2),
-      () => RouteManager.navigateAndPopAll(NavBarView()),
-    );
-  }
-
-  void NavigationToMaintainence() async {
-    Timer(
-      Duration(seconds: 2),
-      () => RouteManager.navigateAndPopAll(MaintainenceView()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF022e47),
-      body: Container(
+      body: Center(
         child: Logo(
           heightFraction: 4,
         ),
       ),
     );
-  }
-}
-
-class MintainenceResponse {
-  bool? success;
-  List<Data>? data;
-
-  MintainenceResponse({this.success, this.data});
-
-  MintainenceResponse.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Data {
-  String? id;
-  String? maintenance;
-
-  Data({this.id, this.maintenance});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    maintenance = json['maintenance'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['maintenance'] = this.maintenance;
-    return data;
   }
 }

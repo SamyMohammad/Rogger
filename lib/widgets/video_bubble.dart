@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class VideoBubble extends StatefulWidget {
-  final String? url;
-  final String? file;
-  final double? aspectRatio;
-  final Function(int duration)? onVideoLoaded;
-  final Function()? onVideoFinished;
-  VideoBubble(
-      {this.url,
-      this.file,
-      this.aspectRatio,
-      this.onVideoLoaded,
-      this.onVideoFinished});
+  final String? url; // URL of the video
+  final String? file; // File path of the video
+  final double? aspectRatio; // Aspect ratio of the video
+  final Function(int duration)? onVideoLoaded; // Callback when video loads
+  final Function()? onVideoFinished; // Callback when video finishes
+
+  VideoBubble({
+    this.url,
+    this.file,
+    this.aspectRatio,
+    this.onVideoLoaded,
+    this.onVideoFinished,
+  });
+
   @override
   _VideoBubbleState createState() => _VideoBubbleState();
 }
@@ -21,74 +24,68 @@ class VideoBubble extends StatefulWidget {
 class _VideoBubbleState extends State<VideoBubble>
     with AutomaticKeepAliveClientMixin {
   late BetterPlayer betterPlayer;
-  // VideoPlayerController? _controller;
-  // FlickManager? flickManager;
 
   @override
   void initState() {
-    betterPlayer = widget.file == null
-        ? BetterPlayer.network(
-            widget.url!,
-            betterPlayerConfiguration: BetterPlayerConfiguration(
-              deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-              eventListener: (v) {
-                if (v.betterPlayerEventType ==
-                    BetterPlayerEventType.hideFullscreen) {
-                  SystemChrome.setPreferredOrientations(
-                      [DeviceOrientation.portraitUp]);
-                }
-              },
-              aspectRatio: widget.aspectRatio,
-            ),
-          )
-        : BetterPlayer.file(
-            widget.file!,
-            betterPlayerConfiguration: BetterPlayerConfiguration(
-              deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
-              eventListener: (v) {
-                if (v.betterPlayerEventType ==
-                    BetterPlayerEventType.hideFullscreen) {
-                  SystemChrome.setPreferredOrientations(
-                      [DeviceOrientation.portraitUp]);
-                }
-              },
-              aspectRatio: widget.aspectRatio,
-            ),
-          );
-    if (widget.onVideoLoaded != null) {
-      widget.onVideoLoaded!(
-        betterPlayer
-                .controller.videoPlayerController?.value.duration?.inSeconds ??
-            0,
-      );
-      betterPlayer.controller.addEventsListener((v) {
-        if (v.betterPlayerEventType == BetterPlayerEventType.finished) {
-          if (widget.onVideoFinished != null) {
-            widget.onVideoFinished!();
+    super.initState();
+
+    // Initialize BetterPlayer based on the provided input (file or URL)
+    betterPlayer = widget.file != null
+        ? _createBetterPlayerFromFile(widget.file!)
+        : _createBetterPlayerFromUrl(widget.url!);
+
+    // Attach listeners for video events
+    if (widget.onVideoLoaded != null || widget.onVideoFinished != null) {
+      betterPlayer.controller.addEventsListener((event) {
+        if (event.betterPlayerEventType == BetterPlayerEventType.initialized) {
+          // Notify the video duration when loaded
+          if (widget.onVideoLoaded != null) {
+            final duration = betterPlayer
+                    .controller.videoPlayerController?.value.duration
+                    ?.inSeconds ??
+                0;
+            widget.onVideoLoaded!(duration);
           }
+        } else if (event.betterPlayerEventType == BetterPlayerEventType.finished) {
+          // Notify when video finishes
+          widget.onVideoFinished?.call();
         }
       });
     }
-    // setState(() {});
-    // _controller = (VideoPlayerController.network(widget.url))
-    //   ..initialize().then((_) {
-    //     if(this.mounted)
-    //       setState(() {});
-    //     flickManager = FlickManager(
-    //       videoPlayerController: _controller!,
-    //       autoPlay: false,
-    //       autoInitialize: true,
-    //     );
-    //   });
-    super.initState();
+  }
+
+  BetterPlayer _createBetterPlayerFromFile(String filePath) {
+    return BetterPlayer.file(
+      filePath,
+      betterPlayerConfiguration: _betterPlayerConfiguration(),
+    );
+  }
+
+  BetterPlayer _createBetterPlayerFromUrl(String url) {
+    return BetterPlayer.network(
+      url,
+      betterPlayerConfiguration: _betterPlayerConfiguration(),
+    );
+  }
+
+  BetterPlayerConfiguration _betterPlayerConfiguration() {
+    return BetterPlayerConfiguration(
+      aspectRatio: widget.aspectRatio,
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+      eventListener: (event) {
+        if (event.betterPlayerEventType ==
+            BetterPlayerEventType.hideFullscreen) {
+          // Enforce portrait orientation after fullscreen
+          SystemChrome.setPreferredOrientations(
+              [DeviceOrientation.portraitUp]);
+        }
+      },
+    );
   }
 
   @override
   void dispose() {
-    this.updateKeepAlive();
-    // flickManager?.dispose();
-    // _controller?.dispose();
-    betterPlayer.controller.dispose();
+    betterPlayer.controller.dispose(); // Dispose the player controller
     super.dispose();
   }
 
@@ -96,26 +93,8 @@ class _VideoBubbleState extends State<VideoBubble>
   Widget build(BuildContext context) {
     super.build(context);
     return betterPlayer;
-    // return Stack(
-    //     children: [
-    //       Center(
-    //         child: _controller != null && flickManager != null && _controller!.value.isInitialized ? FlickVideoPlayer(
-    //           flickManager: flickManager!,
-    //           preferredDeviceOrientationFullscreen: [
-    //             DeviceOrientation.portraitUp,
-    //           ],
-    //         ) : null,
-    //       ),
-    //       if(_controller == null || flickManager == null || !_controller!.value.isInitialized && !_controller!.value.hasError)
-    //         Positioned(
-    //           top: 0,left: 0,
-    //           bottom: 0,right: 0,
-    //           child: LoadingIndicator(),
-    //         ),
-    //     ],
-    // );
   }
 
   @override
-  bool get wantKeepAlive => mounted;
+  bool get wantKeepAlive => true; // Keep the widget alive
 }

@@ -140,10 +140,10 @@ class _AdsSearchSectionState extends State<AdsSearchSection> {
           SizedBox(height: 22),
           Expanded(
             child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 22),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 20,
+                mainAxisSpacing: 15,
                 crossAxisSpacing: 14,
                 childAspectRatio: 6 / 3,
               ),

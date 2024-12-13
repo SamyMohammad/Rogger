@@ -84,7 +84,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
   Future<File?> _getImage() async {
     final permission = await Permission.photos.request();
     if (permission.isGranted) {
-      final file = await ImagePicker().pickMultiImage(limit: 1
+      final file = await ImagePicker().pickMultiImage(limit: 2
           // cropOpt: CropOption(
           //   cropType: CropType.rect,
           //   aspectRatio: CropAspectRatio(1, 1),

@@ -32,7 +32,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
 
   void listenDeepLinkData(BuildContext context) async {
     streamSubscriptionDeepLink = FlutterBranchSdk.listSession().listen((data) {
-      debug
+      
       if (data.containsKey(AppConstants.clickedBranchLink) &&
           data[AppConstants.clickedBranchLink] == true) {
         // Navigate to relative screen
@@ -44,7 +44,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodeView> {
       }
     }, onError: (error) {
       PlatformException platformException = error as PlatformException;
-      debug
+      
     });
   }
 

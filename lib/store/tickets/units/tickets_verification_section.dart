@@ -301,7 +301,7 @@ class _TicketsVerificationSectionState
                                                                   width: 8),
                                                               Expanded(
                                                                   child: Text(
-                                                                      "أقر بمسؤليتي التامه على صحة رقم ${cubit.categories[cubit.indexOfVerification]} التابع لي، وأن صلة غير مسئولة عن صحة المعلومات المدخلة من من طرفي"))
+                                                                      "أقر بمسؤليتي التامه على صحة رقم ${cubit.categories[cubit.indexOfVerification]} التابع لي، وأن روجر غير مسئولة عن صحة المعلومات المدخلة من من طرفي"))
                                                             ],
                                                           ),
                                                           const SizedBox(
@@ -632,7 +632,20 @@ class _BuildRegisterNumberState extends State<BuildRegisterNumber> {
           //     : null,
           fillColor: Theme.of(context).appBarTheme.backgroundColor,
           isNumber: true,
+          autoValidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a number';
+            }
 
+            // RegExp to validate numbers between 7 and 12 digits
+            final regExp = RegExp(r'^\d{7,12}$');
+            if (!regExp.hasMatch(value)) {
+              return 'Number must be between 7 and 12 digits';
+            }
+
+            return null;
+          },
           onChanged: (value) {
             widget.cubit.registerNumberControllerNotifier.value = value;
             widget.cubit.isValidateToVisible();

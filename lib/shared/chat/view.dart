@@ -501,16 +501,18 @@ class ChatTextField extends StatelessWidget {
     return TextField(
       controller: cubit.textEditingController,
       onChanged: (_) => cubit.validateInput(),
-      style: TextStyle(fontSize: 10),
+      style: TextStyle(fontSize: 16),
       minLines: 1,
       cursorColor: Theme.of(context).primaryColor,
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
+    
       maxLines: 5,
       inputFormatters: [
         LengthLimitingTextInputFormatter(200),
       ],
       decoration: InputDecoration(
+        
         // contentPadding: EdgeInsets.only(top: 10, right: 20),
         // suffixIconConstraints: BoxConstraints.tight(Size(60, 30)),
         prefixIcon: GestureDetector(
@@ -576,7 +578,8 @@ class ChatTextField extends StatelessWidget {
         //         getIcon("large_back_arrow"),
         //       ),
         //     )),
-        isDense: true, // Added this
+        isDense: true,
+         // Added this
         contentPadding: EdgeInsets.all(10), // Added this
       ),
     );

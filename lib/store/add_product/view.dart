@@ -54,13 +54,18 @@ class _SAddProductViewState extends State<SAddProductView> {
                         Wrap(
                           children: [
                             ...addProductCubit.images
-                                .map((e) => ImageWidget(
-                                      image: e,
-                                      index: addProductCubit.images.indexOf(e),
-                                      onEdit: () => addProductCubit.editImage(
-                                          addProductCubit.images.indexOf(e)),
-                                      onDelete: () =>
-                                          addProductCubit.removeImage(e),
+                                .map((e) => Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 3),
+                                      child: ImageWidget(
+                                        image: e,
+                                        index:
+                                            addProductCubit.images.indexOf(e),
+                                        onEdit: () => addProductCubit.editImage(
+                                            addProductCubit.images.indexOf(e)),
+                                        onDelete: () =>
+                                            addProductCubit.removeImage(e),
+                                      ),
                                     ))
                                 .toList(),
                             if (addProductCubit.images.length != 5)
@@ -107,7 +112,9 @@ class _SAddProductViewState extends State<SAddProductView> {
                                               .isNotEmpty
                                       ? VideoBubble(
                                           url: widget
-                                              .productsDetailsModel!.video!)
+                                              .productsDetailsModel?.video,
+                                          file: addProductCubit.video,
+                                        )
                                       : Container(
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(

@@ -57,7 +57,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                   ),
                 if (communication != null)
                   _card(
-                    title: "البلاغات",
+                    title: "الشكاوي",
                     notifications: communication,
                   ),
                 if (suggestion != null)
@@ -67,7 +67,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                   ),
                 if (admin != null)
                   _card(
-                    title: "صلة",
+                    title: "تنبيهات",
                     notifications: admin,
                   ),
               ],
@@ -93,7 +93,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                 ? 0
                 : title == 'الاستفسارات'
                     ? 1
-                    : title == 'البلاغات'
+                    : title == 'الشكاوي'
                         ? 2
                         : 3);
         notifications.unread = 0;
@@ -109,9 +109,14 @@ class _NotificationsViewState extends State<NotificationsView> {
             margin: EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: kGreyColor,
-              ),
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  blurRadius: 4,
+                  offset: Offset(0, 1),
+                ),
+              ],
             ),
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Row(
@@ -129,20 +134,18 @@ class _NotificationsViewState extends State<NotificationsView> {
                       Text(
                         title,
                         style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                            color: Theme.of(context).primaryColor
-                        ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
                           item.text ?? '',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryColor
-                          ),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
                       Text(

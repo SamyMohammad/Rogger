@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silah/constants.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/store/add_product/cubit/cubit.dart';
 import 'package:silah/widgets/confirm_button.dart';
 import 'package:silah/widgets/starter_divider.dart';
@@ -42,7 +43,7 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                   StarterDivider(height: 6, width: 50),
                   const SizedBox(height: 10),
                   Text(
-                    "معاهدة صلة",
+                    "معاهدة",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
@@ -74,10 +75,17 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                     children: [
                       // CustomCheckbox(isActive: true),
                       Checkbox(
+                        side: BorderSide(
+                            width: 1.0, color: Theme.of(context).primaryColor),
                         activeColor: Color(0xFF17910D),
                         value: _isCheckedNotifier.value,
-                        shape: const CircleBorder(),
-                        focusColor: Theme.of(context).primaryColor,
+                        checkColor: Colors.white, // Checkmark color
+
+                        shape: CircleBorder(),
+
+                        focusColor: Colors.white,
+
+                        // overlayColor: MaterialStatePropertyAll(Colors.white),
                         onChanged: (newValue) {
                           setState(() {
                             _isCheckedNotifier.value = newValue!;
@@ -100,7 +108,9 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                     fontColor: Theme.of(context).primaryColor,
                     color: _isCheckedNotifier.value
                         ? activeButtonColor
-                        : Colors.grey,
+                        : ThemeCubit.of(context).isDark
+                            ? Color(0xFF1E1E26)
+                            : Color(0xffFAFAFF),
                     onPressed: _isCheckedNotifier.value
                         ? widget.addProductCubit.addProduct
                         : null,

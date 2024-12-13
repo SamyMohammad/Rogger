@@ -149,8 +149,11 @@ class _DialogState extends State<_Dialog> {
                 )
               : ConfirmButton(
                   title: "إرسال",
+                  horizontalMargin: 40,
+                  verticalPadding: 10,
                   onPressed: widget.rating != null ? updateRate : rate,
                   color: activeButtonColor,
+                  fontColor: Colors.white,
                 ),
           const SizedBox(height: 10),
         ],

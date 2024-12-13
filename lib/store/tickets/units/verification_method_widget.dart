@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:silah/constants.dart';
-import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 
 // class VerificationMethodWidget extends StatelessWidget {
 //   final String icon;
@@ -139,13 +138,11 @@ class VerificationMethodWidget extends StatelessWidget {
                   'توثيق $name',
                   style: TextStyle(
                       fontSize: 18,
-                      color: isActivated
+                      color: isActivated || isGuranteed == true
                           ? Colors.black
                           : isChoosen
                               ? Colors.white
-                              : ThemeCubit.of(context).isDark
-                                  ? Colors.white // Dark mode & not activated
-                                  : Colors.black,
+                              : Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: price != null ? 15 : 5),

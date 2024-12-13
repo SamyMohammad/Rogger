@@ -18,6 +18,7 @@ import 'package:silah/shared/product_details/cubit/cubit.dart';
 import 'package:silah/shared/product_details/cubit/states.dart';
 import 'package:silah/shared/product_details/model.dart';
 import 'package:silah/shared/product_details/report_dialog.dart';
+import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/store/add_product/view.dart';
 import 'package:silah/store/store_profile/view.dart';
 import 'package:silah/widgets/app/info_bottom_sheet.dart';
@@ -82,7 +83,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               storeId: productsDetailsModel.advertizerId!,
                             )),
                           ),
-                          SizedBox(width: 15),
+                          SizedBox(width: 8),
                           InkWell(
                               onTap: () {
                                 RouteManager.navigateTo(StoreProfileView(
@@ -104,9 +105,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                           if (cubit.productsDetailsModel!.advertizerId ==
                               AppStorage.getUserModel()?.customerId.toString())
                             PopupMenuButton(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.8),
+                              color: Colors.black.withOpacity(0.6),
                               onSelected: (value) {
                                 switch (value) {
                                   case 1:
@@ -142,7 +141,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 PopupMenuItem(
                                     height: 3,
                                     child: Divider(
-                                      color: Colors.white,
+                                      color: Colors.white.withOpacity(0.4),
                                     )),
                                 PopupMenuItem(
                                   height: 25,
@@ -162,6 +161,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Icon(
                                   FontAwesomeIcons.ellipsis,
+                                  color: ThemeCubit.of(context).isDark
+                                      ? Colors.white
+                                      : Colors.black,
                                   size: 16,
                                 ),
                               ),

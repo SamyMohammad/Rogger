@@ -254,7 +254,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
               // physics: const BouncingScrollPhysics(),
 
               pagingController: pagingController,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 13, vertical: 8),
 
               // padding: const EdgeInsets.all(16),
               separatorBuilder: (context, index) => const SizedBox(
@@ -282,12 +282,20 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                     color: Theme.of(context).appBarTheme.backgroundColor,
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
-                      padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: kLightGreyColorEB),
+                        color: Theme.of(context).appBarTheme.backgroundColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.25),
+                            blurRadius: 4,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                        // border: Border.all(color: kLightGreyColorEB),
                       ),
-                      height: 80,
+                      height: 90,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -357,12 +365,12 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                                       Row(
                                         children: [
                                           Image.asset(getAsset("unlike"),
-                                              height: 18,
+                                              height: 13,
                                               color: Theme.of(context)
                                                   .primaryColor),
                                           SizedBox(width: 10),
                                           Image.asset(getAsset("like"),
-                                              height: 18,
+                                              height: 13,
                                               color: Theme.of(context)
                                                   .primaryColor),
                                           SizedBox(width: 10),
@@ -370,7 +378,8 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                                             advertiser.ratingCount ?? "0",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
-                                          )
+                                          ),
+                                          SizedBox(width: 10),
                                         ],
                                       )
                                     ],

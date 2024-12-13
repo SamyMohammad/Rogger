@@ -29,7 +29,7 @@ class NotificationsCubit extends Cubit<NotificationsStates> {
     emit(NotificationsInit());
   }
 
-  /// 0: صلة - 1: استفسار - 2: البلاغات - 3: الاقتراحات
+  /// 0: صلة - 1: استفسار - 2: الشكاوي - 3: الاقتراحات
   Future<void> markAsRead({required int purpose}) async {
     try {
       await DioHelper.post(

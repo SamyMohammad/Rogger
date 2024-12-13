@@ -251,6 +251,7 @@ class StoreInfoColumn extends StatelessWidget {
                           return SvgPicture.asset(
                             getIcon(request.verificationType?.name ?? ''),
                             fit: BoxFit.scaleDown,
+                            height: 30,
                           );
                         } else {
                           // Return the SizedBox for odd indices

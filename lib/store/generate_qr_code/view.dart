@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
@@ -60,9 +61,12 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
     response =
         await FlutterBranchSdk.getShortUrl(buo: buo!, linkProperties: lp!);
     if (response?.success ?? false) {
+      print('FlutterBranchSdk.getShortUrl${response?.result}');
       setState(() {});
-      //
-    } else {}
+      // print("${response.result}");
+    } else {
+      print('${response?.errorCode} - ${response?.errorMessage}');
+    }
   }
 
   void _generateQrCode(BuildContext context) async {
@@ -76,16 +80,21 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
             backgroundColor: Colors.white,
             imageFormat: BranchImageFormat.PNG));
     if (responseQrCodeImage?.success ?? false) {
+      print('FlutterBranchSdk.BranchImageFormat${response?.result}');
       setState(() {});
-      //
-    } else {}
+      // print("${response.result}");
+    } else {
+      print('${responseQrCodeImage?.errorCode} - ${response?.errorMessage}');
+    }
   }
 
-  _saved(File imageFile) async {
+  _saved(Uint8List imageFile) async {
     try {
       await Gal.requestAccess();
       if (await Gal.hasAccess()) {
-        await Gal.putImage(imageFile.path);
+        await Gal.putImageBytes(imageFile);
+        print("File Saved to Gallery");
+        showSnackBar("تم الحفظ");
         // final imagePath = await directory.createFile('image.png');
       }
     } on GalException catch (e) {
@@ -94,8 +103,6 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
 
     // TODO: fix save issue
     // final result = await ImageGallerySaver.saveImage(image);
-
-    showSnackBar("تم الحفظ");
   }
 
   @override
@@ -108,16 +115,16 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
             StarterDivider(height: 5, width: 50),
             const SizedBox(height: 40),
             Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  // border: Border.all(color: Colors.white, width: 3),
-                  color: Color(0xff70F1EB),
-
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 60),
-                child: Screenshot(
-                  controller: screenshotController,
+              child: Screenshot(
+                controller: screenshotController,
+                child: Container(
+                  decoration: BoxDecoration(
+                    // border: Border.all(color: Colors.white, width: 3),
+                    color: Color(0xff70F1EB),
+                
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 60),
                   child: QrImageView(
                     backgroundColor: Colors.transparent,
                     embeddedImageStyle: QrEmbeddedImageStyle(
@@ -193,25 +200,25 @@ class _GenerateQRCodeViewState extends State<GenerateQRCodeView> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(15),
                   onTap: () async {
-                    final directory = (await getApplicationDocumentsDirectory())
-                        .path; //from path_provide package
-                    int fileName = DateTime.now().microsecondsSinceEpoch;
-                    String path = '$fileName$directory';
+                    // final directory = (await getApplicationDocumentsDirectory())
+                    //     .path; //from path_provide package
+                    // int fileName = DateTime.now().microsecondsSinceEpoch;
+                    // String path = '$fileName$directory';
                     screenshotController
                         //     .captureFromLongWidget(QrImageView(
                         //   size: 140,
                         //   data: response?.result ??
                         //       AppStorage.customerID.toString(),
                         // ))
-                        .captureAndSave(path)
-                        .then((String? image) async {
+                        .capture()
+                        .then((image) async {
                       if (image != null) {
-                        final directory =
-                            await getApplicationDocumentsDirectory();
-                        final imageFile =
-                            await File('${directory.path}/image.png').create();
-                        // await imagePath.writeAsBytes(image);
-                        _saved(imageFile);
+                        print('inCapture');
+                        // final directory =
+                        //     await getApplicationDocumentsDirectory();
+                        // final imageFile = await im.writeAsBytes(image);
+
+                        _saved(image);
                       }
                     });
                   },

@@ -25,8 +25,8 @@ class CommentsBottomSheetWidget extends StatelessWidget {
           )),
       child: Column(children: [
         Container(
-          height: 8,
-          width: 100,
+          height: 5,
+          width: 60,
           decoration: BoxDecoration(
               color: kGreyButtonColorD9,
               borderRadius: BorderRadius.circular(10)),
@@ -65,6 +65,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                             child: Image.asset(getAsset("pro"),
                                 height: 52, width: 52),
                           ),
+                          SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -89,13 +90,15 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                                           hItemPadding: 0,
                                           vItemPadding: 0,
                                         ),
+                                        SizedBox(height: 5),
                                         Text(
                                             DateFormat('yyyy-MM-dd', 'en')
                                                 .format(DateTime.parse(
                                                     comment?.dateAdded ?? '')),
                                             style: TextStyle(
                                                 fontSize: 10,
-                                                color: kDarkGreyColor))
+                                                color: kDarkGreyColor)),
+                                        SizedBox(height: 5),
                                       ],
                                     ),
                                   ],

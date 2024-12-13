@@ -46,7 +46,6 @@ class LocationManager {
 
       return position;
     } catch (e) {
-      debug
     }
     return null;
   }
@@ -78,8 +77,7 @@ class LocationManager {
         return true;
       }
     } catch (e, s) {
-      debug
-      debug
+      debugPrint("$e $s");      
     }
     showLocationErrorBar();
     return false;

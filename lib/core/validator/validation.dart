@@ -72,14 +72,14 @@ class Validator {
   static String? name(String? value) {
     final validCharacters = RegExp(r'^[a-zA-Z\u0600-\u06FF\s]+$');
     RegExp arabicOrEnglishRegex =
-    RegExp(r'^[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FFa-zA-Z\s]+$');
+        RegExp(r'^[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FFa-zA-Z\s]+$');
 
     if (value!.isEmpty)
       return 'حقل فارغ!';
     else if (!validCharacters.hasMatch(value))
       return 'الاسم يجب أن لا يحتوي على رموز';
-    else if (value.length < 4)
-      return 'الاسم يجب الا يقل عن 4 احرف';
+    else if (value.length < 4 || value.length > 14)
+      return 'الاسم يجب ألا يقل عن 4 أحرف و يجب ألا يزيد عن 14 حرف';
     else
       return null;
   }
@@ -89,8 +89,8 @@ class Validator {
     if (value!.isEmpty) return 'حقل فارغ!';
     if (!validCharacters.hasMatch(value))
       return 'يجب ان يكون بالانجليزية والرموز - و ـ بدلا من المسافات';
-    else if (value.length < 4)
-      return 'الاسم يجب الا يقل عن 4 احرف';
+    else if (value.length < 4 || value.length > 14)
+      return 'الاسم المستعار يجب ألا يقل عن 4 أحرف و يجب ألا يزيد عن 14 حرف';
     else
       return null;
   }

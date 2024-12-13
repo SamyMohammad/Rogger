@@ -22,6 +22,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
   final BaseModel? productsDetailsModel;
   void init() async {
     await getCategoriesInAddPage();
+    debugPrint(
+        "productsDetailsModel?.categoryID${productsDetailsModel?.categoryID}");
 
     if (productsDetailsModel == null) {
       return;
@@ -31,8 +33,30 @@ class AddProductCubit extends Cubit<AddProductStates> {
     final price = productsDetailsModel!.price!.replaceAll('S.R', '').trim();
     priceController.text = price == '0' ? '' : price;
     descriptionController.text = productsDetailsModel?.description ?? '';
-    categoryID = productsDetailsModel?.categoryID as ValueNotifier<String?>;
+    print(
+        " productsDetailsModel?.categoryID${productsDetailsModel?.categoryID}");
+    // Find and set the initial category based on categoryID
+    categoryInAddProduct =
+        categoriesInAddProduct?.data?.firstWhereOrNull((category) {
+      return category.id == productsDetailsModel?.categoryID;
+    });
+    video = productsDetailsModel?.video ?? "";
+    // Set categoryID value
+    categoryID.value = categoryInAddProduct?.id;
+    // categoryInAddProduct =
+    //     (categoriesInAddProduct?.data ?? []).firstWhere((element) {
+    //   return element.id == productsDetailsModel?.categoryID;
+    // });
+    // categoryID.value = categoryInAddProduct?.id;
+    // categoryInAddProduct = CategoryInAddProduct(
+    //     name: productsDetailsModel?.categoryName,
+    //     id: productsDetailsModel?.categoryID);
 
+    // categoryInAddProduct =
+    //     (categoriesInAddProduct?.data ?? []).firstWhere((element) {
+    //   return element.id == productsDetailsModel?.categoryID;
+    // });
+    // categoryID.value = categoryInAddProduct?.id;
     emit(AddProductImagesLoadingState());
     for (var i in productsDetailsModel?.productImages ?? []) {
       final file = await getFileFromImageUrl(i);
@@ -47,7 +71,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  File? video;
+  String? video;
   List<File> images = [];
   makeValuesToNull() {
     categoryID.value = null;
@@ -78,14 +102,11 @@ class AddProductCubit extends Cubit<AddProductStates> {
         'customer_id': AppStorage.customerID,
       });
       final data = response.data;
-      
 
       categoriesInAddProduct = CategoriesInAddProduct.fromJson(data);
       // categoriesModel.categories[0].
       emit(AddProductInitState());
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   }
 
   Future<void> addProduct() async {
@@ -97,10 +118,10 @@ class AddProductCubit extends Cubit<AddProductStates> {
     try {
       final response =
           await DioHelper.post('provider/products/add', formData: formData);
-      debug
+
       if (response.data['success']) {
         closeKeyboard();
-        
+
         RouteManager.pop();
         makeValuesToNull();
         showSnackBar('تمت الإضافة!', duration: 100);
@@ -108,8 +129,6 @@ class AddProductCubit extends Cubit<AddProductStates> {
         throw Exception(response.data);
       }
     } catch (e, s) {
-      
-      
       showSnackBar('فشلت اضافة المنتج!', errorMessage: true);
     }
     emit(AddProductInitState());
@@ -145,8 +164,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
       'product_description[2][description]': descriptionController.text,
     });
     if (video != null)
-      formData.files.add(
-          MapEntry('videos[0]', await MultipartFile.fromFile(video!.path)));
+      formData.files.add(MapEntry(
+          'videos[0]', await MultipartFile.fromFile(File(video!).path)));
     if (images.isNotEmpty)
       for (int i = 0; i < images.length; i++) {
         formData.files.add(MapEntry(
@@ -163,7 +182,6 @@ class AddProductCubit extends Cubit<AddProductStates> {
         throw Exception(response.data);
       }
     } catch (e) {
-      
       showSnackBar('فشل تعديل المنتج!', errorMessage: true);
     }
     emit(AddProductInitState());
@@ -177,11 +195,11 @@ class AddProductCubit extends Cubit<AddProductStates> {
       'price': priceController.text,
       'product_description[2][description]': descriptionController.text,
     };
-    
+
     final formData = FormData.fromMap(data);
     if (video != null)
-      formData.files.add(
-          MapEntry('videos[0]', await MultipartFile.fromFile(video!.path)));
+      formData.files
+          .add(MapEntry('videos[0]', await MultipartFile.fromFile(video!)));
     for (int i = 0; i < images.length; i++) {
       formData.files.add(
           MapEntry('files[$i]', await MultipartFile.fromFile(images[i].path)));
@@ -195,7 +213,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
       final pickedFile =
           await ImagePicker().pickVideo(source: ImageSource.gallery);
       if (pickedFile != null) {
-        video = File(pickedFile.path);
+        video = pickedFile.path;
         emit(AddProductInitState());
       }
     }
@@ -242,7 +260,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
   void editImage(int index) async {
     final permission = await Permission.photos.request();
     if (permission.isGranted) {
-      final pickedFiles = await ImagePicker().pickMultiImage(limit: 1);
+      final pickedFiles = await ImagePicker().pickMultiImage(limit: 2);
       images[index] = File(pickedFiles.first.path);
       emit(AddProductInitState());
     }
@@ -273,5 +291,14 @@ class AddProductCubit extends Cubit<AddProductStates> {
     descriptionController.dispose();
     categoryID.dispose();
     return super.close();
+  }
+}
+
+extension ListExtensions<E> on List<E> {
+  E? firstWhereOrNull(bool Function(E element) test) {
+    for (var element in this) {
+      if (test(element)) return element;
+    }
+    return null;
   }
 }

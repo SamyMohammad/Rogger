@@ -244,6 +244,8 @@ const Color kAppBArDarkColor = Color(0xFF1E1E26);
 const Color kBackgroundCDarkColor = Color(0xFF14141A);
 
 ThemeData lightTheme = ThemeData(
+  unselectedWidgetColor: Colors.white54, // Your color
+
   platform: TargetPlatform.iOS,
   primaryColor: kPrimaryColor,
   // cursorColor: kPrimaryColor,
@@ -276,6 +278,8 @@ ThemeData lightTheme = ThemeData(
 ThemeData darkTheme = ThemeData(
   platform: TargetPlatform.iOS,
   primaryColor: Colors.white,
+  unselectedWidgetColor: Colors.white54, // Your color
+checkboxTheme: CheckboxThemeData(),
   hintColor: kAccentColor,
   // cursorColor: kPrimaryColor,
   textTheme: TextTheme(

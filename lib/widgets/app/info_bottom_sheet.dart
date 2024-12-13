@@ -66,8 +66,8 @@ class InfoBottomSheet extends StatelessWidget {
             ],
           ),
           Divider(
-            color: Theme.of(context).appBarTheme.backgroundColor,
-            thickness: 0,
+            color: Theme.of(context).primaryColor,
+            thickness: .08,
           ),
           Expanded(
             child: ListView(
@@ -76,8 +76,10 @@ class InfoBottomSheet extends StatelessWidget {
                 HtmlEncodedText(
                   // isMe: false,
                   encodedText: info,
-                  textStyle:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Theme.of(context).primaryColor),
                 ),
                 // Text(
                 //   info,
