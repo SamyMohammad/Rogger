@@ -282,6 +282,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                         : ConfirmButton(
                             title: 'ارسال',
                             horizontalPadding: 30,
+                            horizontalMargin: 40,
                             onPressed:
                                 cubit.areInputsValid ? cubit.contactUs : null,
                             fontColor: cubit.areInputsValid

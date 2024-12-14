@@ -24,9 +24,10 @@ class CommentsBottomSheetWidget extends StatelessWidget {
             topRight: Radius.circular(10),
           )),
       child: Column(children: [
+        SizedBox(height: 8),
         Container(
-          height: 5,
-          width: 60,
+          height: 3,
+          width: 50,
           decoration: BoxDecoration(
               color: kGreyButtonColorD9,
               borderRadius: BorderRadius.circular(10)),
@@ -37,7 +38,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
             Text(
               "تعليقات (${commentsModel?.data?.length ?? 0})",
               style: TextStyle(
-                  color: kGreyButtonColorD9,
+                  color: kDarkGreyColor,
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
             )
@@ -62,8 +63,11 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(50),
-                            child: Image.asset(getAsset("pro"),
+                            child: Image.asset(getAsset('person'),
                                 height: 52, width: 52),
+
+                            //  Image.asset(getAsset("pro"),
+                            //     height: 52, width: 52),
                           ),
                           SizedBox(width: 10),
                           Expanded(

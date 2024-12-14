@@ -10,6 +10,7 @@ import 'package:silah/widgets/starter_divider.dart';
 import 'package:silah/widgets/text_form_field.dart';
 
 import '../../../core/router/router.dart';
+import '../../../shared_cubit/theme_cubit/cubit.dart';
 import '../../../widgets/rate_widget.dart';
 
 showRateDialog(
@@ -48,12 +49,23 @@ class _Dialog extends StatefulWidget {
 
 class _DialogState extends State<_Dialog> {
   double rating = 0;
-  String comment = 'asdasdasd';
+  final TextEditingController _commentController = TextEditingController();
+  bool _isButtonEnabled = false;
+
+  void _updateButtonState() {
+    setState(() {
+      _isButtonEnabled = _commentController.text.isNotEmpty;
+    });
+  }
+
+  // String comment = '';
+
   bool isLoading = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _commentController.addListener(_updateButtonState);
 
     if (widget.rating != null) {
       rating = widget.rating!;
@@ -69,7 +81,7 @@ class _DialogState extends State<_Dialog> {
           'customer_id': AppStorage.getUserModel()?.customerId,
           'advertizer_id': widget.storeId,
           'rating': rating,
-          'comment': comment,
+          'comment': _commentController.text,
         },
       );
 
@@ -95,7 +107,7 @@ class _DialogState extends State<_Dialog> {
           // 'advertizer_id': widget.storeId,
           'rating_id': widget.rateId,
           'rating': rating,
-          'comment': comment,
+          'comment': _commentController.text,
         },
       );
 
@@ -134,9 +146,11 @@ class _DialogState extends State<_Dialog> {
               hint: "كتابة التعليقات ..",
               // controller: ,
               fillColor: Theme.of(context).appBarTheme.backgroundColor,
-              onChanged: (newComment) {
-                comment = newComment;
-              },
+              controller: _commentController,
+              // onChanged: (newComment) {
+              //   comment = newComment;
+              //   setState(() {});
+              // },
               hasBorder: true,
               multiLine: true,
               maxLines: 6,
@@ -151,9 +165,21 @@ class _DialogState extends State<_Dialog> {
                   title: "إرسال",
                   horizontalMargin: 40,
                   verticalPadding: 10,
-                  onPressed: widget.rating != null ? updateRate : rate,
-                  color: activeButtonColor,
-                  fontColor: Colors.white,
+                  fontColor:
+                      _isButtonEnabled ? Colors.white : Color(0xFFA1A1A1),
+                  color: _isButtonEnabled
+                      ? activeButtonColor
+                      : ThemeCubit.of(context).isDark
+                          ? Color(0xFF1E1E26)
+                          : Color(0xffFAFAFF),
+                  onPressed: !_isButtonEnabled
+                      ? null
+                      : widget.rating != null
+                          ? updateRate
+                          : rate,
+                  // color:
+                  //     _isButtonEnabled ? activeButtonColor : Color(0xFFA1A1A1),
+                  // fontColor: Colors.white,
                 ),
           const SizedBox(height: 10),
         ],

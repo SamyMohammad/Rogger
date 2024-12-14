@@ -19,7 +19,9 @@ class NotificationsView extends StatefulWidget {
 }
 
 class _NotificationsViewState extends State<NotificationsView> {
-  final cubit = NotificationsCubit()..getNotifications();
+  final 
+   = Notifications
+  ()..getNotifications();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,9 @@ class _NotificationsViewState extends State<NotificationsView> {
             return ListView(
               padding: VIEW_PADDING,
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 if (inquiry != null)
                   _card(
                     title: "الاستفسارات",
@@ -67,7 +72,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                   ),
                 if (admin != null)
                   _card(
-                    title: "تنبيهات",
+                    title: "التنبيهات",
                     notifications: admin,
                   ),
               ],

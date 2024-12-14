@@ -20,8 +20,7 @@ class NotificationDetailsView extends StatelessWidget {
         title: title,
       ),
       body: Container(
-                                       color: Theme.of(context).scaffoldBackgroundColor
-,
+          color: Theme.of(context).scaffoldBackgroundColor,
           width: double.infinity,
           child: Column(
             children: [
@@ -47,8 +46,10 @@ class NotificationDetailsView extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(item.text ?? '',style: TextStyle(
-                                        color: Theme.of(context).scaffoldBackgroundColor),),
+                                  Text(
+                                    item.text ?? '',
+                                    style: TextStyle(color: kPrimary1Color),
+                                  ),
                                   Text(
                                     customizeDateTimeFromNow(item.dateDiff!),
                                     style: TextStyle(
@@ -59,7 +60,7 @@ class NotificationDetailsView extends StatelessWidget {
                                 ],
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Color.fromARGB(255, 199, 199, 199),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
@@ -71,13 +72,14 @@ class NotificationDetailsView extends StatelessWidget {
                 ),
               ),
               Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 24),
-                child: Text('لا يمكن الارسال للجهة',style: TextStyle(color: Theme.of(context).primaryColor) ,),
-                                           color: Theme.of(context).appBarTheme.backgroundColor
-
-              ),
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Text(
+                    'لا يمكن الارسال للجهة',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  color: Theme.of(context).appBarTheme.backgroundColor),
             ],
           )),
     );
