@@ -117,14 +117,21 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                 height: widget.height,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(widget.height / 2),
-                  child: Image.network(
-                    widget.image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Image.asset(
-                      getAsset('person'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  child: widget.image !=
+                          "https://roogr.sa/api/image/user_image.png"
+                      ? Image.network(
+                          widget.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            getAsset('person'),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Image.asset(
+                          getAsset('person'),
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,

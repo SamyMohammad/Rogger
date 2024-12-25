@@ -13,12 +13,12 @@ import '../../../core/dio_manager/dio_manager.dart';
 import '../../../widgets/rate_widget.dart';
 
 class StoresSearchSection extends StatefulWidget {
+  final StoresCubit cubit;
+
   const StoresSearchSection({
     super.key,
     required this.cubit,
   });
-
-  final StoresCubit cubit;
 
   @override
   State<StoresSearchSection> createState() => _StoresSearchSectionState();
@@ -37,90 +37,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
   );
   GetAdvertisersModel? getAdvertisersModel;
 
-  Future<void> filterStores(
-    int page, {
-    bool? verfied,
-    String? type,
-    String term = '',
-  }) async {
-    try {
-      final Map<String, dynamic> requestData = {
-        'page': page,
-        'limit': 10,
-        'trem': _searchTerm,
-      };
-
-      // Add 'verfied' to requestData if it's not null
-      if (verfied != null) {
-        requestData['verfied'] = verfied;
-      }
-      if (type != null) {
-        requestData['type'] = type;
-      }
-      final response = await DioHelper.post('customer/account/advertisers',
-          data: requestData);
-
-      getAdvertisersModel = GetAdvertisersModel.fromJson(response.data);
-      // subCategories = getSubCategory?.categories??[];
-      //
-
-      final newItems = getAdvertisersModel?.advertisers ?? [];
-
-      newItems.forEach((element) {});
-
-      bool isLastPage = newItems.length < 10;
-
-      if (isLastPage) {
-        // 3
-        pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = page + 1;
-
-        pagingController.appendPage(newItems, nextPageKey);
-      }
-
-      // pagingController.refresh();
-      // emit(GetAdvertisersSuccessState(newItems));
-    } catch (e) {
-      // emit(GetAdvertisersErrorState(e.toString()));
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: '');
-    // scrollController.addListener(() {
-    //   if (scrollController.position.atEdge) {
-    //     bool isTop = scrollController.position.pixels == 0;
-    //     if (!isTop) {
-    //
-    //       shouldLoadNextPage = true;
-    //       setState(() {});
-    //     }
-    //   }
-    // });
-    // controller.addListener(_updateSearchTerm);
-
-    pagingController.addPageRequestListener((pageKey) {
-      filterStores(pageKey);
-    });
-  }
-
   String? _searchTerm;
-  void _updateSearchTerm(String text) {
-    const duration = Duration(milliseconds: 800);
-    _debouncer.debounce(
-      duration: duration,
-      onDebounce: () {
-        _searchTerm = text;
-        pagingController.itemList?.clear();
-        // filterStores(1, term: _searchTerm ?? '');
-
-        pagingController.refresh();
-      },
-    );
-  }
 
   final Debouncer _debouncer = Debouncer();
 
@@ -304,7 +221,7 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
                             child: advertiser.profile !=
                                     'https://roogr.sa/api/image/'
                                 ? Image.network(
-                                    advertiser.profile ?? getAsset('person'),
+                                    advertiser.profile??'',
                                     height: 60,
                                     width: 60,
                                     fit: BoxFit.fill,
@@ -412,5 +329,77 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
         )
       ],
     ));
+  }
+  Future<void> filterStores(
+    int page, {
+    bool? verfied,
+    String? type,
+    String term = '',
+  }) async {
+    try {
+      final Map<String, dynamic> requestData = {
+        'page': page,
+        'limit': 10,
+        'trem': _searchTerm,
+      };
+
+      // Add 'verfied' to requestData if it's not null
+      if (verfied != null) {
+        requestData['verfied'] = verfied;
+      }
+      if (type != null) {
+        requestData['type'] = type;
+      }
+      final response = await DioHelper.post('customer/account/advertisers',
+          data: requestData);
+
+      getAdvertisersModel = GetAdvertisersModel.fromJson(response.data);
+      // subCategories = getSubCategory?.categories??[];
+      //
+
+      final newItems = getAdvertisersModel?.advertisers ?? [];
+
+      newItems.forEach((element) {});
+
+      bool isLastPage = newItems.length < 10;
+
+      if (isLastPage) {
+        // 3
+        pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = page + 1;
+
+        pagingController.appendPage(newItems, nextPageKey);
+      }
+
+      // pagingController.refresh();
+      // emit(GetAdvertisersSuccessState(newItems));
+    } catch (e) {
+      // emit(GetAdvertisersErrorState(e.toString()));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: '');
+
+    pagingController.addPageRequestListener((pageKey) {
+      filterStores(pageKey);
+    });
+  }
+
+  void _updateSearchTerm(String text) {
+    const duration = Duration(milliseconds: 800);
+    _debouncer.debounce(
+      duration: duration,
+      onDebounce: () {
+        _searchTerm = text;
+        pagingController.itemList?.clear();
+        // filterStores(1, term: _searchTerm ?? '');
+
+        pagingController.refresh();
+      },
+    );
   }
 }

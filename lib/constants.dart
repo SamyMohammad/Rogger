@@ -14,7 +14,7 @@ import 'widgets/toast.dart';
 
 enum SupportTypes { issue, inquiry, suggestion }
 
-const String MAP_API_KEY = 'AIzaSyAdvXvIQSrguEjx4zPLkjxCYJDYK-tBIrE';
+const String MAP_API_KEY = 'AIzaSyAIwqIOmCI0HthEdRNgpI8oKjBrDPzn7TU';
 
 const String PLACE_HOLDER_IMAGE =
     "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png";
@@ -45,8 +45,7 @@ final List<BoxShadow> primaryBoxShadow = [
       color: Colors.grey.shade500)
 ];
 
-Future<BitmapDescriptor> getMapIcon(String imageName) =>
-    BitmapDescriptor.fromAssetImage(
+Future<BitmapDescriptor> getMapIcon(String imageName) => BitmapDescriptor.asset(
       ImageConfiguration(size: Size(100, 100)),
       getAsset('enabled-marker'),
     );
@@ -279,7 +278,7 @@ ThemeData darkTheme = ThemeData(
   platform: TargetPlatform.iOS,
   primaryColor: Colors.white,
   unselectedWidgetColor: Colors.white54, // Your color
-checkboxTheme: CheckboxThemeData(),
+  checkboxTheme: CheckboxThemeData(),
   hintColor: kAccentColor,
   // cursorColor: kPrimaryColor,
   textTheme: TextTheme(

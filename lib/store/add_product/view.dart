@@ -18,9 +18,9 @@ import '../../shared_cubit/theme_cubit/cubit.dart';
 import '../change_map_activity/units/choose_bottom_sheet.dart';
 
 class SAddProductView extends StatefulWidget {
+  final BaseModel? productsDetailsModel;
   const SAddProductView({Key? key, this.productsDetailsModel})
       : super(key: key);
-  final BaseModel? productsDetailsModel;
 
   @override
   State<SAddProductView> createState() => _SAddProductViewState();
@@ -47,12 +47,14 @@ class _SAddProductViewState extends State<SAddProductView> {
               builder: (context, value, child) => ValueListenableBuilder(
                   valueListenable: addProductCubit.nameController,
                   builder: (context, value, child) {
+                    print('addProductCubit.images.length ${addProductCubit.images.length}');
                     return ListView(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       physics: BouncingScrollPhysics(),
                       children: [
                         Wrap(
                           children: [
+                            if(addProductCubit.images.length!=0)
                             ...addProductCubit.images
                                 .map((e) => Padding(
                                       padding:
@@ -68,7 +70,31 @@ class _SAddProductViewState extends State<SAddProductView> {
                                       ),
                                     ))
                                 .toList(),
-                            if (addProductCubit.images.length != 5)
+                            // Only show add image icon if images list is empty
+                            if (addProductCubit.images.isEmpty)
+                              Padding(
+                                padding: EdgeInsets.all(2),
+                                child: GestureDetector(
+                                  child: Container(
+                                    height: 100,
+                                    width: 100,
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: kLightGreyColorEB,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        getIcon("image"),
+                                        height: 40,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: addProductCubit.pickImages,
+                                ),
+                              ),
+                            // Show add image icon if less than 5 images
+                            if (addProductCubit.images.isNotEmpty && addProductCubit.images.length < 5)
                               Padding(
                                 padding: EdgeInsets.all(2),
                                 child: GestureDetector(
@@ -95,50 +121,53 @@ class _SAddProductViewState extends State<SAddProductView> {
                         const SizedBox(height: 12),
                         Align(
                           alignment: Alignment.topRight,
-                          child: SizedBox(
-                            height: addProductCubit.video != null ||
-                                    widget.productsDetailsModel?.video != null
-                                ? 100
-                                : 100,
-                            width: addProductCubit.video != null ||
-                                    widget.productsDetailsModel?.video != null
-                                ? null
-                                : 100,
-                            child: GestureDetector(
-                              child: addProductCubit.video == null
-                                  ? widget.productsDetailsModel?.video !=
-                                              null &&
-                                          widget.productsDetailsModel!.video!
-                                              .isNotEmpty
-                                      ? VideoBubble(
-                                          url: widget
-                                              .productsDetailsModel?.video,
-                                          file: addProductCubit.video,
-                                        )
-                                      : Container(
-                                          padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: kLightGreyColorEB,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                              child: SvgPicture.asset(
+                          child: Builder(builder: (context) {
+                            print('Video values:');
+                            print('Cubit video: ${addProductCubit.video}');
+                            print(
+                                'Model video: ${widget.productsDetailsModel?.video}');
+
+                            final modelVideo =
+                                widget.productsDetailsModel?.video;
+                            final hasVideo = (addProductCubit.video != null &&
+                                    addProductCubit.video != '') ||
+                                (modelVideo != null && modelVideo != '');
+
+                            print('Has video: $hasVideo');
+
+                            return SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: GestureDetector(
+                                child: hasVideo
+                                    ? VideoBubble(
+                                        videoUrl: modelVideo != null &&
+                                                modelVideo != ''
+                                            ? modelVideo
+                                            : addProductCubit.video != null &&
+                                                    addProductCubit.video != ''
+                                                ? addProductCubit.video ?? ''
+                                                : '',
+                                        isNetwork: modelVideo != null,
+                                      )
+                                    : Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: kLightGreyColorEB,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: SvgPicture.asset(
                                             getIcon("video"),
                                             height: 40,
-                                          )),
-                                        )
-                                  : Container(
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        color: kLightGreyColorEB,
-                                        borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
                                       ),
-                                      child: SvgPicture.asset(getIcon("video")),
-                                    ),
-                              onTap: addProductCubit.pickVideo,
-                            ),
-                          ),
+                                onTap: addProductCubit.pickVideo,
+                              ),
+                            );
+                          }),
                         ),
                         const SizedBox(height: 12),
                         BlocBuilder<AddProductCubit, AddProductStates>(
@@ -148,7 +177,9 @@ class _SAddProductViewState extends State<SAddProductView> {
                                 ?.data;
                             return ChooseBottomSheet<CategoryInAddProduct>(
                               items: categories ?? [],
-                              title: 'القسم',
+                              title:
+                                  addProductCubit.categoryInAddProduct?.name ??
+                                      'اختر القسم',
                               itemLabelBuilder: (category) =>
                                   category.name ?? '',
                               selectedItem:

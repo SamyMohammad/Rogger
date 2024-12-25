@@ -61,7 +61,7 @@ class SignUpCubit extends Cubit<SignUpStates> {
           customerGroup: int.parse(groupId!),
         ));
       }
-    } catch (e, s) {
+    } catch (e) {
       showToast(e.toString());
 
       // emit(HomeErrorState(e.toString()));

@@ -146,7 +146,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {}
+    } catch (e) {}
     emit(TicketsInitState());
   }
 
@@ -174,7 +174,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {}
+    } catch (e) {}
     emit(TicketsInitState());
   }
 
@@ -214,7 +214,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {}
+    } catch (e) {}
     // emit(TicketsInitState());
   }
 
@@ -268,7 +268,7 @@ class TicketsCubit extends Cubit<TicketsStates> {
         // ErrorModel.fromJson(response.data['error'])));
         throw Exception(response.data);
       }
-    } catch (e, s) {}
+    } catch (e) {}
     return null;
     // emit(TicketsInitState());
   }

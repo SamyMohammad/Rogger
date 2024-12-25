@@ -19,9 +19,7 @@ class NotificationsView extends StatefulWidget {
 }
 
 class _NotificationsViewState extends State<NotificationsView> {
-  final 
-   = Notifications
-  ()..getNotifications();
+  final cubit = NotificationsCubit()..getNotifications();
 
   @override
   Widget build(BuildContext context) {

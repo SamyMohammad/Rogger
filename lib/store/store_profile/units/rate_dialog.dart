@@ -52,23 +52,92 @@ class _DialogState extends State<_Dialog> {
   final TextEditingController _commentController = TextEditingController();
   bool _isButtonEnabled = false;
 
-  void _updateButtonState() {
-    setState(() {
-      _isButtonEnabled = _commentController.text.isNotEmpty;
-    });
-  }
+  // void _updateButtonState() {
+  //   setState(() {
+  //     _isButtonEnabled = rating > 0;
+  //   });
+  // }
 
   // String comment = '';
 
   bool isLoading = false;
   @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 5),
+          StarterDivider(width: 50),
+          const SizedBox(height: 10),
+          Text("اضغط على النجوم للتقييم"),
+          RateWidget(
+            rate: rating,
+            hItemPadding: 0,
+            itemSize: 20,
+            onRate: (v) {
+              setState(() {
+                rating = v;
+                _isButtonEnabled = rating > 0;
+              });
+            },
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            child: InputFormField(
+              hint: "كتابة التعليقات ..",
+              // controller: ,
+              fillColor: Theme.of(context).appBarTheme.backgroundColor,
+              controller: _commentController,
+              // onChanged: (newComment) {
+              //   comment = newComment;
+              //   setState(() {});
+              // },
+              hasBorder: true,
+              multiLine: true,
+              maxLines: 6,
+            ),
+          ),
+          isLoading
+              ? Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: LoadingIndicator(),
+                )
+              : ConfirmButton(
+                  title: "إرسال",
+                  horizontalMargin: 40,
+                  verticalPadding: 10,
+                  fontColor:
+                      _isButtonEnabled ? Colors.white : Color(0xFFA1A1A1),
+                  color: _isButtonEnabled
+                      ? activeButtonColor
+                      : ThemeCubit.of(context).isDark
+                          ? Color(0xFF1E1E26)
+                          : Color(0xffFAFAFF),
+                  onPressed: !_isButtonEnabled
+                      ? null
+                      : widget.rating != null
+                          ? updateRate
+                          : rate,
+                  // color:
+                  //     _isButtonEnabled ? activeButtonColor : Color(0xFFA1A1A1),
+                  // fontColor: Colors.white,
+                ),
+          const SizedBox(height: 10),
+        ],
+      ),
+      //Text('تقييم المعلن\n${widget.storeName}'),
+    );
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _commentController.addListener(_updateButtonState);
-
     if (widget.rating != null) {
       rating = widget.rating!;
+      _isButtonEnabled = rating > 0;
     }
   }
 
@@ -121,70 +190,5 @@ class _DialogState extends State<_Dialog> {
     }
     RouteManager.pop();
     setState(() => isLoading = false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 5),
-          StarterDivider(width: 50),
-          const SizedBox(height: 10),
-          Text("اضغط على النجوم للتقييم"),
-          RateWidget(
-            rate: rating,
-            hItemPadding: 0,
-            itemSize: 20,
-            onRate: (v) => rating = v,
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-            child: InputFormField(
-              hint: "كتابة التعليقات ..",
-              // controller: ,
-              fillColor: Theme.of(context).appBarTheme.backgroundColor,
-              controller: _commentController,
-              // onChanged: (newComment) {
-              //   comment = newComment;
-              //   setState(() {});
-              // },
-              hasBorder: true,
-              multiLine: true,
-              maxLines: 6,
-            ),
-          ),
-          isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: LoadingIndicator(),
-                )
-              : ConfirmButton(
-                  title: "إرسال",
-                  horizontalMargin: 40,
-                  verticalPadding: 10,
-                  fontColor:
-                      _isButtonEnabled ? Colors.white : Color(0xFFA1A1A1),
-                  color: _isButtonEnabled
-                      ? activeButtonColor
-                      : ThemeCubit.of(context).isDark
-                          ? Color(0xFF1E1E26)
-                          : Color(0xffFAFAFF),
-                  onPressed: !_isButtonEnabled
-                      ? null
-                      : widget.rating != null
-                          ? updateRate
-                          : rate,
-                  // color:
-                  //     _isButtonEnabled ? activeButtonColor : Color(0xFFA1A1A1),
-                  // fontColor: Colors.white,
-                ),
-          const SizedBox(height: 10),
-        ],
-      ),
-      //Text('تقييم المعلن\n${widget.storeName}'),
-    );
   }
 }

@@ -83,6 +83,28 @@ class DioHelper {
     };
     return await _dio.delete(path, data: data);
   }
+
+  static Future<Response<dynamic>> downloadFile(
+    String url, {
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      // If the URL is a relative path, prepend the base URL
+      final fullUrl = url.startsWith('http') ? url : (_baseUrl + url);
+
+      return await _dio.get(
+        fullUrl,
+        options: options ?? Options(responseType: ResponseType.bytes),
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+    } catch (e) {
+      print('Error downloading file: $e');
+      rethrow;
+    }
+  }
 }
 
 class _MyHttpOverrides extends HttpOverrides {

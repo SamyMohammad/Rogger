@@ -15,7 +15,7 @@ class CitiesCubit extends Cubit<CitiesStates> {
       final response = await DioHelper.post('customer/account/cities');
       citiesModel = CitiesModel.fromJson(response.data);
       emit(CitiesInitState());
-    } catch (e, s) {
+    } catch (e) {
       // emit(HomeErrorState(e.toString()));
     }
   }

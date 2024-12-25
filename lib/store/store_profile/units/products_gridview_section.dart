@@ -6,21 +6,18 @@ import 'package:silah/store/store_profile/units/product_gridview_tile.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 
 class ProductsGridviewSection extends StatelessWidget {
+  final StoreProfileCubit cubit;
+
   const ProductsGridviewSection({
     super.key,
     required this.cubit,
   });
-
-  final StoreProfileCubit cubit;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
       bloc: cubit,
       builder: (context, state) {
-        // if (state is StoreProfileEmptyState) {
-        //   return SizedBox();
-        // }
 
         final products = StoreProfileCubit.of(context).productsModel?.products;
 

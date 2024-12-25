@@ -28,12 +28,6 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
   T? selectedValue;
 
   @override
-  void initState() {
-    super.initState();
-    selectedValue = widget.selectedItem; // Initialize with selected item
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(10),
@@ -76,6 +70,13 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    
+    selectedValue = widget.selectedItem; // Initialize with selected item
   }
 
   void showCustomBottomSheet(BuildContext context) {
@@ -192,7 +193,7 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
                                 widget.itemLabelBuilder(widget.items[index]),
                                 style: TextStyle(
                                   fontSize: 16.0,
-                                  color: isSelected
+                                  color: isSelected 
                                       ? CupertinoColors.activeBlue
                                       : Colors.grey,
                                 ),

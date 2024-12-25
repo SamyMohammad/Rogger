@@ -77,7 +77,7 @@ class EditProfileCubit extends Cubit<EditProfileStates> {
       } else if (data.toString().contains('message')) {
         showToast(data['message']);
       }
-    } catch (e, s) {}
+    } catch (e) {}
     emit(EditProfileInitState());
   }
 

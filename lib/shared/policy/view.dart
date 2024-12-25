@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:silah/shared/policy/cubit/cubit.dart';
 import 'package:silah/shared/policy/cubit/states.dart';
-import 'package:silah/widgets/app_bar.dart';
 import 'package:silah/widgets/loading_indicator.dart';
 
 import '../../constants.dart';

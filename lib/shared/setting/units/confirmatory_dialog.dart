@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:silah/constants.dart';
 import 'package:silah/core/router/router.dart';
 import 'package:silah/store/change_map_activity/view.dart';
 

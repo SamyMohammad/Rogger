@@ -94,32 +94,48 @@ class LocationManager {
     String location = "";
     final String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$MAP_API_KEY&language=ar';
-    final response = await Dio().post(url);
-    if (response.statusCode == 200) {
-      final data = response.data;
-      if (data['results'].length != 0) {
-        final result = data['results'][0]['address_components'] as List;
-        int counter = 0;
-        for (var i in result) {
-          if (i['types'].join("").contains("administrative_area_level_1") ||
-              i['types'].join("").contains("administrative_area_level_2") ||
-              i['types'].join("").contains("sublocality_level_1")) {
-            if (counter == 1 && onlyCity) {
-              return i['long_name'];
+    try {
+      final response = await Dio().post(url);
+      if (response.statusCode == 200) {
+        final data = response.data;
+        if (data['results'] != null && data['results'].length > 0) {
+          final result = data['results'][0]['address_components'] as List;
+          
+          // First, try to find locality
+          for (var component in result) {
+            if (component['types'].join("").contains("locality")) {
+              location = component['long_name'];
+              break;
             }
-            if (counter < 2) {
-              location = i['long_name'] + " " + location;
+          }
+          
+          // If locality not found, try administrative_area_level_1
+          if (location.isEmpty) {
+            for (var component in result) {
+              if (component['types'].join("").contains("administrative_area_level_1")) {
+                location = component['long_name'];
+                break;
+              }
             }
-            counter++;
+          }
+          
+          // If still empty, try administrative_area_level_2
+          if (location.isEmpty) {
+            for (var component in result) {
+              if (component['types'].join("").contains("administrative_area_level_2")) {
+                location = component['long_name'];
+                break;
+              }
+            }
           }
         }
       }
-
-      // location = result[1]['short_name'] ?? '';
-      // location = location! + (location.isNotEmpty ? '\n' : '') + result[2]['short_name'];
-      return location;
-    } else
-      throw Exception('Cannot get City by LatLng');
+    } catch (e) {
+      debugPrint("Error getting city: $e");
+    }
+    
+    // Return the location if found, otherwise return "غير معروف"
+    return location.isNotEmpty ? location : "غير معروف";
   }
 
   static Future<bool> isLocationAssigned() async {

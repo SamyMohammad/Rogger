@@ -16,7 +16,7 @@ class CustomerGroupsCubit extends Cubit<CustomerGroupsState> {
       final response = await DioHelper.post('customer/account/customer_groups');
       customerGroupsModel = CustomerGroupsModel.fromJson(response.data);
       emit(CustomerGroupsInitState());
-    } catch (e, s) {
+    } catch (e) {
       // emit(HomeErrorState(e.toString()));
     }
   }

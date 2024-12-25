@@ -41,7 +41,7 @@ class VerifyCubit extends Cubit<VerifyStates> {
       } else {
         showToast('كود خاطئ');
       }
-    } catch (e, s) {
+    } catch (e) {
       // emit(HomeErrorState(e.toString()));
     }
     emit(VerifyInitState());

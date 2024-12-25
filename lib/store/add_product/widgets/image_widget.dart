@@ -19,6 +19,7 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       height: sizeFromWidth(3.5),

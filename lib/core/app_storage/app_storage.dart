@@ -116,7 +116,7 @@ Future<void> getUserAndCache(int customerID, int customerGroup) async {
     data.addAll({'customer_group': customerGroup});
     await AppStorage.cacheUser(UserModel.fromJson(data));
     FirebaseMessagingHelper.sendFCMToServer();
-  } catch (e, s) {
+  } catch (e) {
     throw e;
   }
 }

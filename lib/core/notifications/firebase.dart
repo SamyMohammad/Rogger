@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:silah/core/notifications/notification_dialog.dart';
 
 // import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
@@ -12,6 +11,24 @@ import '../dio_manager/dio_manager.dart';
 class FirebaseMessagingHelper {
   static final FirebaseMessaging _firebaseMessaging =
       FirebaseMessaging.instance;
+
+  static void checkIfUserClickedNotificationFromBackground() async {
+    final notification = await _firebaseMessaging.getInitialMessage();
+    if (notification == null) {
+      return;
+    }
+    _handleNotificationReceiver(notification);
+    // RouteManager.navigateAndPopUntilFirstPage(TamidDetailsView(title: notification.notification?.title ?? '', id: notification.data['tamid_id']));
+  }
+
+  static Future<String?> getFCM() async {
+    try {
+      final fcm = await _firebaseMessaging.getToken();
+      return fcm;
+    } catch (_) {
+      return '';
+    }
+  }
 
   static void init() async {
     onMessage();
@@ -37,13 +54,8 @@ class FirebaseMessagingHelper {
     });
   }
 
-  static void checkIfUserClickedNotificationFromBackground() async {
-    final notification = await _firebaseMessaging.getInitialMessage();
-    if (notification == null) {
-      return;
-    }
-    _handleNotificationReceiver(notification);
-    // RouteManager.navigateAndPopUntilFirstPage(TamidDetailsView(title: notification.notification?.title ?? '', id: notification.data['tamid_id']));
+  static Future<void> removeTokenFromServer(int userID) async {
+    await DioHelper.post('token/reset', data: {'customer_id': userID});
   }
 
   static Future<void> sendFCMToServer() async {
@@ -56,26 +68,13 @@ class FirebaseMessagingHelper {
     await DioHelper.post('token', data: body);
   }
 
-  static Future<String?> getFCM() async {
-    try {
-      final fcm = await _firebaseMessaging.getToken();
-      return fcm;
-    } catch (_) {
-      return '';
-    }
-  }
-
-  static Future<void> removeTokenFromServer(int userID) async {
-    await DioHelper.post('token/reset', data: {'customer_id': userID});
-  }
-
   static Future<void> _handleNotificationReceiver(
       RemoteMessage notification) async {
     NavBarCubit.get(NavBarCubit.currentContext).checkIfHasUnreadMessages();
-    showNotificationDialog(
-      title: notification.notification?.title ?? '',
-      body: notification.notification?.body ?? '',
-      type: notification.data['type'] ?? '',
-    );
+    // showNotificationDialog(
+    //   title: notification.notification?.title ?? '',
+    //   body: notification.notification?.body ?? '',
+    //   type: notification.data['type'] ?? '',
+    // );
   }
 }

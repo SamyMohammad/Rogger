@@ -13,6 +13,10 @@ import '../../../core/router/router.dart';
 import '../../../shared/login/view.dart';
 
 class SellerHeaderSection extends StatelessWidget {
+  final StoreInfoModel? storeInfo;
+
+  final StoreProfileCubit cubit;
+  final String storeId;
   const SellerHeaderSection({
     super.key,
     required this.storeInfo,
@@ -20,25 +24,32 @@ class SellerHeaderSection extends StatelessWidget {
     required this.storeId,
   });
 
-  final StoreInfoModel? storeInfo;
-  final StoreProfileCubit cubit;
-  final String storeId;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Image.network(
-          storeInfo!.profileCover!,
-          height: sizeFromHeight(3.5),
-          width: double.infinity,
-          fit: BoxFit.fill,
-          errorBuilder: (_, __, ___) => Container(
-            color: kGreyColor,
-            height: sizeFromHeight(3.5),
-          ),
-        ),
+        storeInfo!.profileCover! != 'https://roogr.sa/api/image/user_image.png'
+            ? Image.network(
+                storeInfo!.profileCover!,
+                height: sizeFromHeight(3.5),
+                width: double.infinity,
+                fit: BoxFit.fill,
+                errorBuilder: (_, __, ___) => Container(
+                  color: kGreyColor,
+                  height: sizeFromHeight(3.5),
+                ),
+              )
+            : Image.asset(
+                getAsset('person'),
+                height: sizeFromHeight(3.5),
+                width: double.infinity,
+                fit: BoxFit.fill,
+                errorBuilder: (_, __, ___) => Container(
+                  color: kGreyColor,
+                  height: sizeFromHeight(3.5),
+                ),
+              ),
         HeaderIcons(cubit: cubit),
         // Positioned(top: 0, right: 0, left: 0, child: HeaderIcons(cubit: cubit)),
         Positioned(
@@ -150,50 +161,6 @@ class SellerHeaderSection extends StatelessWidget {
     );
   }
 
-  void showLoginACustomerDialog(BuildContext context, String title) {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text('يمكن لزبون $title'),
-
-        actions: [
-          CupertinoButton(
-            child: Text(
-              'موافق',
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: RouteManager.pop,
-          ),
-          // CupertinoButton(
-          //   child: Text(
-          //     'نعم',
-          //     style: TextStyle(color: Colors.green),
-          //   ),
-          //   onPressed: () async {
-          //     RouteManager.pop();
-          //     await DioHelper.post('provider/banks/delete_all_commission',
-          //         data: {
-          //           'provider_id': AppStorage.customerID,
-          //         });
-          //     // getCommissions();
-          //   },
-          // ),
-        ],
-        // color: Colors.white,
-        // child: Column(
-        //   children: [
-        //     Text('يمكن لزبون المتابعة'),
-        //     // Row(
-        //     //   children: [
-        //     //
-        //     //   ],
-        //     // )
-        //   ],
-        // ),
-      ),
-    );
-  }
-
   // Function()? isFollow(BuildContext context) {
   //   // if (AppStorage.isLogged) {
   //   //   if (AppStorage.customerID.toString() != storeId) {
@@ -247,6 +214,50 @@ class SellerHeaderSection extends StatelessWidget {
               // getCommissions();
             },
           ),
+        ],
+        // color: Colors.white,
+        // child: Column(
+        //   children: [
+        //     Text('يمكن لزبون المتابعة'),
+        //     // Row(
+        //     //   children: [
+        //     //
+        //     //   ],
+        //     // )
+        //   ],
+        // ),
+      ),
+    );
+  }
+
+  void showLoginACustomerDialog(BuildContext context, String title) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text('يمكن لزبون $title'),
+
+        actions: [
+          CupertinoButton(
+            child: Text(
+              'موافق',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: RouteManager.pop,
+          ),
+          // CupertinoButton(
+          //   child: Text(
+          //     'نعم',
+          //     style: TextStyle(color: Colors.green),
+          //   ),
+          //   onPressed: () async {
+          //     RouteManager.pop();
+          //     await DioHelper.post('provider/banks/delete_all_commission',
+          //         data: {
+          //           'provider_id': AppStorage.customerID,
+          //         });
+          //     // getCommissions();
+          //   },
+          // ),
         ],
         // color: Colors.white,
         // child: Column(

@@ -93,7 +93,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: cubit.subject == 'inquiry'
-                                        ? Colors.white
+                                        ? Theme.of(context).primaryColor
                                         : kDarkGreyColor),
                               )),
                               decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: cubit.subject == 'suggestion'
-                                        ? Colors.white
+                                        ? Theme.of(context).primaryColor
                                         : kDarkGreyColor),
                               )),
                               decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: cubit.subject == 'issue'
-                                        ? Colors.white
+                                        ? Theme.of(context).primaryColor
                                         : kDarkGreyColor),
                               )),
                               decoration: BoxDecoration(

@@ -57,7 +57,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                     elevation: 5,
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.fromLTRB(9, 9, 18, 12),
+                      padding: EdgeInsets.fromLTRB(16, 9, 18, 12),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -73,9 +73,11 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -86,7 +88,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.end,
                                       children: [
                                         RateWidget(
                                           rate: double.parse(
@@ -109,6 +111,7 @@ class CommentsBottomSheetWidget extends StatelessWidget {
                                 ),
                                 ReadMoreText(
                                   comment?.comment ?? '',
+                                  
                                   trimLines: 2,
                                   trimMode: TrimMode.Line,
                                   trimCollapsedText: "عرض المزيد",

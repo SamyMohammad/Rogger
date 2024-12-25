@@ -82,7 +82,7 @@ class CategoryCubit extends Cubit<CategoryStates> {
       // } else {
       //   throw Exception(response.data);
       // }
-    } catch (e, s) {}
+    } catch (e) {}
     // emit(TicketsInitState());
   }
 
