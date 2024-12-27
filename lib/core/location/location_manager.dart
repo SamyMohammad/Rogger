@@ -100,23 +100,25 @@ class LocationManager {
       if (response.statusCode == 200) {
         final data = response.data;
         if (data['results'] != null && data['results'].length > 0) {
-          final result = data['results'][1]['address_components'] as List;
+          final locality = data['results'][1]['address_components'] as List;
+          final subLocality = data['results'][2]['address_components'] as List;
 
           // First, try to find locality
-          for (var component in result) {
+          for (var component in locality) {
             if (component['types']
                 .join("")
-                .contains("administrative_area_level_1")) {
+                .contains("locality")) {
               location = component['long_name'];
-              break;
             }
+          }
+          for (var component in subLocality) {
             if (component['types'].contains("sublocality_level_1")) {
               neighborhood = component['long_name'];
             }
           }
           // If locality not found, try administrative_area_level_1
           if (location.isEmpty) {
-            for (var component in result) {
+            for (var component in locality) {
               if (component['types']
                   .join("")
                   .contains("administrative_area_level_1")) {
@@ -128,7 +130,7 @@ class LocationManager {
 
           // If still empty, try administrative_area_level_2
           if (location.isEmpty) {
-            for (var component in result) {
+            for (var component in locality) {
               if (component['types']
                   .join("")
                   .contains("administrative_area_level_2")) {
