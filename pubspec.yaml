@@ -116,7 +116,9 @@ dependency_overrides:
   drag_down_to_pop: any
   zxing2: any
   qr_code_tools: 
-    path: C:/Users/Lenovo/Downloads/qr_code_tools-master/qr_code_tools-master
+    git: 
+      url: https://github.com/SamyMohammad/qr_code_tools-master.git
+      ref: main # commit hash
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^4.0.0

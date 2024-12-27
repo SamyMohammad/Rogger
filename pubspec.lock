@@ -1276,9 +1276,11 @@ packages:
   qr_code_tools:
     dependency: "direct overridden"
     description:
-      path: "C:/Users/Lenovo/Downloads/qr_code_tools-master/qr_code_tools-master"
-      relative: false
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: adaf84582ea32a9ddde33d09f4e7d502873205e8
+      url: "https://github.com/SamyMohammad/qr_code_tools-master.git"
+    source: git
     version: "0.1.0"
   qr_flutter:
     dependency: "direct main"
