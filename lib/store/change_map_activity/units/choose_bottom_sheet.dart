@@ -10,10 +10,12 @@ class ChooseBottomSheet<T> extends StatefulWidget {
   final String Function(T item) itemLabelBuilder;
   final void Function(T selectedItem) onItemSelected;
   final T? selectedItem;
+  final bool isEnabled;
 
   ChooseBottomSheet({
     super.key,
     required this.items,
+    this.isEnabled = true,
     required this.title,
     required this.itemLabelBuilder,
     required this.onItemSelected,
@@ -34,9 +36,11 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          showCustomBottomSheet(context); // Open the bottom sheet
-        },
+        onTap: widget.isEnabled
+            ? () {
+                showCustomBottomSheet(context); // Open the bottom sheet
+              }
+            : null,
         child: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -75,7 +79,7 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
   @override
   void initState() {
     super.initState();
-    
+
     selectedValue = widget.selectedItem; // Initialize with selected item
   }
 
@@ -193,7 +197,7 @@ class _ChooseBottomSheetState<T> extends State<ChooseBottomSheet<T>> {
                                 widget.itemLabelBuilder(widget.items[index]),
                                 style: TextStyle(
                                   fontSize: 16.0,
-                                  color: isSelected 
+                                  color: isSelected
                                       ? CupertinoColors.activeBlue
                                       : Colors.grey,
                                 ),

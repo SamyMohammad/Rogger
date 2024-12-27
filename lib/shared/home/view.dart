@@ -109,9 +109,6 @@ class _HomeViewState extends State<HomeView> {
                                 CategoryCubit.of(context).getCategoryProducts(
                                     categoryID, homeCubit.nearestAds);
                               }
-                              // _pageController.jumpToPage(currentIndex);
-                              // homeCubit.selectCategory(category.categoryId);
-                              // CategoryCubit.of(context).getCategoryProducts(category.categoryId!, homeCubit.nearestAds);
                             },
                           );
                         },
@@ -173,24 +170,28 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       ),
-      floatingActionButton: !AppStorage.isLogged
-          ? _NearestLocationButton()
-          : (AppStorage.getUserModel()!.customerGroup == 2)
-              ? Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: kPrimaryColor.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: IconButton(
-                      color: Colors.white,
-                      icon: Icon(
-                        FontAwesomeIcons.plus,
-                        size: 22,
-                      ),
-                      onPressed: () =>
-                          RouteManager.navigateTo(SAddProductView())),
-                )
-              : _NearestLocationButton(),
+      floatingActionButton:
+          !AppStorage.isLogged && !HomeProductsCubit.of(context).isUserBanned
+              ? _NearestLocationButton()
+              : (AppStorage.getUserModel()!.customerGroup == 2 &&
+                      !HomeProductsCubit.of(context).isUserBanned)
+                  ? Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: 22,
+                          ),
+                          onPressed: () =>
+                              RouteManager.navigateTo(SAddProductView())),
+                    )
+                  : AppStorage.getUserModel()!.customerGroup == 1
+                      ? _NearestLocationButton()
+                      : SizedBox.shrink(),
     );
   }
 }

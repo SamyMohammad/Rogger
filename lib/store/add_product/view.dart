@@ -47,29 +47,31 @@ class _SAddProductViewState extends State<SAddProductView> {
               builder: (context, value, child) => ValueListenableBuilder(
                   valueListenable: addProductCubit.nameController,
                   builder: (context, value, child) {
-                    print('addProductCubit.images.length ${addProductCubit.images.length}');
+                    print(
+                        'addProductCubit.images.length ${addProductCubit.images.length}');
                     return ListView(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       physics: BouncingScrollPhysics(),
                       children: [
                         Wrap(
                           children: [
-                            if(addProductCubit.images.length!=0)
-                            ...addProductCubit.images
-                                .map((e) => Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 3),
-                                      child: ImageWidget(
-                                        image: e,
-                                        index:
-                                            addProductCubit.images.indexOf(e),
-                                        onEdit: () => addProductCubit.editImage(
-                                            addProductCubit.images.indexOf(e)),
-                                        onDelete: () =>
-                                            addProductCubit.removeImage(e),
-                                      ),
-                                    ))
-                                .toList(),
+                            if (addProductCubit.images.length != 0)
+                              ...addProductCubit.images
+                                  .map((e) => Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 3),
+                                        child: ImageWidget(
+                                          image: e,
+                                          index:
+                                              addProductCubit.images.indexOf(e),
+                                          onEdit: () => addProductCubit
+                                              .editImage(addProductCubit.images
+                                                  .indexOf(e)),
+                                          onDelete: () =>
+                                              addProductCubit.removeImage(e),
+                                        ),
+                                      ))
+                                  .toList(),
                             // Only show add image icon if images list is empty
                             if (addProductCubit.images.isEmpty)
                               Padding(
@@ -94,7 +96,8 @@ class _SAddProductViewState extends State<SAddProductView> {
                                 ),
                               ),
                             // Show add image icon if less than 5 images
-                            if (addProductCubit.images.isNotEmpty && addProductCubit.images.length < 5)
+                            if (addProductCubit.images.isNotEmpty &&
+                                addProductCubit.images.length < 5)
                               Padding(
                                 padding: EdgeInsets.all(2),
                                 child: GestureDetector(
@@ -177,6 +180,11 @@ class _SAddProductViewState extends State<SAddProductView> {
                                 ?.data;
                             return ChooseBottomSheet<CategoryInAddProduct>(
                               items: categories ?? [],
+                              isEnabled:
+                                  addProductCubit.categoryInAddProduct?.name !=
+                                          null
+                                      ? false
+                                      : true,
                               title:
                                   addProductCubit.categoryInAddProduct?.name ??
                                       'اختر القسم',

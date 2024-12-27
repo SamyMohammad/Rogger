@@ -45,8 +45,7 @@ class LocationManager {
           "getLocationFromDevice${position.latitude} ${position.longitude}");
 
       return position;
-    } catch (e) {
-    }
+    } catch (e) {}
     return null;
   }
 
@@ -54,7 +53,7 @@ class LocationManager {
     try {
       LocationData? position;
       if (latLng == null) position = await getLocationFromDevice();
-      
+
       currentLocationFromServer = LatLng(position?.latitude ?? latLng!.latitude,
           position?.longitude ?? latLng!.longitude);
       final city = await getCityByLatLng(
@@ -77,7 +76,7 @@ class LocationManager {
         return true;
       }
     } catch (e, s) {
-      debugPrint("$e $s");      
+      debugPrint("$e $s");
     }
     showLocationErrorBar();
     return false;
@@ -92,6 +91,8 @@ class LocationManager {
     bool onlyCity = false,
   }) async {
     String location = "";
+    String neighborhood = "";
+
     final String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$MAP_API_KEY&language=ar';
     try {
@@ -99,30 +100,38 @@ class LocationManager {
       if (response.statusCode == 200) {
         final data = response.data;
         if (data['results'] != null && data['results'].length > 0) {
-          final result = data['results'][0]['address_components'] as List;
-          
+          final result = data['results'][1]['address_components'] as List;
+
           // First, try to find locality
           for (var component in result) {
-            if (component['types'].join("").contains("locality")) {
+            if (component['types']
+                .join("")
+                .contains("administrative_area_level_1")) {
               location = component['long_name'];
               break;
             }
+            if (component['types'].contains("sublocality_level_1")) {
+              neighborhood = component['long_name'];
+            }
           }
-          
           // If locality not found, try administrative_area_level_1
           if (location.isEmpty) {
             for (var component in result) {
-              if (component['types'].join("").contains("administrative_area_level_1")) {
+              if (component['types']
+                  .join("")
+                  .contains("administrative_area_level_1")) {
                 location = component['long_name'];
                 break;
               }
             }
           }
-          
+
           // If still empty, try administrative_area_level_2
           if (location.isEmpty) {
             for (var component in result) {
-              if (component['types'].join("").contains("administrative_area_level_2")) {
+              if (component['types']
+                  .join("")
+                  .contains("administrative_area_level_2")) {
                 location = component['long_name'];
                 break;
               }
@@ -133,9 +142,9 @@ class LocationManager {
     } catch (e) {
       debugPrint("Error getting city: $e");
     }
-    
+
     // Return the location if found, otherwise return "غير معروف"
-    return location.isNotEmpty ? location : "غير معروف";
+    return location.isNotEmpty ? "$location,$neighborhood" : "غير معروف";
   }
 
   static Future<bool> isLocationAssigned() async {
@@ -146,8 +155,8 @@ class LocationManager {
             LatLng(position!.latitude ?? 0, position.longitude ?? 0);
       } catch (e) {
         currentLocationFromServer = defaultLatLng;
-        
-        // 
+
+        //
       }
       return true;
     }
@@ -165,7 +174,7 @@ class LocationManager {
       locationInfoModel = LocationInfoModel.fromJson(response.data);
       currentLocationFromServer = LatLng(double.parse(locationInfo['loc_lat']),
           double.parse(locationInfo['loc_long']));
-      return responseCity != null ;
+      return responseCity != null;
     } catch (e) {
       return false;
     }

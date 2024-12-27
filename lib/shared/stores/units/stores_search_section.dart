@@ -396,8 +396,6 @@ class _StoresSearchSectionState extends State<StoresSearchSection> {
       onDebounce: () {
         _searchTerm = text;
         pagingController.itemList?.clear();
-        // filterStores(1, term: _searchTerm ?? '');
-
         pagingController.refresh();
       },
     );
