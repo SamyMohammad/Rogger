@@ -88,14 +88,14 @@ class MyApp extends StatelessWidget {
           initSharedPref(context);
           return MaterialApp(
             locale: DevicePreview.locale(context),
-            builder: DevicePreview.appBuilder,
+            // builder: DevicePreview.appBuilder,
             navigatorKey: navigatorKey,
             onGenerateRoute: onGenerateRoute,
             debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: themeCubit.appTheme,
-            // builder: (context, child) => PopScaffold(child: child!),
+            builder: (context, child) => PopScaffold(child: child!),
             home: SplashView(),
           );
         },

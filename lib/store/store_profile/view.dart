@@ -35,42 +35,44 @@ class _StoreProfileViewState extends State<StoreProfileView> {
               body: LoadingIndicator(),
             );
           }
-          return Scaffold(
-            body: CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    SellerHeaderSection(
-                        storeInfo: storeInfo,
-                        cubit: cubit,
-                        storeId: widget.storeId),
-                    FollowersAndRatingsCount(
-                        commentsModel: cubit.commentsModel,
-                        storeInfo: storeInfo,
-                        isFollowing: AppStorage.isLogged && cubit.isFollowing),
-                    Transform.translate(
-                        offset: Offset(0, -12),
-                        child: StoreInfoColumn(
-                            storeInfo: storeInfo,
-                            cubit: cubit,
-                            storeId: widget.storeId,
-                            rate: cubit.getOverAllRating != null
-                                ? double.parse(cubit.getOverAllRating ?? '0')
-                                : null)),
-                  ]),
-                ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverCategoriesDelegate(
-                    child: CategoriesListviewSection(storeId: widget.storeId),
+          return SafeArea(
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      SellerHeaderSection(
+                          storeInfo: storeInfo,
+                          cubit: cubit,
+                          storeId: widget.storeId),
+                      FollowersAndRatingsCount(
+                          commentsModel: cubit.commentsModel,
+                          storeInfo: storeInfo,
+                          isFollowing: AppStorage.isLogged && cubit.isFollowing),
+                      Transform.translate(
+                          offset: Offset(0, -12),
+                          child: StoreInfoColumn(
+                              storeInfo: storeInfo,
+                              cubit: cubit,
+                              storeId: widget.storeId,
+                              rate: cubit.getOverAllRating != null
+                                  ? double.parse(cubit.getOverAllRating ?? '0')
+                                  : null)),
+                    ]),
                   ),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    ProductsGridviewSection(cubit: cubit),
-                  ]),
-                ),
-              ],
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SliverCategoriesDelegate(
+                      child: CategoriesListviewSection(storeId: widget.storeId),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      ProductsGridviewSection(cubit: cubit),
+                    ]),
+                  ),
+                ],
+              ),
             ),
           );
         },
