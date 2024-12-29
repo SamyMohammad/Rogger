@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
 import 'package:silah/core/location/location_info_model.dart';
@@ -14,21 +13,22 @@ class LocationManager {
   static LatLng? currentLocationFromServer;
   static LatLng? currentLocationFromDevice;
   static LocationInfoModel? locationInfoModel;
-  static Location location = new Location();
+  // static Location location = new Location();
+  // static Geolocator location = Geolocator;
 
-  static Future<LocationData?> getLocationFromDevice() async {
+  static Future<Position?> getLocationFromDevice() async {
     bool serviceEnabled;
-    PermissionStatus permission;
+    LocationPermission permission;
 
     try {
-      serviceEnabled = await location.serviceEnabled();
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         showLocationErrorBar();
       }
 
-      permission = await location.hasPermission();
+      permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        permission = await location.requestPermission();
+        permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           showLocationErrorBar();
         }
@@ -37,7 +37,9 @@ class LocationManager {
       if (permission == LocationPermission.deniedForever) {
         showLocationErrorBar();
       }
-      final position = await location.getLocation();
+      print("getLocationFromDeviceFailure");
+
+      final position = await Geolocator.getCurrentPosition();
       currentLocationFromDevice = LatLng(
           position.latitude ?? defaultLatLng.latitude,
           position.longitude ?? defaultLatLng.longitude);
@@ -51,7 +53,8 @@ class LocationManager {
 
   static Future<bool> setLocation([LatLng? latLng]) async {
     try {
-      LocationData? position;
+      Position? position;
+
       if (latLng == null) position = await getLocationFromDevice();
 
       currentLocationFromServer = LatLng(position?.latitude ?? latLng!.latitude,
@@ -92,13 +95,17 @@ class LocationManager {
   }) async {
     String location = "";
     String neighborhood = "";
+    print("datagoogleapis");
 
     final String url =
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$MAP_API_KEY&language=ar';
     try {
       final response = await Dio().post(url);
+      // print("datagoogleapis ${response.data}");
+
       if (response.statusCode == 200) {
         final data = response.data;
+        print("datagoogleapis $data");
         if (data['results'] != null && data['results'].length > 0) {
           final locality = data['results'] as List;
 
@@ -111,11 +118,58 @@ class LocationManager {
               List<String> types = List<String>.from(component['types']);
               if (types.contains('locality')) {
                 location = component['long_name'];
+                print("location--- $location");
+                break;
               }
-              if (types.contains('sublocality') ||
-                  types.contains('neighborhood')) {
+            }
+            if (location.isNotEmpty) {
+              break;
+            }
+          }
+          for (var i = 0; i < locality.length; i++) {
+            final locationName =
+                data['results'][i]['address_components'] as List;
+            for (var component in locationName) {
+              List<String> types = List<String>.from(component['types']);
+
+              if (types.contains('sublocality')) {
                 neighborhood = component['long_name'];
+                print("neighborhood--- $neighborhood");
               }
+              if (neighborhood.isNotEmpty) {
+                break;
+              }
+            }
+            if (neighborhood.isNotEmpty) {
+              break;
+            }
+            for (var component in locationName) {
+              List<String> types = List<String>.from(component['types']);
+
+              if (types.contains('neighborhood')) {
+                neighborhood = component['long_name'];
+                print("neighborhood--- $neighborhood");
+              }
+              if (neighborhood.isNotEmpty) {
+                break;
+              }
+            }
+            if (neighborhood.isNotEmpty) {
+              break;
+            }
+            for (var component in locationName) {
+              List<String> types = List<String>.from(component['types']);
+
+              if (types.contains('administrative_area_level_1')) {
+                neighborhood = component['long_name'];
+                print("neighborhood--- $neighborhood");
+              }
+              if (neighborhood.isNotEmpty) {
+                break;
+              }
+            }
+            if (neighborhood.isNotEmpty) {
+              break;
             }
           }
           // First, try to find locality
@@ -167,6 +221,7 @@ class LocationManager {
     } catch (e) {
       debugPrint("Error getting city: $e");
     }
+    debugPrint("Error getting city: $location $neighborhood");
 
     // Return the location if found, otherwise return "غير معروف"
     return location.isNotEmpty ? "$location,$neighborhood" : "غير معروف";

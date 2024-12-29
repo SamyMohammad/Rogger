@@ -49,8 +49,11 @@ class NavBarCubit extends Cubit<NavBarStates> {
     checkIfHasUnreadMessages();
     checkIfHasNotifications();
     toggleOnlineStatus(true);
+        // print("object: 'isAssigned', value: $isAssigned");
+
     LocationManager.setLocation();
     final isAssigned = await LocationManager.isLocationAssigned();
+    print("object: 'isAssigned', value: $isAssigned");
     if (!isAssigned) {
       RouteManager.navigateAndPopAll(SelectLocationView());
     }
