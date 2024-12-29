@@ -31,7 +31,7 @@ class DioHelper {
       error: true,
       compact: true,
       maxWidth: 90,
-      enabled: kDebugMode,
+      enabled: false,
     ));
   }
 

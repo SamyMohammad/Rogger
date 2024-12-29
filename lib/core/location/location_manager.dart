@@ -100,18 +100,40 @@ class LocationManager {
       if (response.statusCode == 200) {
         final data = response.data;
         if (data['results'] != null && data['results'].length > 0) {
-          final locality = data['results'][0]['address_components'] as List;
-          // final subLocality = data['results'][2]['address_components'] as List;
+          final locality = data['results'] as List;
 
-          // First, try to find locality
-          for (var component in locality) {
-            if (component['types'].join("").contains("locality")) {
-              location = component['long_name'];
-            }
-            if (component['types'].join("").contains("sublocality")) {
-              neighborhood = component['long_name'];
+          // final locality = data['results'][2]['address_components'] as List;
+          // final subLocality = data['results'][2]['address_components'] as List;
+          for (var i = 0; i < locality.length; i++) {
+            final locationName =
+                data['results'][i]['address_components'] as List;
+            for (var component in locationName) {
+              List<String> types = List<String>.from(component['types']);
+              if (types.contains('locality')) {
+                location = component['long_name'];
+              }
+              if (types.contains('sublocality') ||
+                  types.contains('neighborhood')) {
+                neighborhood = component['long_name'];
+              }
             }
           }
+          // First, try to find locality
+
+          // for (var component in locality) {
+          //   if (component['types'].contains("locality")) {
+          //     location = component['long_name'];
+          //   }
+          // }
+          print("location $location");
+
+          // for (var component in locality) {
+          //   if (component['types'].contains("sublocality_level_1")) {
+          //     neighborhood = component['long_name'];
+          //   }
+          // }
+          print("neighborhood $neighborhood");
+
           // for (var component in subLocality) {
           //   if (component['types'].contains("sublocality_level_1")) {
           //     neighborhood = component['long_name'];
