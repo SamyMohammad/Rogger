@@ -100,22 +100,23 @@ class LocationManager {
       if (response.statusCode == 200) {
         final data = response.data;
         if (data['results'] != null && data['results'].length > 0) {
-          final locality = data['results'][1]['address_components'] as List;
-          final subLocality = data['results'][2]['address_components'] as List;
+          final locality = data['results'][0]['address_components'] as List;
+          // final subLocality = data['results'][2]['address_components'] as List;
 
           // First, try to find locality
           for (var component in locality) {
-            if (component['types']
-                .join("")
-                .contains("locality")) {
+            if (component['types'].join("").contains("locality")) {
               location = component['long_name'];
             }
-          }
-          for (var component in subLocality) {
-            if (component['types'].contains("sublocality_level_1")) {
+            if (component['types'].join("").contains("sublocality")) {
               neighborhood = component['long_name'];
             }
           }
+          // for (var component in subLocality) {
+          //   if (component['types'].contains("sublocality_level_1")) {
+          //     neighborhood = component['long_name'];
+          //   }
+          // }
           // If locality not found, try administrative_area_level_1
           if (location.isEmpty) {
             for (var component in locality) {

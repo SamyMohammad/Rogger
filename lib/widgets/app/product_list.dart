@@ -77,7 +77,7 @@ class GridProductItem extends StatelessWidget {
                     ),
             ),
           ),
-          SizedBox(height: 5),
+          Spacer(),
           Text(
             title,
             style: TextStyle(
@@ -87,7 +87,7 @@ class GridProductItem extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          SizedBox(height: 7),
+          Spacer(),
           AbsorbPointer(
             absorbing: true,
             child: RateWidget(
@@ -96,7 +96,7 @@ class GridProductItem extends StatelessWidget {
               hItemPadding: 0,
             ),
           ),
-          SizedBox(height: 7),
+          Spacer(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,7 +119,7 @@ class GridProductItem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 5),
+          Spacer(),
           Row(
             children: [
               Icon(
@@ -139,7 +139,7 @@ class GridProductItem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          Spacer(),
           Row(
             children: [
               ClipRRect(
