@@ -189,9 +189,10 @@ class TicketsCubit extends Cubit<TicketsStates> {
 
       if (response.data.containsKey('success')) {
         print(
-            'getStatusVerificationPPPP ${response.data["requests"][0].toString()}');
+            'getStatusVerification ${response.data["requests"][0].toString()}');
         accountIsVerified = response.data["requests"].any((request) {
-          return request['STATUS'] == "approved";
+          return request['STATUS'] == "approved" &&
+              request['is_expired'] == false;
         });
 
         getStatusVerification = GetStatusVerification.fromJson(response.data);

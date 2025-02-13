@@ -31,294 +31,305 @@ class _SAddProductViewState extends State<SAddProductView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddProductCubit(widget.productsDetailsModel)..init(),
-      child: Scaffold(
-        appBar: AppBar(
-            title: Text(widget.productsDetailsModel == null
-                ? 'أضف اعلان'
-                : 'تعديل الاعلان')),
-        body: BlocBuilder<AddProductCubit, AddProductStates>(
-            builder: (context, state) {
-          final addProductCubit = AddProductCubit.of(context);
+      child: BlocListener<AddProductCubit, AddProductStates>(
+        listener: (context, state) {
+          if (state is AddProductLoadingState) {
+            // dialog with loading
+            showDialog(
+                context: context,
+                builder: (context) => Center(child: LoadingIndicator()));
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+              title: Text(widget.productsDetailsModel == null
+                  ? 'أضف اعلان'
+                  : 'تعديل الاعلان')),
+          body: BlocBuilder<AddProductCubit, AddProductStates>(
+              builder: (context, state) {
+            final addProductCubit = AddProductCubit.of(context);
 
-          return Form(
-            key: addProductCubit.formKey,
-            child: ValueListenableBuilder(
-              valueListenable: addProductCubit.categoryID,
-              builder: (context, value, child) => ValueListenableBuilder(
-                  valueListenable: addProductCubit.nameController,
-                  builder: (context, value, child) {
-                    print(
-                        'addProductCubit.images.length ${addProductCubit.images.length}');
-                    return ListView(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        Wrap(
-                          children: [
-                            if (addProductCubit.images.length != 0)
-                              ...addProductCubit.images
-                                  .map((e) => Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 3),
-                                        child: ImageWidget(
-                                          image: e,
-                                          index:
-                                              addProductCubit.images.indexOf(e),
-                                          onEdit: () => addProductCubit
-                                              .editImage(addProductCubit.images
-                                                  .indexOf(e)),
-                                          onDelete: () =>
-                                              addProductCubit.removeImage(e),
+            return Form(
+              key: addProductCubit.formKey,
+              child: ValueListenableBuilder(
+                valueListenable: addProductCubit.categoryID,
+                builder: (context, value, child) => ValueListenableBuilder(
+                    valueListenable: addProductCubit.nameController,
+                    builder: (context, value, child) {
+                      print(
+                          'addProductCubit.images.length ${addProductCubit.images.length}');
+                      return ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        physics: BouncingScrollPhysics(),
+                        children: [
+                          Wrap(
+                            children: [
+                              if (addProductCubit.images.length != 0)
+                                ...addProductCubit.images
+                                    .map((e) => Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3),
+                                          child: ImageWidget(
+                                            image: e,
+                                            index: addProductCubit.images
+                                                .indexOf(e),
+                                            onEdit: () =>
+                                                addProductCubit.editImage(
+                                                    addProductCubit.images
+                                                        .indexOf(e)),
+                                            onDelete: () =>
+                                                addProductCubit.removeImage(e),
+                                          ),
+                                        ))
+                                    .toList(),
+                              // Only show add image icon if images list is empty
+                              if (addProductCubit.images.isEmpty)
+                                Padding(
+                                  padding: EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    child: Container(
+                                      height: 100,
+                                      width: 100,
+                                      padding: EdgeInsets.all(15),
+                                      decoration: BoxDecoration(
+                                        color: kLightGreyColorEB,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          getIcon("image"),
+                                          height: 40,
                                         ),
-                                      ))
-                                  .toList(),
-                            // Only show add image icon if images list is empty
-                            if (addProductCubit.images.isEmpty)
-                              Padding(
-                                padding: EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  child: Container(
-                                    height: 100,
-                                    width: 100,
-                                    padding: EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      color: kLightGreyColorEB,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        getIcon("image"),
-                                        height: 40,
                                       ),
                                     ),
+                                    onTap: addProductCubit.pickImages,
                                   ),
-                                  onTap: addProductCubit.pickImages,
                                 ),
-                              ),
-                            // Show add image icon if less than 5 images
-                            if (addProductCubit.images.isNotEmpty &&
-                                addProductCubit.images.length < 5)
-                              Padding(
-                                padding: EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  child: Container(
-                                    height: 100,
-                                    width: 100,
-                                    padding: EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      color: kLightGreyColorEB,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        getIcon("image"),
-                                        height: 40,
+                              // Show add image icon if less than 5 images
+                              if (addProductCubit.images.isNotEmpty &&
+                                  addProductCubit.images.length < 5)
+                                Padding(
+                                  padding: EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    child: Container(
+                                      height: 100,
+                                      width: 100,
+                                      padding: EdgeInsets.all(15),
+                                      decoration: BoxDecoration(
+                                        color: kLightGreyColorEB,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          getIcon("image"),
+                                          height: 40,
+                                        ),
                                       ),
                                     ),
+                                    onTap: addProductCubit.pickImages,
                                   ),
-                                  onTap: addProductCubit.pickImages,
                                 ),
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Builder(builder: (context) {
-                            print('Video values:');
-                            print('Cubit video: ${addProductCubit.video}');
-                            print(
-                                'Model video: ${widget.productsDetailsModel?.video}');
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Builder(builder: (context) {
+                              print('Video values:');
+                              print('Cubit video: ${addProductCubit.video}');
+                              print(
+                                  'Model video: ${widget.productsDetailsModel?.video}');
 
-                            final modelVideo =
-                                widget.productsDetailsModel?.video;
-                            final hasVideo = (addProductCubit.video != null &&
-                                    addProductCubit.video != '') ||
-                                (modelVideo != null && modelVideo != '');
+                              final modelVideo =
+                                  widget.productsDetailsModel?.video;
+                              final hasVideo = (addProductCubit.video != null &&
+                                      addProductCubit.video != '') ||
+                                  (modelVideo != null && modelVideo != '');
 
-                            print('Has video: $hasVideo');
+                              print('Has video: $hasVideo');
 
-                            return SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: GestureDetector(
-                                child: hasVideo
-                                    ? VideoBubble(
-                                        videoUrl: modelVideo != null &&
-                                                modelVideo != ''
-                                            ? modelVideo
-                                            : addProductCubit.video != null &&
-                                                    addProductCubit.video != ''
-                                                ? addProductCubit.video ?? ''
-                                                : '',
-                                        isNetwork: modelVideo != null,
-                                      )
-                                    : Container(
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: kLightGreyColorEB,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            getIcon("video"),
-                                            height: 40,
+                              return SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: GestureDetector(
+                                  child: hasVideo
+                                      ? VideoBubble(
+                                          videoUrl: modelVideo != null &&
+                                                  modelVideo != ''
+                                              ? modelVideo
+                                              : addProductCubit.video != null &&
+                                                      addProductCubit.video !=
+                                                          ''
+                                                  ? addProductCubit.video ?? ''
+                                                  : '',
+                                          isNetwork: modelVideo != null,
+                                        )
+                                      : Container(
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: kLightGreyColorEB,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              getIcon("video"),
+                                              height: 40,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                onTap: addProductCubit.pickVideo,
+                                  onTap: addProductCubit.pickVideo,
+                                ),
+                              );
+                            }),
+                          ),
+                          const SizedBox(height: 12),
+                          BlocBuilder<AddProductCubit, AddProductStates>(
+                            builder: (context, state) {
+                              final categories = AddProductCubit.of(context)
+                                  .categoriesInAddProduct
+                                  ?.data;
+                              return ChooseBottomSheet<CategoryInAddProduct>(
+                                items: categories ?? [],
+                                isEnabled: addProductCubit
+                                            .categoryInAddProduct?.name !=
+                                        null
+                                    ? false
+                                    : true,
+                                title: addProductCubit
+                                        .categoryInAddProduct?.name ??
+                                    'اختر القسم',
+                                itemLabelBuilder: (category) =>
+                                    category.name ?? '',
+                                selectedItem:
+                                    addProductCubit.categoryInAddProduct,
+                                onItemSelected: (selectedItem) {
+                                  addProductCubit.categoryInAddProduct =
+                                      selectedItem;
+                                  addProductCubit.categoryID.value =
+                                      addProductCubit.categoryInAddProduct?.id;
+                                  addProductCubit.checkInputsValidity();
+                                },
+                              );
+                              // DropMenu(
+                              //     upperText: 'القسم*',
+                              //     hint: 'اختر القسم',
+                              //     value: addProductCubit.categoryInAddProduct,
+                              //     items: categories ?? [],
+                              //     isItemsModel: true,
+                              //     onChanged: (v) {
+                              //       addProductCubit.categoryInAddProduct =
+                              //           (v as CategoryInAddProduct);
+                              //       addProductCubit.categoryID.value =
+                              //           addProductCubit.categoryInAddProduct?.id;
+                              //       addProductCubit.checkInputsValidity();
+                              //     });
+                            },
+                          ),
+                          SizedBox(
+                            height: 19,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: InputFormField(
+                                  // upperText: 'اسم اعلان',
+                                  hint: 'اسم الاعلان',
+                                  hasLabel: true,
+                                  hasBorder: true,
+                                  validator: Validator.name,
+                                  isNext: false,
+                                  fillColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  onChanged: (a) =>
+                                      addProductCubit.checkInputsValidity(),
+                                  controller: addProductCubit.nameController,
+                                ),
                               ),
-                            );
-                          }),
-                        ),
-                        const SizedBox(height: 12),
-                        BlocBuilder<AddProductCubit, AddProductStates>(
-                          builder: (context, state) {
-                            final categories = AddProductCubit.of(context)
-                                .categoriesInAddProduct
-                                ?.data;
-                            return ChooseBottomSheet<CategoryInAddProduct>(
-                              items: categories ?? [],
-                              isEnabled:
-                                  addProductCubit.categoryInAddProduct?.name !=
-                                          null
-                                      ? false
-                                      : true,
-                              title:
-                                  addProductCubit.categoryInAddProduct?.name ??
-                                      'اختر القسم',
-                              itemLabelBuilder: (category) =>
-                                  category.name ?? '',
-                              selectedItem:
-                                  addProductCubit.categoryInAddProduct,
-                              onItemSelected: (selectedItem) {
-                                addProductCubit.categoryInAddProduct =
-                                    selectedItem;
-                                addProductCubit.categoryID.value =
-                                    addProductCubit.categoryInAddProduct?.id;
-                                addProductCubit.checkInputsValidity();
-                              },
-                            );
-                            // DropMenu(
-                            //     upperText: 'القسم*',
-                            //     hint: 'اختر القسم',
-                            //     value: addProductCubit.categoryInAddProduct,
-                            //     items: categories ?? [],
-                            //     isItemsModel: true,
-                            //     onChanged: (v) {
-                            //       addProductCubit.categoryInAddProduct =
-                            //           (v as CategoryInAddProduct);
-                            //       addProductCubit.categoryID.value =
-                            //           addProductCubit.categoryInAddProduct?.id;
-                            //       addProductCubit.checkInputsValidity();
-                            //     });
-                          },
-                        ),
-                        SizedBox(
-                          height: 19,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: InputFormField(
-                                // upperText: 'اسم اعلان',
-                                hint: 'اسم الاعلان',
-                                hasLabel: true,
-                                hasBorder: true,
-                                validator: Validator.name,
-                                isNext: false,
-                                fillColor:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                onChanged: (a) =>
-                                    addProductCubit.checkInputsValidity(),
-                                controller: addProductCubit.nameController,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: InputFormField(
-                                // upperText: 'السعر',
-                                hint: 'السعر',
-                                hasLabel: true,
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: InputFormField(
+                                  // upperText: 'السعر',
+                                  hint: 'السعر',
+                                  hasLabel: true,
 
-                                hasBorder: true,
-                                isNumber: true,
-                                fillColor:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                controller: addProductCubit.priceController,
+                                  hasBorder: true,
+                                  isNumber: true,
+                                  fillColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  controller: addProductCubit.priceController,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 19,
-                        ),
-                        InputFormField(
-                          // upperText: 'الوصف',
-                          hasBorder: true,
-                          hint: 'كتابة الوصف',
-                          isNext: false,
-                          multiLine: true,
-                          maxLines: 2,
-                          fillColor: Theme.of(context).scaffoldBackgroundColor,
-                          controller: addProductCubit.descriptionController,
-                        ),
-                        state is AddProductLoadingState
-                            ? LoadingIndicator()
-                            : ConfirmButton(
-                                title: widget.productsDetailsModel != null
-                                    ? 'تعديل'
-                                    : 'إضافة',
-                                fontColor: addProductCubit.nameController.value
-                                            .text.isNotEmpty &&
-                                        addProductCubit.categoryID.value !=
-                                            null &&
-                                        addProductCubit.images.isNotEmpty
-                                    ? Colors.white
-                                    : Color(0xFFA1A1A1),
-                                color: addProductCubit.nameController.value.text
-                                            .isNotEmpty &&
-                                        addProductCubit.categoryID.value !=
-                                            null &&
-                                        addProductCubit.images.isNotEmpty
-                                    ? activeButtonColor
-                                    : ThemeCubit.of(context).isDark
-                                        ? Color(0xFF1E1E26)
-                                        : Color(0xffFAFAFF),
-                                // color: addProductCubit.nameController.value.text
-                                //             .isNotEmpty &&
-                                //         addProductCubit.categoryID.value !=
-                                //             null &&
-                                //         addProductCubit.images.isNotEmpty
-                                //     ? activeButtonColor
-                                //     : kDarkGreyColor,
-                                verticalMargin: 20,
-                                onPressed: addProductCubit.nameController.value
-                                            .text.isNotEmpty &&
-                                        addProductCubit.categoryID.value !=
-                                            null &&
-                                        addProductCubit.images.isNotEmpty
-                                    ? widget.productsDetailsModel == null
-                                        ? () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SilahAgreementDialog(
-                                                      addProductCubit:
-                                                          addProductCubit);
-                                                });
-                                          }
-                                        // ? addProductCubit.addProduct
-                                        : addProductCubit.updateProduct
-                                    : null,
-                              ),
-                      ],
-                    );
-                  }),
-            ),
-          );
-        }),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 19,
+                          ),
+                          InputFormField(
+                            // upperText: 'الوصف',
+                            hasBorder: true,
+                            hint: 'كتابة الوصف',
+                            isNext: false,
+                            multiLine: true,
+                            maxLines: 2,
+                            fillColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            controller: addProductCubit.descriptionController,
+                          ),
+                          // state is AddProductLoadingState
+                          //     ? LoadingIndicator()
+                          //     :
+                          ConfirmButton(
+                            title: widget.productsDetailsModel != null
+                                ? 'تعديل'
+                                : 'إضافة',
+                            fontColor: addProductCubit
+                                        .nameController.value.text.isNotEmpty &&
+                                    addProductCubit.categoryID.value != null &&
+                                    addProductCubit.images.isNotEmpty
+                                ? Colors.white
+                                : Color(0xFFA1A1A1),
+                            color: addProductCubit
+                                        .nameController.value.text.isNotEmpty &&
+                                    addProductCubit.categoryID.value != null &&
+                                    addProductCubit.images.isNotEmpty
+                                ? activeButtonColor
+                                : ThemeCubit.of(context).isDark
+                                    ? Color(0xFF1E1E26)
+                                    : Color(0xffFAFAFF),
+                            // color: addProductCubit.nameController.value.text
+                            //             .isNotEmpty &&
+                            //         addProductCubit.categoryID.value !=
+                            //             null &&
+                            //         addProductCubit.images.isNotEmpty
+                            //     ? activeButtonColor
+                            //     : kDarkGreyColor,
+                            verticalMargin: 20,
+                            onPressed: addProductCubit
+                                        .nameController.value.text.isNotEmpty &&
+                                    addProductCubit.categoryID.value != null &&
+                                    addProductCubit.images.isNotEmpty
+                                ? widget.productsDetailsModel == null
+                                    ? () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return SilahAgreementDialog(
+                                                  addProductCubit:
+                                                      addProductCubit);
+                                            });
+                                      }
+                                    // ? addProductCubit.addProduct
+                                    : addProductCubit.updateProduct
+                                : null,
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

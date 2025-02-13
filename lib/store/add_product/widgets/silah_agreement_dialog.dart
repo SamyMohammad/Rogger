@@ -3,6 +3,7 @@ import 'package:silah/constants.dart';
 import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/store/add_product/cubit/cubit.dart';
 import 'package:silah/widgets/confirm_button.dart';
+import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/starter_divider.dart';
 
 class SilahAgreementDialog extends StatefulWidget {
@@ -112,7 +113,12 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                             ? Color(0xFF1E1E26)
                             : Color(0xffFAFAFF),
                     onPressed: _isCheckedNotifier.value
-                        ? widget.addProductCubit.addProduct
+                        ? () {
+                            Navigator.pop(context);
+                            widget.addProductCubit.addProduct();
+
+
+                          }
                         : null,
                   ),
                   const SizedBox(height: 40),

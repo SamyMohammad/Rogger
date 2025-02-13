@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:silah/core/validator/validation.dart';
@@ -74,26 +73,26 @@ class _DropMenuState<T> extends State<DropMenu> {
         Container(
           child: DropdownButtonFormField(
             isExpanded: false,
-            onTap: () => showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15))),
-                scrollControlDisabledMaxHeightRatio: .2,
-                builder: (context) => CupertinoPicker(
-                      selectionOverlay:
-                          CupertinoPickerDefaultSelectionOverlay(),
-                      itemExtent: 30, // Height of each item in the picker
-                      onSelectedItemChanged: (int index) {
-                        // Callback function when an item is selected
-                        // Use 'index' to determine which item was selected
-                      },
-                      children: [
-                        ...widget.items.map((e) => Text(e.toString())).toList(),
-                        ...widget.items.map((e) => Text(e.toString())).toList(),
-                      ],
-                    )),
+            // onTap: () => showModalBottomSheet(
+            //     context: context,
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.only(
+            //             topLeft: Radius.circular(15),
+            //             topRight: Radius.circular(15))),
+            //     scrollControlDisabledMaxHeightRatio: .2,
+            //     builder: (context) => CupertinoPicker(
+            //           selectionOverlay:
+            //               CupertinoPickerDefaultSelectionOverlay(),
+            //           itemExtent: 30, // Height of each item in the picker
+            //           onSelectedItemChanged: (int index) {
+            //             // Callback function when an item is selected
+            //             // Use 'index' to determine which item was selected
+            //           },
+            //           children: [
+            //             ...widget.items.map((e) => Text(e.toString())).toList(),
+            //             // ...widget.items.map((e) => Text(e.toString())).toList(),
+            //           ],
+            //         )),
             dropdownColor: Theme.of(context).appBarTheme.backgroundColor,
             selectedItemBuilder: widget.isMapDepartment == true
                 ? (context) {
