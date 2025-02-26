@@ -31,6 +31,7 @@ class RegisterCompletedView extends StatelessWidget {
             ),
             ConfirmButton(
               verticalMargin: 20,
+              color: activeButtonColor,
               title: 'الدخول للتطبيق',
               onPressed: () => RouteManager.navigateTo(NavBarView()),
             ),

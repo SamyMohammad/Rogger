@@ -51,6 +51,7 @@ class OnlineStatusTile extends StatelessWidget {
                   .ref('chats/${AppStorage.customerID}/$chatID')
                   .onValue,
               builder: (context, snapshot) {
+                print("snapshot.data?.snapshot.value ${snapshot.data?.snapshot.value}");
                 final isTyping = (snapshot.data?.snapshot.value
                         as Map?)?['typing'] as bool? ??
                     false;
@@ -63,31 +64,29 @@ class OnlineStatusTile extends StatelessWidget {
   }
 
   Widget _tile({required bool isOnline, required String status}) {
-    return Builder(
-      builder: (context) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isOnline)
-              CircleAvatar(
-                radius: 3,
-                backgroundColor: Colors.green,
-              ),
-            if (isOnline) SizedBox(width: 4),
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Text(
-                status,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 10,
-                  height: 0.75,
-                ),
+    return Builder(builder: (context) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isOnline)
+            CircleAvatar(
+              radius: 3,
+              backgroundColor: Colors.green,
+            ),
+          if (isOnline) SizedBox(width: 4),
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text(
+              status ?? 'sss',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 10,
+                height: 0.75,
               ),
             ),
-          ],
-        );
-      }
-    );
+          ),
+        ],
+      );
+    });
   }
 }

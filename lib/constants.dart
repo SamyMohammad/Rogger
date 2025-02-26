@@ -14,7 +14,7 @@ import 'widgets/toast.dart';
 
 enum SupportTypes { issue, inquiry, suggestion }
 
-const String MAP_API_KEY = 'AIzaSyAIwqIOmCI0HthEdRNgpI8oKjBrDPzn7TU';
+const String MAP_API_KEY = 'AIzaSyDsEV_EHCaHHhEfI5_XxqeTa9gkXm5x_vU';
 
 const String PLACE_HOLDER_IMAGE =
     "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png";

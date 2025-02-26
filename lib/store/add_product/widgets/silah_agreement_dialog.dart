@@ -3,16 +3,15 @@ import 'package:silah/constants.dart';
 import 'package:silah/shared_cubit/theme_cubit/cubit.dart';
 import 'package:silah/store/add_product/cubit/cubit.dart';
 import 'package:silah/widgets/confirm_button.dart';
-import 'package:silah/widgets/loading_indicator.dart';
 import 'package:silah/widgets/starter_divider.dart';
 
 class SilahAgreementDialog extends StatefulWidget {
+  final AddProductCubit addProductCubit;
+
   const SilahAgreementDialog({
     super.key,
     required this.addProductCubit,
   });
-
-  final AddProductCubit addProductCubit;
 
   @override
   State<SilahAgreementDialog> createState() => _SilahAgreementDialogState();
@@ -20,12 +19,6 @@ class SilahAgreementDialog extends StatefulWidget {
 
 class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
   late ValueNotifier<bool> _isCheckedNotifier;
-
-  @override
-  void initState() {
-    _isCheckedNotifier = ValueNotifier<bool>(false);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +99,9 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                   const SizedBox(height: 50),
                   ConfirmButton(
                     title: "نشر الإعلان",
-                    fontColor: Theme.of(context).primaryColor,
+                    fontColor: _isCheckedNotifier.value 
+                        ? Colors.white
+                        : Color(0xFFA1A1A1),
                     color: _isCheckedNotifier.value
                         ? activeButtonColor
                         : ThemeCubit.of(context).isDark
@@ -116,8 +111,6 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
                         ? () {
                             Navigator.pop(context);
                             widget.addProductCubit.addProduct();
-
-
                           }
                         : null,
                   ),
@@ -127,5 +120,11 @@ class _SilahAgreementDialogState extends State<SilahAgreementDialog> {
             ),
           );
         });
+  }
+
+  @override
+  void initState() {
+    _isCheckedNotifier = ValueNotifier<bool>(false);
+    super.initState();
   }
 }

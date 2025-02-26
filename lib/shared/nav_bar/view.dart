@@ -80,7 +80,7 @@ class _NavBarViewState extends State<NavBarView> {
                                       size: 18,
                                     ),
                                   ),
-                                  if (cubit.hasNotifications)
+                                  if (cubit.hasUnreadMessages)
                                     Positioned(
                                       top: 0,
                                       bottom: 15,

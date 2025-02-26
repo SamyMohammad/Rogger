@@ -135,7 +135,7 @@ class _DropMenuState<T> extends State<DropMenu> {
                 ? widget.value
                 : null, // guard it with null if empty
 
-            validator: Validator.dropMenu,
+            // validator: Validator.dropMenu,
             onChanged: widget.items.isNotEmpty
                 ? (v) {
                     if (widget.onChanged == null) return;

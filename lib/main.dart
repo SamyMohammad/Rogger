@@ -74,7 +74,6 @@ class MyApp extends StatelessWidget {
               ..getHomeProductsData()
               ..checkIfUserBanned(),
             lazy: false),
-        // BlocProvider(create: (context) => ProductCubit()..getProductData(),),
         BlocProvider(
             create: (context) => CustomerGroupsCubit()..getCustomGroup()),
         BlocProvider(create: (context) => ThemeCubit())

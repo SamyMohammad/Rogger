@@ -1,10 +1,15 @@
 part of '../view.dart';
 
-class _EditProfileView extends StatelessWidget {
-  const _EditProfileView({Key? key, required this.cubit}) : super(key: key);
-
+class _EditProfileView extends StatefulWidget {
   final EditProfileCubit cubit;
 
+  const _EditProfileView({Key? key, required this.cubit}) : super(key: key);
+
+  @override
+  State<_EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<_EditProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,16 +17,16 @@ class _EditProfileView extends StatelessWidget {
         title: Text('الملف الشخصي'),
       ),
       body: Form(
-        key: cubit.formKey,
+        key: widget.cubit.formKey,
         child: ListView(
           padding: VIEW_PADDING,
           children: [
             InputFormField(
-              controller: cubit.nameController,
+              controller: widget.cubit.nameController,
               upperText: 'الاسم',
               verticalMargin: 10,
               fillColor: Theme.of(context).scaffoldBackgroundColor,
-              onChanged: (_) => cubit.checkInputsValidity(),
+              onChanged: (_) => widget.cubit.checkInputsValidity(),
               suffixIcon: Icon(
                 FontAwesomeIcons.pen,
                 color: kGreyColor,
@@ -31,10 +36,10 @@ class _EditProfileView extends StatelessWidget {
             ),
             if (AppStorage.isStore)
               InputFormField(
-                controller: cubit.nicknameController,
+                controller: widget.cubit.nicknameController,
                 upperText: 'اسم المستخدم@',
                 fillColor: Theme.of(context).scaffoldBackgroundColor,
-                onChanged: (_) => cubit.checkInputsValidity(),
+                onChanged: (_) => widget.cubit.checkInputsValidity(),
                 suffixIcon: Icon(
                   FontAwesomeIcons.pen,
                   color: kGreyColor,
@@ -68,10 +73,10 @@ class _EditProfileView extends StatelessWidget {
             //   ),
             if (AppStorage.isStore)
               BlocBuilder(
-                bloc: cubit,
+                bloc: widget.cubit,
                 builder: (context, state) {
                   final categories =
-                      cubit.mapCategoriesModel?.mapCategories ?? [];
+                      widget.cubit.mapCategoriesModel?.mapCategories ?? [];
                   if (categories.isEmpty) {
                     return SizedBox.shrink();
                   }
@@ -79,31 +84,34 @@ class _EditProfileView extends StatelessWidget {
                     upperText: 'اقسام الخريطة',
                     isItemsModel: true,
                     isMapDepartment: true,
-                    value: cubit.selectedMapCategory,
+                    value: widget.cubit.selectedMapCategory,
                     items: categories,
                     onChanged: (v) {
-                      cubit.selectedMapCategory = v;
-                      cubit.checkInputsValidity();
+                      widget.cubit.selectedMapCategory = v;
+                      // widget.cubit.checkInputsValidity();
                     },
                   );
                 },
               ),
             SizedBox(height: 16),
             BlocBuilder(
-              bloc: cubit,
+              bloc: widget.cubit,
               builder: (context, state) {
                 if (state is EditProfileLoadingState) return LoadingIndicator();
                 return ConfirmButton(
                   title: 'تعديل',
-                  fontColor:
-                      cubit.areInputsValid ? Colors.white : Color(0xFFA1A1A1),
-                  color: cubit.areInputsValid
+                  fontColor: widget.cubit.areInputsValid
+                      ? Colors.white
+                      : Color(0xFFA1A1A1),
+                  color: widget.cubit.areInputsValid
                       ? activeButtonColor
                       : ThemeCubit.of(context).isDark
                           ? Color(0xFF1E1E26)
                           : Color(0xffFAFAFF),
                   // color: cubit.areInputsValid ? activeButtonColor : kGreyColor,
-                  onPressed: cubit.areInputsValid ? cubit.editProfile : null,
+                  onPressed: widget.cubit.areInputsValid
+                      ? widget.cubit.editProfile
+                      : null,
                 );
               },
             ),
@@ -111,5 +119,12 @@ class _EditProfileView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.cubit.checkInputsValidity();
   }
 }

@@ -5,7 +5,7 @@
     <string name="deeplink_alternate_link">wfn2x-alternate.app.link</string>
 
     <string name="deeplink_alternate_test_link">wfn2x-alternate.test-app.link</string>
-    <string name="branch_io_sdk_test_key">key_test_cugs8NkZ95AUfvYGD6YIDeleqsjMEYN9</string>
-    <string name="branch_io_sdk_live_key">key_live_nreq2Ui834zJoF6Kr1ZKAhpbEvmRx6MI</string>
+    <string name="branch_io_sdk_test_key">key_test_lyi7VazzDE6XYwBVnDpf3ifowrbtPcxI</string>
+    <string name="branch_io_sdk_live_key">key_live_lCa4UmEwFz21XBzRhxbeYhabAwfCQcBZ</string>
     <string name="app_name">Roger</string>
 </resources>

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:silah/core/app_storage/app_storage.dart';
 import 'package:silah/core/dio_manager/dio_manager.dart';
@@ -84,12 +84,10 @@ class AddProductCubit extends Cubit<AddProductStates> {
   Future<void> getCategoriesInAddPage() async {
     emit(AddProductLoadingState());
     try {
-      // final data = {
-      //   'customer_id': AppStorage.customerID,
-      // };
       final response =
           await DioHelper.post('common/category/product_categories', data: {
         'customer_id': AppStorage.customerID,
+        
       });
       final data = response.data;
 

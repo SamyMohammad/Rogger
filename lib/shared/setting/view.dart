@@ -40,7 +40,6 @@ class _SettingViewState extends State<SettingView> {
   @override
   void initState() {
     changeTheme();
-
     if (AppStorage.isLogged)
       getUserAndCache(
         AppStorage.customerID,

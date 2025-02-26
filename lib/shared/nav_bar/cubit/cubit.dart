@@ -57,10 +57,8 @@ class NavBarCubit extends Cubit<NavBarStates> {
     if (!isAssigned) {
       RouteManager.navigateAndPopAll(SelectLocationView());
     }
-
     emit(NavBarInitState());
   }
-
   void toggleTab(int value) {
     currentIndex = value;
     emit(NavBarInitState());

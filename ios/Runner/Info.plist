@@ -3,6 +3,12 @@
 <plist version="1.0">
 <dict>
 <key>CFBundleURLTypes</key>
+<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to allow you to select and share images in news articles.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to your camera to allow you to take photos for sharing in news articles.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to your microphone to allow you to record video content for news articles.</string>
 <array>
   <dict>
     <key>CFBundleURLSchemes</key>

@@ -6,19 +6,19 @@ import 'package:silah/store/store_profile/cubit/cubit.dart';
 import 'package:silah/widgets/app/info_bottom_sheet.dart';
 
 class HeaderIcons extends StatelessWidget {
+  final StoreProfileCubit cubit;
+
   const HeaderIcons({
     super.key,
     required this.cubit,
   });
 
-  final StoreProfileCubit cubit;
-
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: 30,
-        left: 32,
-        right: 32,
+        top: 55,
+        left: 15,
+        right: 15,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -27,12 +27,11 @@ class HeaderIcons extends StatelessWidget {
                 RouteManager.pop();
               },
               child: CircleAvatar(
-                radius: 15,
+                radius: 17,
                 backgroundColor: kPrimaryColor.withOpacity(0.7),
-                child: SvgPicture.asset(
-                  getIcon("back_arrow"),
-                  fit: BoxFit.scaleDown,
-                  height: 15,
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 20,
                 ),
               ),
             ),
@@ -59,7 +58,7 @@ class HeaderIcons extends StatelessWidget {
                 info: cubit.storeInfoModel!.brief!,
               ),
               child: CircleAvatar(
-                radius: 15,
+                radius: 17,
                 backgroundColor: kPrimaryColor.withOpacity(0.7),
                 child: SvgPicture.asset(
                   getIcon("info"),
