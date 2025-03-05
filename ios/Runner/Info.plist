@@ -2,108 +2,126 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Branch_key</key>
-	<dict>
-		<key>live</key>
-		<string>key_live_lCa4UmEwFz21XBzRhxbeYhabAwfCQcBZ</string>
-		<key>test</key>
-		<string>key_test_lyi7VazzDE6XYwBVnDpf3ifowrbtPcxI</string>
-	</dict>
-	<key>Branch_universal_link_domains</key>
-	<dict>
-		<key>Item 0</key>
-		<string>ahe7t.test-app.link</string>
-		<key>Item 1</key>
-		<string>ahe7t-alternate.test-app.link</string>
-		<key>Item 2</key>
-		<string>ahe7t.test-app.link</string>
-	</dict>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>روجر - Roogr</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>روجر - Roogr</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>4.0.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.sila.sila</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>Item 0</key>
-	<string>ahe7t.test-app.link</string>
-	<key>Item 1</key>
-	<string>ahe7t-alternate.test-app.link</string>
-	<key>Item 2</key>
-	<string>ahe7t.test-app.link</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>https</string>
-		<string>http</string>
-		<string>tel</string>
-	</array>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>App would like to use your camera to can send photos and videos in chats and edit your profile photo</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Used to capture audio for Voice Notes in chats</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need add only access to save medias</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery,to help you set your profile photo and send it in chat</string>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>sila</string>
+            </array>
+        </dict>
+    </array>
+  <!-- Branch.io Configuration -->
+<key>branch_key</key>
+ <dict>
+    <key>live</key>
+    <string>key_live_lCa4UmEwFz21XBzRhxbeYhabAwfCQcBZ</string>
+    <key>test</key>
+    <string>key_test_lyi7VazzDE6XYwBVnDpf3ifowrbtPcxI</string>
+ </dict>
+ <key>branch_universal_link_domains</key>
+ <array>
+    <string>ahe7t.app.link</string>
+    <string>ahe7t-alternate.app.link</string>
+    <string>ahe7t.test-app.link</string>
+    <string>ahe7t-alternate.test-app.link</string>
+ </array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to your photo library to allow you to select and share images in news articles.</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>App would like to use your camera to send photos and videos in chats and edit your profile photo</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Used to capture audio for Voice Notes in chats</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need add only access to save medias</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
+
+    <key>NSLocationUsageDescription</key>
+    <string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Location is required to detect user latitude and longitude for easy location picking when getting nearest shops on the App.</string>
+
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+
+    <key>CFBundleDisplayName</key>
+    <string>${PRODUCT_NAME}</string>
+
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <key>CFBundleName</key>
+    <string>روجر - ROOGR</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>3.0.6</string>
+
+    <key>CFBundleSignature</key>
+    <string>????</string>
+
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>https</string>
+        <string>http</string>
+        <string>tel</string>
+    </array>
+
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
+
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    </array>
+
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
 </dict>
 </plist>
