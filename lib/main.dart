@@ -1,6 +1,8 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:media_cache_manager/media_cache_manager.dart';
@@ -39,11 +41,11 @@ void main() async {
   // getUserAndCache(185, 1);
   // getUserAndCache(186, 2);
 
-  runApp(MyApp());
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => MyApp(), // Wrap your app
-  // ));
+  // runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(), // Wrap your app
+  ));
 }
 
 class MyApp extends StatelessWidget {

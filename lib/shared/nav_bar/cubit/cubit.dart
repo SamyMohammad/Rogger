@@ -30,7 +30,7 @@ class NavBarCubit extends Cubit<NavBarStates> {
     HomeView(),
     if (AppStorage.getUserModel()?.customerGroup == 2) SChangeMapActivityView(),
     if (AppStorage.getUserModel()?.customerGroup == 1) UAdvertiserOnMapView(),
-    if (!AppStorage.isLogged) LoginToContinueWidget(),
+    if (!AppStorage.isLogged) LoginToContinueWidget.withoutAppBar(),
     MessagesView(),
     SettingView()
   ];

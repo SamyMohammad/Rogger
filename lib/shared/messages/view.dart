@@ -16,7 +16,7 @@ class MessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!AppStorage.isLogged) {
-      return LoginToContinueWidget();
+      return LoginToContinueWidget.withoutAppBar();
     }
     return BlocProvider(
       create: (context) => MessagesCubit()..init(),
