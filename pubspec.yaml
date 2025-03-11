@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
   
-version: 3.0.9+3097
+version: 3.1.2+3099
 
 
 environment:
@@ -79,11 +79,13 @@ dependencies:
   image_picker: ^1.1.2
   # flutter_branch_sdk: 8.1.1
   flutter_secure_storage: ^8.1.0
-  flutter_branch_sdk: ^8.2.0
+  flutter_branch_sdk: any
   modal_bottom_sheet: ^3.0.0
   gal: ^2.3.0
   image_gallery_saver: ^2.0.3
   better_player: ^0.0.63
+  flutter_screenutil: ^5.9.3
+  device_preview: ^1.1.0
   # device_preview: ^1.1.0
   # device_preview: ^1.1.0
 dependency_overrides:
@@ -116,7 +118,7 @@ dependency_overrides:
   photo_view: ^0.15.0
 
   # image_gallery_saver: any
-  screenshot: 2.5.0
+  screenshot: 2.3.0
   drag_down_to_pop: any
   zxing2: any
   qr_code_tools: 

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="deeplink_test_link">wfn2x.test-app.link</string>
-    <string name="deeplink_link">wfn2x.app.link</string>
-    <string name="deeplink_alternate_link">wfn2x-alternate.app.link</string>
-
-    <string name="deeplink_alternate_test_link">wfn2x-alternate.test-app.link</string>
+    <string name="deeplink_test_link">ahe7t.test-app.link</string>
+    <string name="deeplink_link">ahe7t.app.link</string>
+    <string name="deeplink_alternate_link">ahe7t-alternate.app.link</string>
+    <string name="deeplink_alternate_test_link">ahe7t-alternate.test-app.link</string>
     <string name="branch_io_sdk_test_key">key_test_lyi7VazzDE6XYwBVnDpf3ifowrbtPcxI</string>
     <string name="branch_io_sdk_live_key">key_live_lCa4UmEwFz21XBzRhxbeYhabAwfCQcBZ</string>
     <string name="app_name">Roger</string>
